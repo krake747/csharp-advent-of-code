@@ -1,4 +1,5 @@
 ﻿using AdventOfCode2021.Shared;
+using System.Security.Cryptography.X509Certificates;
 
 namespace AdventOfCode2021;
 
@@ -7,29 +8,36 @@ public static class Day2
     /// <summary>
     /// What do you get if you multiply your final horizontal position by your final depth?
     /// </summary>
-    public static int Part1(IEnumerable<string> input, int x, int y)
+    public static int Part1(IEnumerable<string> input)
     {
-        var commands = input.Select(Decode)
-                            .Prepend(new Coordinate(x, y));
+        var (x, y, aim) = input.Select(i => i)
+                          .Aggregate((x: 0, y: 0, aim: 0), (prev, curr) => Decode(prev, curr));
 
-        var sumX = commands.Sum(loc => loc.X);
-        var sumY = commands.Sum(loc => loc.Y);
-
-        return sumX * sumY;
+        return x * aim;
     }
 
-    private static Coordinate Decode(string command)
+    /// <summary>
+    /// What do you get if you multiply your final horizontal position by your final depth?
+    /// </summary>
+    public static int Part2(IEnumerable<string> input)
     {
-        var instruction = new Instruction(command.Split(' ')[0], int.Parse(command.Split(' ')[1]));
-        return instruction.Direction switch
+
+        var (x, y, aim) = input.Select(i => i)
+                               .Aggregate((x: 0, y: 0, aim: 0), (prev, curr) => Decode(prev, curr));
+
+        return x * y;
+    }
+
+    private static (int x, int y, int aim) Decode((int x, int y, int aim) coords, string command)
+    {
+        var direction = command.Split(' ')[0];
+        var units = int.Parse(command.Split(' ')[1]);
+        return direction switch
         {
-            "forward" => new Coordinate(instruction.Units, 0),
-            "down" => new Coordinate(0, instruction.Units),
-            "up" => new Coordinate(0, -instruction.Units),
-            _ => new Coordinate(0, 0)
+            "forward" => (coords.x + units, coords.y + (coords.aim * units), coords.aim),
+            "down" => (coords.x, coords.y, coords.aim + units),
+            "up" => (coords.x, coords.y, coords.aim - units),
+            _ => (coords.x, coords.y, coords.aim)
         };
     }
-
-    private record Coordinate(int X, int Y);
-    private record Instruction(string Direction, int Units);
 }
