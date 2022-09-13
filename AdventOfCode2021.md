@@ -3,3 +3,4 @@
 | **Problem**         | Part 1 | Part 2 |
 | :------------------ | :----: | :----: |
 | Day 1 - Sonar Sweep | :star: | :star: |
+| Day 2 - Dive!       | :star: |        |
