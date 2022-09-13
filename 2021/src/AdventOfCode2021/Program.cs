@@ -16,7 +16,12 @@ var parser = new TextFileParserService();
 var inputDay2 = parser.Fetch("day02.txt")
                       .ToList();
 
-var result21 = Day2.Part1(inputDay2, 0, 0);
+
+var result21 = Day2.Part1(inputDay2);
+var result22 = Day2.Part2(inputDay2);
+
+Console.WriteLine(result21);
+Console.WriteLine(result22);
 
 
 Console.WriteLine("END");
