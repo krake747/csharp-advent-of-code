@@ -34,8 +34,8 @@ public class AdventOfCode2021Tests
     [Theory]
     [InlineData(new string[] { }, 0, 0, 0)]
     [InlineData(new string[] { "forward 5" }, 0, 0, 0)]
-    [InlineData(new string[] { "forward 5", "down 5" }, 0, 0, -25)]
-    [InlineData(new string[] { "forward 5", "down 5", "forward 8", "up 3", "down 8", "forward 2" }, 0, 0, -150)]
+    [InlineData(new string[] { "forward 5", "down 5" }, 0, 0, 25)]
+    [InlineData(new string[] { "forward 5", "down 5", "forward 8", "up 3", "down 8", "forward 2" }, 0, 0, 150)]
     public void Day2_Part1_ShouldReturnInteger_WhenEnumberableIsStringAndStartingPositionsAreInteger(string[] values, int x, int y, int expected)
     {
         // Act
