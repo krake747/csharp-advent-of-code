@@ -1,5 +1,4 @@
 ﻿using AdventOfCode2021.Shared;
-using System.Security.Cryptography.X509Certificates;
 
 namespace AdventOfCode2021;
 
@@ -11,7 +10,7 @@ public static class Day2
     public static int Part1(IEnumerable<string> input)
     {
         var (x, y, aim) = input.Select(i => i)
-                          .Aggregate((x: 0, y: 0, aim: 0), (prev, curr) => Decode(prev, curr));
+                               .Aggregate((x: 0, y: 0, aim: 0), (prev, curr) => Decode(prev, curr));
 
         return x * aim;
     }
