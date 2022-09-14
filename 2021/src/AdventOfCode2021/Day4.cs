@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 using AdventOfCode2021.Shared;
+using static AdventOfCode2021.Day4;
 
 namespace AdventOfCode2021;
 
@@ -16,7 +18,9 @@ public static class Day4
 
     public static int Part2(IEnumerable<string> input)
     {
-        return 1;
+        var bingoSystem = ProcessInput(input);
+        var score = BingoScore(bingoSystem, false);
+        return score;
     }
 
     internal static BingoSystem ProcessInput(IEnumerable<string> input)
@@ -40,20 +44,26 @@ public static class Day4
         return new BingoSystem(numbers, boards);
     }
 
-    internal static int BingoScore(BingoSystem bingoSystem)
+    internal static int BingoScore(BingoSystem bingoSystem, bool firstBoard = true)
     {
+        var winningBoards = new Dictionary<int, WinningBoard>();
         foreach (var number in bingoSystem.Numbers)
         {
             MarkNumber(bingoSystem, number);
-            
-            var winningBoard = HasBingo(bingoSystem);
 
-            if (winningBoard.Bingo)
+            winningBoards = HasBingo(bingoSystem, winningBoards);
+
+            if (winningBoards.Count == 1 && firstBoard)
             {
-                return CalculateBingoScore(winningBoard, number);
-            }  
-        }
+                return CalculateBingoScore(winningBoards.Select(w => new { w.Key, w.Value }).First().Value, number);
+            }
 
+            if (winningBoards.Count == bingoSystem.Boards.Count && !firstBoard)
+            {
+                return CalculateBingoScore(winningBoards.Select(w => new { w.Key, w.Value }).Last().Value, number);
+            }
+        }
+        
         return -1;
     }
 
@@ -70,9 +80,10 @@ public static class Day4
         }
     }
 
-    private static WinningBoard HasBingo(BingoSystem bingoSystem)
+    private static Dictionary<int, WinningBoard> HasBingo(BingoSystem bingoSystem, Dictionary<int, WinningBoard> winningBoards)
     {
-        foreach (var (board, index) in bingoSystem.Boards.ToList().WithIndex())
+        var boards = bingoSystem.Boards.ToList();
+        foreach (var (board, index) in boards.WithIndex())
         {
             var checkCols = Enumerable.Range(0, board.GetLength(0))
                                       .Select(c => board.GetColumn(c).All(v => v == "X"))
@@ -82,15 +93,27 @@ public static class Day4
                                       .Select(r => board.GetRow(r).All(v => v == "X"))
                                       .Any(r => r == true);
             
-            if (checkCols || checkRows) return new WinningBoard(true, board, index);
+            if (checkCols || checkRows)
+            {
+                if (!winningBoards.Select(k => k.Key).Contains(index))
+                {
+                    winningBoards.Add(index, new WinningBoard(true, board, index));
+                }    
+            }
+
+            if (winningBoards.Count == bingoSystem.Boards.Count)
+            {
+                return winningBoards;
+            }
         }
 
-        return new WinningBoard(false, new string[][] {}, -1);
+        return winningBoards;
     }
 
     private static int CalculateBingoScore(WinningBoard board, string number)
     {
-        var unmarkedScore = board.Board.Select(r => r.Where(v => v != "X").Sum(int.Parse))
+        var unmarkedScore = board.Board
+                                 .Select(r => r.Where(v => v != "X").Sum(int.Parse))
                                  .Sum();
 
         return unmarkedScore * int.Parse(number);
