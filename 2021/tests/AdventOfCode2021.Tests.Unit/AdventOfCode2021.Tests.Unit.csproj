@@ -26,4 +26,10 @@
     <ProjectReference Include="..\..\src\AdventOfCode2021\AdventOfCode2021.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="Inputs\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
