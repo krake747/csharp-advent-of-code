@@ -15,4 +15,15 @@ public static class LinqExtensions
 
         return rollingSums;
     }
+
+    public static T[] GetColumn<T>(this T[][] input, int columnNumber) =>
+        Enumerable.Range(0, input.GetLength(0))
+                  .Select(x => input[x][columnNumber])
+                  .ToArray();
+    
+
+    public static T[] GetRow<T>(this T[][] input, int rowNumber) => 
+        Enumerable.Range(0, input.GetLength(1))
+                  .Select(x => input[rowNumber][x])
+                  .ToArray();  
 }
