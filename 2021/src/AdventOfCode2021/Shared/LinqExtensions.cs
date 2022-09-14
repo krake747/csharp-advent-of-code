@@ -23,7 +23,12 @@ public static class LinqExtensions
     
 
     public static T[] GetRow<T>(this T[][] input, int rowNumber) => 
-        Enumerable.Range(0, input.GetLength(1))
+        Enumerable.Range(0, input.GetLength(0))
                   .Select(x => input[rowNumber][x])
-                  .ToArray();  
+                  .ToArray();
+
+    public static IEnumerable<(T item, int index)> WithIndex<T>(this IEnumerable<T> input)
+    {
+        return input.Select((item, index) => (item, index));
+    }
 }

@@ -1,6 +1,4 @@
 ﻿using AdventOfCode2021.Shared;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 
 namespace AdventOfCode2021;
 
