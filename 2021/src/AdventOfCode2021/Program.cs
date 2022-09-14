@@ -29,10 +29,10 @@ var inputDay3 = parser.Fetch("day03.txt")
 
 
 var result31 = Day3.Part1(inputDay3);
-//var result32 = Day3.Part2(inputDay3);
+var result32 = Day3.Part2(inputDay3);
 
 Console.WriteLine(result31);
-//Console.WriteLine(result32);
+Console.WriteLine(result32);
 
 
 Console.WriteLine("END");
