@@ -34,15 +34,25 @@ var parser = new TextFileParserService();
 //Console.WriteLine(result31);
 //Console.WriteLine(result32);
 
-var inputDay4 = parser.Fetch("day04.txt")
+//var inputDay4 = parser.Fetch("day04.txt")
+//                      .ToList();
+
+
+//var result41 = Day4.Part1(inputDay4);
+//var result42 = Day4.Part2(inputDay4);
+
+//Console.WriteLine(result41);
+//Console.WriteLine(result42);
+
+var inputDay5 = parser.Fetch("day05.txt")
                       .ToList();
 
 
-var result41 = Day4.Part1(inputDay4);
-var result42 = Day4.Part2(inputDay4);
+var result51 = Day5.Part1(inputDay5);
+var result52 = Day5.Part2(inputDay5);
 
-Console.WriteLine(result41);
-Console.WriteLine(result42);
+Console.WriteLine(result51);
+Console.WriteLine(result52);
 
 
 Console.WriteLine("END");
