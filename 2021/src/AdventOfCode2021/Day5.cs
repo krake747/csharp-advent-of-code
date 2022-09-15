@@ -1,7 +1,5 @@
 ﻿using AdventOfCode2021.Shared;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Text.RegularExpressions;
 namespace AdventOfCode2021;
 
@@ -13,7 +11,7 @@ public static class Day5
     public static int Part1(IEnumerable<string> input)
     {
         var lines = input.Select(r => Regex.Replace(r, "[^0-9]", " ").Split(' ', StringSplitOptions.RemoveEmptyEntries))
-                         .Select(v => new Line(int.Parse(v[0]), int.Parse(v[1]), int.Parse(v[2]), int.Parse(v[3])));
+            .Select(v => new Line(int.Parse(v[0]), int.Parse(v[1]), int.Parse(v[2]), int.Parse(v[3])));
 
         var grid = PlaceHydrothermalVents(lines, CreateGrid(lines));
         var count = CountOverlappingLines(grid);
@@ -25,7 +23,13 @@ public static class Day5
     /// </summary>
     public static int Part2(IEnumerable<string> input)
     {
-        return 1;
+        var lines = input.Select(r => Regex.Replace(r, "[^0-9]", " ").Split(' ', StringSplitOptions.RemoveEmptyEntries))
+            .Select(v => new Line(int.Parse(v[0]), int.Parse(v[1]), int.Parse(v[2]), int.Parse(v[3])));
+
+        var grid = PlaceHydrothermalVents(lines, CreateGrid(lines), true);
+        var count = CountOverlappingLines(grid);
+
+        return count;
     }
 
     private static int[,] CreateGrid(IEnumerable<Line> lines)
@@ -41,50 +45,64 @@ public static class Day5
         return new int[maxY + 1, maxX + 1];
     }
 
+    private static int[,] PlaceHydrothermalVents(IEnumerable<Line> lines, int[,] grid, bool diagonals = false)
+    {
+        foreach (var line in lines.ToList())
+        {
+            // Place Vertical vents
+            if (line.X1 == line.X2)
+            {
+                EnumerableRange.Integer(line.Y1, line.Y2, 1)
+                    .Select(i => new Coordinate(line.X1, i))
+                    .ToList()
+                    .ForEach(v => grid[v.Y, v.X] += 1);
+            }
+
+            // Place Horizontal vents
+            if (line.Y1 == line.Y2)
+            {
+                EnumerableRange.Integer(line.X1, line.X2, 1)
+                    .Select(i => new Coordinate(i, line.Y1))
+                    .ToList()
+                    .ForEach(v => grid[v.Y, v.X] += 1);
+            }
+
+            // Place Diagonal vents
+            if ((line.X2 - line.X1 == line.Y2 - line.Y1) && diagonals)
+            {
+                EnumerableRange.Integer(line.X1, line.X2, 1)
+                    .Zip(EnumerableRange.Integer(line.Y1, line.Y2, 1))
+                    .Select(i => new Coordinate(i.First, i.Second))
+                    .ToList()
+                    .ForEach(v => grid[v.Y, v.X] += 1);
+            }
+
+            // Place Antidiagonal vents
+            if ((line.X2 - line.X1 == line.Y1 - line.Y2) && diagonals)
+            {
+                EnumerableRange.Integer(line.X1, line.X2, 1)
+                    .Zip(EnumerableRange.Integer(line.Y1, line.Y2, 1))
+                    .Select(i => new Coordinate(i.First, i.Second))
+                    .ToList()
+                    .ForEach(v => grid[v.Y, v.X] += 1);
+            }
+        }
+
+        return grid;
+    }
+
     private static int CountOverlappingLines(int[,] grid, int timesOverlapping = 2)
     {
         int countMaxOverlap = 0;
         foreach (var cell in grid)
         {
-            if (cell < timesOverlapping)
+            if (cell >= timesOverlapping)
             {
-                continue;
+                countMaxOverlap++;
             }
-            countMaxOverlap++;
         }
 
         return countMaxOverlap;
-    }
-
-    private static int[,] PlaceHydrothermalVents(IEnumerable<Line> lines, int[,] grid)
-    {
-        var horizontal = lines.Where(l => l.X1 == l.X2);
-        var vertical = lines.Where(l => l.Y1 == l.Y2);
-
-        var vents = horizontal.Concat(vertical);
-
-        foreach (var line in vents.ToList())
-        {
-            // Place Horizontal vents
-            if (line.X1 == line.X2)
-            {
-                EnumerableRange.Integer(line.Y1, line.Y2, 1)
-                               .Select(i => new Coordinate(line.X1, i))
-                               .ToList()
-                               .ForEach(v => grid[v.Y, v.X] += 1);
-            }
-
-            // Place Vertical vents
-            if (line.Y1 == line.Y2)
-            {
-                EnumerableRange.Integer(line.X1, line.X2, 1)
-                               .Select(i => new Coordinate(i, line.Y1))
-                               .ToList()
-                               .ForEach(v => grid[v.Y, v.X] += 1);
-            }
-        }
-
-        return grid;
     }
 
     private static void TraceGrid(int[,] grid)
