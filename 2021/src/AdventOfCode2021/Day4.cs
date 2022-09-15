@@ -1,9 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-
+﻿using System.Text.RegularExpressions;
 using AdventOfCode2021.Shared;
-using static AdventOfCode2021.Day4;
 
 namespace AdventOfCode2021;
 
@@ -19,7 +15,7 @@ public static class Day4
     public static int Part2(IEnumerable<string> input)
     {
         var bingoSystem = ProcessInput(input);
-        var score = BingoScore(bingoSystem, false);
+        var score = BingoScore(bingoSystem, true);
         return score;
     }
 
@@ -27,8 +23,8 @@ public static class Day4
     {
         var numbers = input.First().Split(',');
 
-        var boards = new List<string[][]> { };
         var board = new List<string[]> { };
+        var boards = new List<string[][]> { };
         foreach (var row in input.Skip(2).Append(""))
         {
             if (string.IsNullOrEmpty(row))
@@ -44,7 +40,7 @@ public static class Day4
         return new BingoSystem(numbers, boards);
     }
 
-    internal static int BingoScore(BingoSystem bingoSystem, bool firstBoard = true)
+    internal static int BingoScore(BingoSystem bingoSystem, bool finalBoard = false)
     {
         var winningBoards = new Dictionary<int, WinningBoard>();
         foreach (var number in bingoSystem.Numbers)
@@ -53,23 +49,24 @@ public static class Day4
 
             winningBoards = HasBingo(bingoSystem, winningBoards);
 
-            if (winningBoards.Count == 1 && firstBoard)
+            if (winningBoards.Count == 1 && !finalBoard)
             {
-                return CalculateBingoScore(winningBoards.Select(w => new { w.Key, w.Value }).First().Value, number);
+                return CalculateBingoScore(winningBoards.Select(w => w.Value).First(), number);
             }
 
-            if (winningBoards.Count == bingoSystem.Boards.Count && !firstBoard)
+            if (winningBoards.Count == bingoSystem.Boards.Count && finalBoard)
             {
-                return CalculateBingoScore(winningBoards.Select(w => new { w.Key, w.Value }).Last().Value, number);
+                return CalculateBingoScore(winningBoards.Select(w => w.Value).Last(), number);
             }
         }
-        
+
         return -1;
     }
 
     private static void MarkNumber(BingoSystem bingoSystem, string number)
     {
-        foreach (var (board, index) in bingoSystem.Boards.ToList().WithIndex())
+        var boards = bingoSystem.Boards.ToList();
+        foreach (var (board, index) in boards.WithIndex())
         {
             var markedBoard = Enumerable.Range(0, board.GetLength(0))
                                         .Select(r => board[r].Select(x => Regex.Replace(x, @$"^{number}$", "X")).ToArray())
@@ -92,13 +89,10 @@ public static class Day4
             var checkRows = Enumerable.Range(0, board.GetLength(0))
                                       .Select(r => board.GetRow(r).All(v => v == "X"))
                                       .Any(r => r == true);
-            
-            if (checkCols || checkRows)
+
+            if ((checkCols || checkRows) && !winningBoards.Select(k => k.Key).Contains(index))
             {
-                if (!winningBoards.Select(k => k.Key).Contains(index))
-                {
-                    winningBoards.Add(index, new WinningBoard(true, board, index));
-                }    
+                winningBoards.Add(index, new WinningBoard(board));
             }
 
             if (winningBoards.Count == bingoSystem.Boards.Count)
@@ -120,5 +114,5 @@ public static class Day4
     }
 
     internal record BingoSystem(string[] Numbers, List<string[][]> Boards);
-    internal record WinningBoard(bool Bingo, string[][] Board, int Index);
+    internal record WinningBoard(string[][] Board);
 }
