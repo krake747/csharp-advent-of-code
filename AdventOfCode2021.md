@@ -8,4 +8,4 @@ Instructions to the puzzle problems are found on: https://adventofcode.com/2021/
 | Day 2 - Dive!                | :star: | :star: |
 | Day 3 - Binary Diagnostic    | :star: | :star: |
 | Day 4 - Giant Squid          | :star: | :star: |
-| Day 5 - Hydrothermal Venture | :star: |  |
+| Day 5 - Hydrothermal Venture | :star: | :star: |
