@@ -8,41 +8,11 @@ namespace AdventOfCode2021.Tests.Unit;
 public class Day4Tests
 {
     [Theory]
-    [InlineData("day04.txt", 4512, Skip = "Github Actions: Due to external input file")]
-    public void Part1_ShouldReturnInteger_WhenEnumberableAreStringsFromFile(string file, int expected)
-    {
-        // Arrange
-        var parser = new TextFileParserService();
-        var input = parser.Fetch(file);
-
-        // Act
-        var result = Day4.Part1(input);
-
-        // Assert 
-        result.Should().Be(expected);
-    }
-
-    [Theory]
     [ClassData(typeof(Day4Part1TestData))]
     public void Part1_ShouldReturnInteger_WhenEnumberableAreStrings(string[] values, int expected)
     {
         // Act
         var result = Day4.Part1(values);
-
-        // Assert 
-        result.Should().Be(expected);
-    }
-
-    [Theory]
-    [InlineData("day04.txt", 1924, Skip = "Github Actions: Due to external input file")]
-    public void Part2_ShouldReturnInteger_WhenEnumberableAreStringsFromFile(string file, int expected)
-    {
-        // Arrange
-        var parser = new TextFileParserService();
-        var input = parser.Fetch(file);
-
-        // Act
-        var result = Day4.Part2(input);
 
         // Assert 
         result.Should().Be(expected);
