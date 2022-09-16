@@ -5,7 +5,7 @@ VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2021", "2021", "{E4C1206D-C91C-41DC-8FFA-BDCFA4886C97}"
 	ProjectSection(SolutionItems) = preProject
-		AdventOfCode2021.md = AdventOfCode2021.md
+		2021\AdventOfCode2021.md = 2021\AdventOfCode2021.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E2820BF9-D850-4F5A-BDB8-1641F99949DA}"
