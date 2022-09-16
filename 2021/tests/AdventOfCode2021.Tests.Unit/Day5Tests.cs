@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using FluentAssertions;
+﻿using FluentAssertions;
+using System.Collections;
 using Xunit;
 
 namespace AdventOfCode2021.Tests.Unit;
@@ -23,6 +23,28 @@ public class Day5Tests
     {
         // Act
         var result = Day5.Part2(values);
+
+        // Assert 
+        result.Should().Be(expected);
+    }
+
+    [Theory]
+    [ClassData(typeof(Day5Part1TestData))]
+    public void Part1a_ShouldReturnInteger_WhenEnumberableAreStrings(string[] values, int expected)
+    {
+        // Act
+        var result = Day5.Part1a(values);
+
+        // Assert 
+        result.Should().Be(expected);
+    }
+
+    [Theory]
+    [ClassData(typeof(Day5Part2TestData))]
+    public void Part2a_ShouldReturnInteger_WhenEnumberableAreStrings(string[] values, int expected)
+    {
+        // Act
+        var result = Day5.Part2a(values);
 
         // Assert 
         result.Should().Be(expected);
