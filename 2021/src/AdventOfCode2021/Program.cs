@@ -58,8 +58,8 @@ var inputDay6 = parser.Fetch("day06.txt")
                       .ToList();
 
 
-var result61 = Day6.Part1(inputDay6);
-var result62 = Day6.Part2(inputDay6);
+var result61 = Day6.Part1(inputDay6, 80);
+var result62 = Day6.Part2(inputDay6, 256);
 
 Console.WriteLine(result61);
 Console.WriteLine(result62);
