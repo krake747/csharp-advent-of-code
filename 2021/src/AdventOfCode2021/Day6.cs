@@ -1,6 +1,4 @@
-﻿using AdventOfCode2021.Shared;
-
-namespace AdventOfCode2021;
+﻿namespace AdventOfCode2021;
 
 public static class Day6
 {
