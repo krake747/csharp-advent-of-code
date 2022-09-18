@@ -32,7 +32,7 @@ public static class Day7
             .Select(int.Parse);
 
         var leastFuelConsumption = Enumerable.Range(0, positions.Max())
-            .Min(pos => positions.Sum(p => Enumerable.Range(0, Math.Abs(p - pos) + 1).Sum()));
+            .Min(pos => positions.Select(p => Math.Abs(p - pos)).Sum(n => n * (n + 1) / 2));
 
         return leastFuelConsumption;
     }
