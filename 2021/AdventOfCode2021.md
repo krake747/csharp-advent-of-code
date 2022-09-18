@@ -11,4 +11,4 @@ Instructions to the puzzle problems are found on: https://adventofcode.com/2021/
 | Day 5 - Hydrothermal Venture    | :star: | :star: |
 | Day 6 - Lanternfish             | :star: | :star: |
 | Day 7 - The Treachery of Whales | :star: | :star: |
-| Day 8 - Seven Segment Search    | :star: |  |
+| Day 8 - Seven Segment Search    | :star: | :star: |
