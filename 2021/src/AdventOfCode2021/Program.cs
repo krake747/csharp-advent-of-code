@@ -1,9 +1,7 @@
 ﻿using AdventOfCode2021;
 using AdventOfCodeLib;
 
-var parser = new TextFileParserService();
-
-var inputDay1 = parser.Fetch("day01.txt")
+var inputDay1 = TextFileReaderService.Fetch(@"..\..\..\Inputs\", "day01.txt")
     .Select(int.Parse)
     .ToList();
 
