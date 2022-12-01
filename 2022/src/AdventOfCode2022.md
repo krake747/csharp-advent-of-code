@@ -1,0 +1,7 @@
+# Advent of Code 2022
+
+Instructions to the puzzle problems are found on: https://adventofcode.com/2022/
+
+| **Problem**                     | Part 1 | Part 2 |
+| :------------------------------ | :----: | :----: |
+| Day 1 - Calorie Counting        | :star: |  |
