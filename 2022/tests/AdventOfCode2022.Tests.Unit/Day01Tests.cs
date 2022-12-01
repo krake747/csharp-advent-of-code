@@ -4,12 +4,13 @@ namespace AdventOfCode2022.Tests.Unit;
 
 public class Day01Tests
 {
-    private static IEnumerable<string> RealData => TextFileReaderService.Fetch(@"..\..\..\Inputs\", "Day01.txt"); 
+    private static IEnumerable<string> TestData => TextFileReaderService.Fetch(@"..\..\..\TestInput\", "Day01.txt"); 
+    private static IEnumerable<string> RealData => TextFileReaderService.Fetch(@"..\..\..\Input\", "Day01.txt"); 
 
     public static TheoryData<string[], int> Part1Data => new()
     {
         {
-            new[] { "1000", "2000", "3000", "", "4000", "", "5000", "6000", "", "7000", "8000", "9000", "", "10000" },
+            TestData.ToArray(),
             24000
         },
         {
@@ -22,8 +23,11 @@ public class Day01Tests
     [MemberData(nameof(Part1Data))]
     public void Part1_ShouldReturnInteger_WhenTryingToFindTheElfCarryingTheMostCalories(string[] values, int expected)
     {
+        // Arrange
+        var sut = new Day01();
+        
         // Act
-        var result = new Day01().Part1(values);
+        var result = sut.Part1(values);
 
         // Assert
         result.Should().Be(expected);
