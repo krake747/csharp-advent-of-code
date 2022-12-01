@@ -4,6 +4,14 @@ namespace AdventOfCode2022.Tests.Unit;
 
 public class Day01Tests
 {
+    private readonly Day01 _sut;
+
+    public Day01Tests()
+    {
+        // Arrange
+        _sut = new Day01();
+    }
+    
     private static IEnumerable<string> TestData => TextFileReaderService.Fetch(@"..\..\..\TestInput\", "Day01.txt"); 
     private static IEnumerable<string> RealData => TextFileReaderService.Fetch(@"..\..\..\Input\", "Day01.txt"); 
 
@@ -35,11 +43,8 @@ public class Day01Tests
     [MemberData(nameof(Part1Data))]
     public void Part1_ShouldReturnInteger_WhenSearchingTheElfCarryingTheMostCalories(string[] values, int expected)
     {
-        // Arrange
-        var sut = new Day01();
-        
         // Act
-        var result = sut.Part1(values);
+        var result = _sut.Part1(values);
 
         // Assert
         result.Should().Be(expected);
@@ -50,11 +55,8 @@ public class Day01Tests
     public void Part2_ShouldReturnInteger_WhenSearchingTheTopThreeElvesCarryingTheMostCalories(string[] values, 
         int expected)
     {
-        // Arrange
-        var sut = new Day01();
-        
         // Act
-        var result = sut.Part2(values);
+        var result = _sut.Part2(values);
 
         // Assert
         result.Should().Be(expected);

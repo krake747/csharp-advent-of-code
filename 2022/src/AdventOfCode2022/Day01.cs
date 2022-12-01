@@ -19,9 +19,9 @@ public class Day01 : IDay
             .Sum();
     }
     
-    private static IEnumerable<int> CreateElves(IEnumerable<string> values)
+    private static IEnumerable<int> CreateElves(IEnumerable<string> calories)
     {
-        return string.Join("|", values)
+        return string.Join("|", calories)
             .Split("||")
             .Select(elf => elf.Split("|")
                 .Select(int.Parse)
