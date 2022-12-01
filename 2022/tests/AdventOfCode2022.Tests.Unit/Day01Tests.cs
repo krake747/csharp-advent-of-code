@@ -20,7 +20,7 @@ public class Day01Tests
 
     [Theory]
     [MemberData(nameof(Part1Data))]
-    public void Part1_ShouldReturnInteger(string[] values, int expected)
+    public void Part1_ShouldReturnInteger_WhenTryingToFindTheElfCarryingTheMostCalories(string[] values, int expected)
     {
         // Act
         var result = new Day01().Part1(values);
@@ -28,15 +28,15 @@ public class Day01Tests
         // Assert
         result.Should().Be(expected);
     }
-
-    [Theory]
-    [MemberData(nameof(Part1Data))]
-    public void Part2_ShouldReturnInteger_WhenEnumerableIsInteger(string[] values, int expected)
-    {
-        // Act
-        var result = new Day01().Part2(values);
-
-        // Assert
-        result.Should().Be(expected);
-    }
+    //
+    // [Theory]
+    // [MemberData(nameof(Part1Data))]
+    // public void Part2_ShouldReturnInteger_WhenEnumerableIsInteger(string[] values, int expected)
+    // {
+    //     // Act
+    //     var result = new Day01().Part2(values);
+    //
+    //     // Assert
+    //     result.Should().Be(expected);
+    // }
 }

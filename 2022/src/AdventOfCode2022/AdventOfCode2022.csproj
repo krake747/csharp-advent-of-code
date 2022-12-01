@@ -10,8 +10,4 @@
       <ProjectReference Include="..\..\..\lib\AdventOfCodeLib\AdventOfCodeLib.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Inputs" />
-    </ItemGroup>
-
 </Project>
