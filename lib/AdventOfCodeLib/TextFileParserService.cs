@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace AdventOfCode2021.Shared;
+namespace AdventOfCodeLib;
 
 public class TextFileParserService : IFileParserService
 {
@@ -12,7 +12,9 @@ public class TextFileParserService : IFileParserService
         return Read(fileLocation);
     }
 
-    internal IEnumerable<string> Read(string path) =>
-        File.ReadAllLines(path, Encoding.UTF8)
-            .SelectMany(x => x.Split(new char[] { '\t' }));
+    private static IEnumerable<string> Read(string path)
+    {
+        return File.ReadAllLines(path, Encoding.UTF8)
+            .SelectMany(x => x.Split(new[] { '\t' }));
+    }
 }

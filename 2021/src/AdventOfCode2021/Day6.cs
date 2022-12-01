@@ -23,9 +23,8 @@ public static class Day6
         var fishes = input.ToList();
         for (var day = 0; day < days; day++)
         {
-            int newFishes = 0;
+            var newFishes = 0;
             for (var i = 0; i < fishes.Count; i++)
-            {
                 switch (fishes[i])
                 {
                     case 0:
@@ -36,12 +35,8 @@ public static class Day6
                         fishes[i]--;
                         break;
                 }
-            }
 
-            for (var i = 0; i < newFishes; i++)
-            {
-                fishes.Add(8);
-            }
+            for (var i = 0; i < newFishes; i++) fishes.Add(8);
         }
 
         return fishes.Count;
@@ -49,7 +44,7 @@ public static class Day6
 
     private static long CountLanternfishesDict(IEnumerable<int> input, int days)
     {
-        var fishes = new Dictionary<int, long>()
+        var fishes = new Dictionary<int, long>
         {
             { 0, 0 },
             { 1, 0 },
@@ -62,18 +57,12 @@ public static class Day6
             { 8, 0 }
         };
 
-        foreach (var fish in input.ToList())
-        {
-            fishes[fish]++;
-        }
+        foreach (var fish in input.ToList()) fishes[fish]++;
 
         for (var day = 0; day < days; day++)
         {
             var reprodFishes = fishes[0];
-            for (var i = 0; i < fishes.Keys.Count - 1; i++)
-            {
-                fishes[i] = fishes[i + 1];
-            }
+            for (var i = 0; i < fishes.Keys.Count - 1; i++) fishes[i] = fishes[i + 1];
 
             fishes[6] = reprodFishes + fishes[6];
             fishes[8] = reprodFishes;

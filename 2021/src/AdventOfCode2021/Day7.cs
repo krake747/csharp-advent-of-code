@@ -3,7 +3,7 @@
 public static class Day7
 {
     /// <summary>
-    /// How much fuel must they spend to align to that position? (using least possible fuel)
+    ///     How much fuel must they spend to align to that position? (using least possible fuel)
     /// </summary>
     public static int Part1(IEnumerable<string> input)
     {

@@ -1,16 +1,9 @@
-﻿using System.Globalization;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography;
-using static AdventOfCode2021.Day5;
-
-namespace AdventOfCode2021;
+﻿namespace AdventOfCode2021;
 
 public static class Day8
 {
     /// <summary>
-    /// In the output values, how many times do digits 1, 4, 7, or 8 appear?
+    ///     In the output values, how many times do digits 1, 4, 7, or 8 appear?
     /// </summary>
     public static int Part1(IEnumerable<string> input)
     {
@@ -51,20 +44,20 @@ public static class Day8
         var eight = codes.Single(c => c.Length == 7);
 
         // 9 is determined by length of 6 and the one line which is not present in 'seven' and 'four'.
-        var nine = codes.Single(c => 
-            c.Length == 6 && 
+        var nine = codes.Single(c =>
+            c.Length == 6 &&
             c.Except(seven).Except(four).Count() == 1);
 
         // 6 is determined by length of 6 and not equal to 'nine' and 1 line present in 'one'.
         var six = codes.Single(c =>
-            c.Length == 6 && 
-            c != nine && 
+            c.Length == 6 &&
+            c != nine &&
             one.Except(c).Count() == 1);
 
         // 0 is determined by length of 6 and not equal to 'nine' and not equal to 'six'.
         var zero = codes.Single(c =>
-            c.Length == 6 && 
-            c != nine && 
+            c.Length == 6 &&
+            c != nine &&
             c != six);
 
         // Determine single lines
@@ -88,10 +81,10 @@ public static class Day8
 
         // 2 is determined by length of 5, not equal to 'five', contains 'c' and  line 'e', but not line 'f'.
         var two = codes.Single(s =>
-            s.Length == 5 && 
-            s != five && 
-            s.Contains(c) && 
-            s.Contains(e) && 
+            s.Length == 5 &&
+            s != five &&
+            s.Contains(c) &&
+            s.Contains(e) &&
             !s.Contains(f));
 
         // three is determined by length of 5, not equal to 'five' and 'two'
@@ -100,9 +93,9 @@ public static class Day8
             s != five &&
             s != two);
 
-        return new Dictionary<string, string>()
+        return new Dictionary<string, string>
         {
-            { string.Concat(zero.OrderBy(c => c)), "0" }, 
+            { string.Concat(zero.OrderBy(c => c)), "0" },
             { string.Concat(one.OrderBy(c => c)), "1" },
             { string.Concat(two.OrderBy(c => c)), "2" },
             { string.Concat(three.OrderBy(c => c)), "3" },
@@ -111,7 +104,7 @@ public static class Day8
             { string.Concat(six.OrderBy(c => c)), "6" },
             { string.Concat(seven.OrderBy(c => c)), "7" },
             { string.Concat(eight.OrderBy(c => c)), "8" },
-            { string.Concat(nine.OrderBy(c => c)), "9" },
+            { string.Concat(nine.OrderBy(c => c)), "9" }
         };
     }
 

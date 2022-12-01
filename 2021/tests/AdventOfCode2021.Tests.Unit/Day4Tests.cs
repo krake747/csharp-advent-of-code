@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using Xunit;
 using FluentAssertions;
-using AdventOfCode2021.Shared;
 
 namespace AdventOfCode2021.Tests.Unit;
 
@@ -9,7 +8,7 @@ public class Day4Tests
 {
     [Theory]
     [ClassData(typeof(Day4Part1TestData))]
-    public void Part1_ShouldReturnInteger_WhenEnumberableAreStrings(string[] values, int expected)
+    public void Part1_ShouldReturnInteger_WhenEnumerableAreStrings(string[] values, int expected)
     {
         // Act
         var result = Day4.Part1(values);
@@ -20,7 +19,7 @@ public class Day4Tests
 
     [Theory]
     [ClassData(typeof(Day4Part2TestData))]
-    public void Part2_ShouldReturnInteger_WhenEnumberableAreStrings(string[] values, int expected)
+    public void Part2_ShouldReturnInteger_WhenEnumerableAreStrings(string[] values, int expected)
     {
         // Act
         var result = Day4.Part2(values);
@@ -37,7 +36,7 @@ public class Day4Part1TestData : IEnumerable<object[]>
     {
         yield return new object[] 
         {
-            new string[]
+            new[]
             {
                 "7,4,9,5,11,17,23,2,0,14,21,24,10,16,13,6,15,25,12,22,18,20,8,19,3,26,1",
                 "",
@@ -72,7 +71,7 @@ public class Day4Part2TestData : IEnumerable<object[]>
     {
         yield return new object[]
         {
-            new string[]
+            new[]
             {
                 "7,4,9,5,11,17,23,2,0,14,21,24,10,16,13,6,15,25,12,22,18,20,8,19,3,26,1",
                 "",

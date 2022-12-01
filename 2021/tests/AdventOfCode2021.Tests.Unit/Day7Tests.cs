@@ -8,7 +8,7 @@ public class Day7Tests
 {
     [Theory]
     [ClassData(typeof(Day7Part1TestData))]
-    public void Part1_ShouldReturnInteger_WhenEnumberableAreStrings(string[] values, int expected)
+    public void Part1_ShouldReturnInteger_WhenEnumerableAreStrings(string[] values, int expected)
     {
         // Act
         var result = Day7.Part1(values);
@@ -19,7 +19,7 @@ public class Day7Tests
 
     [Theory]
     [ClassData(typeof(Day7Part2TestData))]
-    public void Part2_ShouldReturnInteger_WhenEnumberableAreStrings(string[] values, int expected)
+    public void Part2_ShouldReturnInteger_WhenEnumerableAreStrings(string[] values, int expected)
     {
         // Act
         var result = Day7.Part2(values);

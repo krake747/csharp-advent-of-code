@@ -8,7 +8,7 @@
 //{
 //    [Theory]
 //    [ClassData(typeof(DayXPart1TestData))]
-//    public void Part1_ShouldReturnInteger_WhenEnumberableAreStrings(string[] values, int expected)
+//    public void Part1_ShouldReturnInteger_WhenEnumerableAreStrings(string[] values, int expected)
 //    {
 //        // Act
 //        var result = DayX.Part1(values);

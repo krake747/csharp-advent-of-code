@@ -1,17 +1,17 @@
 ﻿using AdventOfCode2021;
-using AdventOfCode2021.Shared;
+using AdventOfCodeLib;
 
 var parser = new TextFileParserService();
 
-//var inputDay1 = parser.Fetch("day01.txt")
-//                  .Select(int.Parse)
-//                  .ToList();
+var inputDay1 = parser.Fetch("day01.txt")
+    .Select(int.Parse)
+    .ToList();
 
-//var result1 = Day1.Part1(inputDay1);
-//var result2 = Day1.Part2(input);
+var result1 = Day1.Part1(inputDay1);
+var result2 = Day1.Part2(inputDay1);
 
-//Console.WriteLine(result1);
-//Console.WriteLine(result2);
+Console.WriteLine(result1);
+Console.WriteLine(result2);
 
 //var inputDay2 = parser.Fetch("day02.txt")
 //                      .ToList();
@@ -74,15 +74,15 @@ var parser = new TextFileParserService();
 //Console.WriteLine(result71);
 //Console.WriteLine(result72);
 
-var inputDay8 = parser.Fetch("day08.txt")
-                      .ToList();
+//var inputDay8 = parser.Fetch("day08.txt")
+//                      .ToList();
 
 
-var result81 = Day8.Part1(inputDay8);
-var result82 = Day8.Part2(inputDay8);
+//var result81 = Day8.Part1(inputDay8);
+//var result82 = Day8.Part2(inputDay8);
 
-Console.WriteLine(result81);
-Console.WriteLine(result82);
+//Console.WriteLine(result81);
+//Console.WriteLine(result82);
 
 
 Console.WriteLine("END");
