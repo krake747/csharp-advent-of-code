@@ -18,7 +18,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdventOfCode2021.Tests.Unit
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2022", "2022", "{A0FD8D51-5EE8-4EAD-BD12-26729F4A68A0}"
 	ProjectSection(SolutionItems) = preProject
-		2022\src\AdventOfCode2022.md = 2022\src\AdventOfCode2022.md
+		2022\AdventOfCode2022.md = 2022\AdventOfCode2022.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D8EB3F1C-8075-4547-AC86-0E3C1825315A}"
