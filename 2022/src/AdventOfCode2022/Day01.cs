@@ -2,15 +2,15 @@
 
 namespace AdventOfCode2022;
 
-public class Day01 : IDay<string>
+public class Day01 : IDay<IEnumerable<string>>
 {
-    public int Part1(string input)
+    public int Part1(IEnumerable<string> input)
     {
         return TotalCaloriesPerElf(input)
             .Max();
     }
 
-    public int Part2(string input)
+    public int Part2(IEnumerable<string> input)
     {
         return TotalCaloriesPerElf(input)
             .OrderDescending()
@@ -18,10 +18,11 @@ public class Day01 : IDay<string>
             .Sum();
     }
 
-    private static IEnumerable<int> TotalCaloriesPerElf(string calories)
+    private static IEnumerable<int> TotalCaloriesPerElf(IEnumerable<string> calories)
     {
-        return calories.Split("\n\n")
-            .Select(inventory => inventory.Split("\n")
+        return string.Join("|", calories)
+            .Split("||")
+            .Select(inventory => inventory.Split("|")
                 .Select(int.Parse)
                 .Sum());
     }

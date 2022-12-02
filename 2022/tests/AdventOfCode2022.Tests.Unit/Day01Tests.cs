@@ -14,16 +14,16 @@ public class Day01Tests
         _sut = new Day01();
     }
 
-    private static string TestData => FetchFile(@"..\..\..\Data\Day01_Test.txt", ReadAsString);
-    private static string RealData => FetchFile(@"..\..\..\Data\Day01.txt", ReadAsString);
+    private static IEnumerable<string> TestData => FetchFile(@"..\..\..\Data\Day01_Test.txt", ReadAsEnumerable);
+    private static IEnumerable<string> RealData => FetchFile(@"..\..\..\Data\Day01.txt", ReadAsEnumerable);
 
-    public static TheoryData<string, int> Part1Data => new()
+    public static TheoryData<IEnumerable<string>, int> Part1Data => new()
     {
         { TestData, 24000 },
         { RealData, 69795 }
     };
 
-    public static TheoryData<string, int> Part2Data => new()
+    public static TheoryData<IEnumerable<string>, int> Part2Data => new()
     {
         { TestData, 45000 },
         { RealData, 208437 }
@@ -32,7 +32,7 @@ public class Day01Tests
     [Theory]
     [MemberData(nameof(Part1Data))]
     [Description("How many total Calories is that Elf carrying?")]
-    public void Part1_ShouldReturnInteger_WhenSearchingTheElfCarryingTheMostCalories(string values, int expected)
+    public void Part1_ShouldReturnInteger_WhenSearchingTheElfCarryingTheMostCalories(IEnumerable<string> values, int expected)
     {
         // Act
         var result = _sut.Part1(values);
@@ -44,7 +44,7 @@ public class Day01Tests
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("How many Calories are those Elves carrying in total?")]
-    public void Part2_ShouldReturnInteger_WhenSearchingTheTopThreeElvesCarryingTheMostCalories(string values,
+    public void Part2_ShouldReturnInteger_WhenSearchingTheTopThreeElvesCarryingTheMostCalories(IEnumerable<string> values,
         int expected)
     {
         // Act
