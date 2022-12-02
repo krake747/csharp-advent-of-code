@@ -22,7 +22,7 @@ public class Day02 : IDay<IEnumerable<string>>
         return (decrypter(span[0]), decrypter(span[^1]));
     }
 
-    private static (TL, TR) Decrypt<TL, TR, TO>(string code, Func<char, TL> leftParser, Func<char, TO> rightParser,
+    private static (TL, TR) Decrypt<TL, TO, TR>(string code, Func<char, TL> leftParser, Func<char, TO> rightParser,
         Func<TL, TO, TR> rightDecrypter)
     {
         var span = code.AsSpan();
