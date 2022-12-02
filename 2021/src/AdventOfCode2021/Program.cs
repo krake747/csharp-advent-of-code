@@ -1,7 +1,7 @@
 ﻿using AdventOfCode2021;
-using AdventOfCodeLib;
+using static AdventOfCodeLib.TextFileReaderService;
 
-var inputDay1 = TextFileReaderService.Fetch(@"..\..\..\Inputs\", "day01.txt")
+var inputDay1 = FetchFile(@"..\..\..\Inputs\day01.txt", ReadAsEnumerable)
     .Select(int.Parse)
     .ToList();
 

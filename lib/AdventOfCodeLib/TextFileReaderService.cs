@@ -4,15 +4,23 @@ namespace AdventOfCodeLib;
 
 public static class TextFileReaderService
 {
-    public static IEnumerable<string> Fetch(string pathToFolder ,string pathToFile)
+    public static T FetchFile<T>(string from, Func<string,T> reader)
     {
-        var fileLocation = Path.Combine(Directory.GetCurrentDirectory(), pathToFolder) + pathToFile;
-        return Read(fileLocation);
+        return reader(Path.Combine(Directory.GetCurrentDirectory(), from));
     }
 
-    private static IEnumerable<string> Read(string path)
+    public static IEnumerable<string> ReadAsEnumerable(string path)
     {
-        return File.ReadAllLines(path, Encoding.UTF8)
-            .Select(x => x);
+        return File.ReadLines(path, Encoding.UTF8);
+    }
+    
+    public static string[] ReadAsArray(string path)
+    {
+        return File.ReadAllLines(path, Encoding.UTF8);
+    }
+    
+    public static string ReadAsString(string path)
+    {
+        return File.ReadAllText(path, Encoding.UTF8).TrimEnd();
     }
 }

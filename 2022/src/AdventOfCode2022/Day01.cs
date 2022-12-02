@@ -3,27 +3,26 @@ using AdventOfCodeLib;
 
 namespace AdventOfCode2022;
 
-public class Day01 : IDay
+public class Day01 : IDayString
 {
-    public int Part1(IEnumerable<string> input)
+    public int Part1(string input)
     {
-        return CreateElves(input)
+        return TotalCaloriesPerElf(input)
             .Max();
     }
     
-    public int Part2(IEnumerable<string> input)
+    public int Part2(string input)
     {
-        return CreateElves(input)
+        return TotalCaloriesPerElf(input)
             .OrderDescending()
             .Take(3)
             .Sum();
     }
     
-    private static IEnumerable<int> CreateElves(IEnumerable<string> calories)
+    private static IEnumerable<int> TotalCaloriesPerElf(string calories)
     {
-        return string.Join("|", calories)
-            .Split("||")
-            .Select(elf => elf.Split("|")
+        return calories.Split("\n\n")
+            .Select(inventory  => inventory.Split("\n")
                 .Select(int.Parse)
                 .Sum());
     }

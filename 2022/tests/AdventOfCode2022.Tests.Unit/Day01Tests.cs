@@ -1,4 +1,4 @@
-using AdventOfCodeLib;
+using static AdventOfCodeLib.TextFileReaderService;
 
 namespace AdventOfCode2022.Tests.Unit;
 
@@ -12,36 +12,24 @@ public class Day01Tests
         _sut = new Day01();
     }
     
-    private static IEnumerable<string> TestData => TextFileReaderService.Fetch(@"..\..\..\TestInput\", "Day01.txt"); 
-    private static IEnumerable<string> RealData => TextFileReaderService.Fetch(@"..\..\..\Input\", "Day01.txt"); 
+    private static string TestData => FetchFile(@"..\..\..\TestInput\Day01.txt", ReadAsString); 
+    private static string RealData => FetchFile(@"..\..\..\Input\Day01.txt", ReadAsString); 
 
-    public static TheoryData<string[], int> Part1Data => new()
+    public static TheoryData<string, int> Part1Data => new()
     {
-        {
-            TestData.ToArray(),
-            24000
-        },
-        {
-            RealData.ToArray(),
-            69795
-        }
+        { TestData, 24000 },
+        { RealData, 69795 }
     };
     
-    public static TheoryData<string[], int> Part2Data => new()
+    public static TheoryData<string, int> Part2Data => new()
     {
-        {
-            TestData.ToArray(),
-            45000
-        },
-        {
-            RealData.ToArray(),
-            208437
-        }
+        { TestData, 45000 },
+        { RealData, 208437 }
     };
 
     [Theory]
     [MemberData(nameof(Part1Data))]
-    public void Part1_ShouldReturnInteger_WhenSearchingTheElfCarryingTheMostCalories(string[] values, int expected)
+    public void Part1_ShouldReturnInteger_WhenSearchingTheElfCarryingTheMostCalories(string values, int expected)
     {
         // Act
         var result = _sut.Part1(values);
@@ -52,7 +40,7 @@ public class Day01Tests
     
     [Theory]
     [MemberData(nameof(Part2Data))]
-    public void Part2_ShouldReturnInteger_WhenSearchingTheTopThreeElvesCarryingTheMostCalories(string[] values, 
+    public void Part2_ShouldReturnInteger_WhenSearchingTheTopThreeElvesCarryingTheMostCalories(string values, 
         int expected)
     {
         // Act
