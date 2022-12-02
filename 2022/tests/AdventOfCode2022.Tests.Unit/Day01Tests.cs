@@ -1,7 +1,9 @@
+using System.ComponentModel;
 using static AdventOfCodeLib.TextFileReaderService;
 
 namespace AdventOfCode2022.Tests.Unit;
 
+[Description("day 01 - Calorie Counting")]
 public class Day01Tests
 {
     private readonly Day01 _sut;
@@ -11,16 +13,16 @@ public class Day01Tests
         // Arrange
         _sut = new Day01();
     }
-    
-    private static string TestData => FetchFile(@"..\..\..\TestInput\Day01.txt", ReadAsString); 
-    private static string RealData => FetchFile(@"..\..\..\Input\Day01.txt", ReadAsString); 
+
+    private static string TestData => FetchFile(@"..\..\..\TestInput\Day01.txt", ReadAsString);
+    private static string RealData => FetchFile(@"..\..\..\Input\Day01.txt", ReadAsString);
 
     public static TheoryData<string, int> Part1Data => new()
     {
         { TestData, 24000 },
         { RealData, 69795 }
     };
-    
+
     public static TheoryData<string, int> Part2Data => new()
     {
         { TestData, 45000 },
@@ -29,6 +31,7 @@ public class Day01Tests
 
     [Theory]
     [MemberData(nameof(Part1Data))]
+    [Description("How many total Calories is that Elf carrying?")]
     public void Part1_ShouldReturnInteger_WhenSearchingTheElfCarryingTheMostCalories(string values, int expected)
     {
         // Act
@@ -37,10 +40,11 @@ public class Day01Tests
         // Assert
         result.Should().Be(expected);
     }
-    
+
     [Theory]
     [MemberData(nameof(Part2Data))]
-    public void Part2_ShouldReturnInteger_WhenSearchingTheTopThreeElvesCarryingTheMostCalories(string values, 
+    [Description("How many Calories are those Elves carrying in total?")]
+    public void Part2_ShouldReturnInteger_WhenSearchingTheTopThreeElvesCarryingTheMostCalories(string values,
         int expected)
     {
         // Act

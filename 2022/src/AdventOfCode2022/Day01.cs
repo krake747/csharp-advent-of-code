@@ -1,5 +1,4 @@
-﻿using System.Collections.Immutable;
-using AdventOfCodeLib;
+﻿using AdventOfCodeLib;
 
 namespace AdventOfCode2022;
 
@@ -10,7 +9,7 @@ public class Day01 : IDayString
         return TotalCaloriesPerElf(input)
             .Max();
     }
-    
+
     public int Part2(string input)
     {
         return TotalCaloriesPerElf(input)
@@ -18,11 +17,11 @@ public class Day01 : IDayString
             .Take(3)
             .Sum();
     }
-    
+
     private static IEnumerable<int> TotalCaloriesPerElf(string calories)
     {
         return calories.Split("\n\n")
-            .Select(inventory  => inventory.Split("\n")
+            .Select(inventory => inventory.Split("\n")
                 .Select(int.Parse)
                 .Sum());
     }

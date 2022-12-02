@@ -3,7 +3,7 @@
 namespace AdventOfCode2022;
 
 public class Day02 : IDayEnumerable
-{ 
+{
     public int Part1(IEnumerable<string> input)
     {
         return input.Select(code => Decrypt(code, ShapeDecrypter))
@@ -12,19 +12,19 @@ public class Day02 : IDayEnumerable
 
     public int Part2(IEnumerable<string> input)
     {
-        return input.Select(code => Decrypt(code, ShapeDecrypter, PredictOutcome, OutcomeDecrypter))
+        return input.Select(code => Decrypt(code, ShapeDecrypter, DesiredOutcome, OutcomeDecrypter))
             .Sum(Score);
     }
-    
+
     private static (T, T) Decrypt<T>(string code, Func<char, T> decrypter)
     {
         var span = code.AsSpan();
         return (decrypter(span[0]), decrypter(span[^1]));
     }
-    
-    private static (TL, TR) Decrypt<TL, TR, TO>(string code, 
-        Func<char, TL> leftDecrypter, 
-        Func<char, TO> outcomePredictor, 
+
+    private static (TL, TR) Decrypt<TL, TR, TO>(string code,
+        Func<char, TL> leftDecrypter,
+        Func<char, TO> outcomePredictor,
         Func<TL, TO, TR> rightDecrypter)
     {
         var span = code.AsSpan();
@@ -43,8 +43,8 @@ public class Day02 : IDayEnumerable
             _ => throw new ArgumentOutOfRangeException(nameof(character), "Matching pattern is not defined")
         };
     }
-    
-    private static Outcome PredictOutcome(char rightCharacter)
+
+    private static Outcome DesiredOutcome(char rightCharacter)
     {
         return rightCharacter switch
         {
@@ -54,16 +54,16 @@ public class Day02 : IDayEnumerable
             _ => throw new ArgumentOutOfRangeException(nameof(rightCharacter), "Matching pattern is not defined")
         };
     }
-    
+
     private static Shape OutcomeDecrypter(Shape leftShape, Outcome rightOutCome)
     {
         var losesTo = new Dictionary<Shape, Shape>
         {
             { Shape.Paper, Shape.Rock },
             { Shape.Rock, Shape.Scissors },
-            { Shape.Scissors, Shape.Paper },
+            { Shape.Scissors, Shape.Paper }
         };
-        
+
         return rightOutCome switch
         {
             Outcome.Draw => leftShape,
@@ -71,7 +71,7 @@ public class Day02 : IDayEnumerable
             _ => losesTo.First(shape => shape.Value == leftShape).Key
         };
     }
-    
+
     private static int Score((Shape, Shape) shapes)
     {
         var (left, right) = shapes;
@@ -85,18 +85,18 @@ public class Day02 : IDayEnumerable
                 (_, _) => (int)Outcome.Lose
             };
     }
-}
 
-public enum Shape
-{
-    Rock = 1,
-    Paper,
-    Scissors
-}
+    private enum Shape
+    {
+        Rock = 1,
+        Paper,
+        Scissors
+    }
 
-public enum Outcome
-{
-    Lose = 0,
-    Draw = 3,
-    Win = 6
+    private enum Outcome
+    {
+        Lose = 0,
+        Draw = 3,
+        Win = 6
+    }
 }
