@@ -53,7 +53,7 @@ public class Day02 : IDay<IEnumerable<string>>
         };
     }
 
-    private static Shape DesiredOutcome(Shape leftShape, Result rightOutCome)
+    private static Shape DesiredOutcome(Shape leftShape, Result rightOutcome)
     {
         var losesTo = new Dictionary<Shape, Shape>
         {
@@ -62,7 +62,7 @@ public class Day02 : IDay<IEnumerable<string>>
             { Shape.Scissors, Shape.Paper }
         };
 
-        return rightOutCome switch
+        return rightOutcome switch
         {
             Result.Draw => leftShape,
             Result.Lose => losesTo[leftShape],
@@ -83,7 +83,7 @@ public class Day02 : IDay<IEnumerable<string>>
                 (_, _) => (int)Result.Lose
             };
     }
-    
+
     private enum Shape
     {
         Rock = 1,
