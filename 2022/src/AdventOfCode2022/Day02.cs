@@ -2,7 +2,7 @@
 
 namespace AdventOfCode2022;
 
-public class Day02 : IDayEnumerable
+public class Day02 : IDay<IEnumerable<string>>
 {
     public int Part1(IEnumerable<string> input)
     {
@@ -42,18 +42,18 @@ public class Day02 : IDayEnumerable
         };
     }
 
-    private static Outcome ParseOutcome(char c)
+    private static Result ParseOutcome(char c)
     {
         return c switch
         {
-            'X' => Outcome.Lose,
-            'Y' => Outcome.Draw,
-            'Z' => Outcome.Win,
+            'X' => Result.Lose,
+            'Y' => Result.Draw,
+            'Z' => Result.Win,
             _ => throw new ArgumentOutOfRangeException(nameof(c), "Matching pattern is not defined")
         };
     }
 
-    private static Shape DesiredOutcome(Shape leftShape, Outcome rightOutCome)
+    private static Shape DesiredOutcome(Shape leftShape, Result rightOutCome)
     {
         var losesTo = new Dictionary<Shape, Shape>
         {
@@ -64,8 +64,8 @@ public class Day02 : IDayEnumerable
 
         return rightOutCome switch
         {
-            Outcome.Draw => leftShape,
-            Outcome.Lose => losesTo[leftShape],
+            Result.Draw => leftShape,
+            Result.Lose => losesTo[leftShape],
             _ => losesTo.First(shape => shape.Value == leftShape).Key
         };
     }
@@ -74,16 +74,16 @@ public class Day02 : IDayEnumerable
     {
         var (left, right) = shapes;
         return left == right
-            ? (int)right + (int)Outcome.Draw
+            ? (int)right + (int)Result.Draw
             : (int)right + (left, right) switch
             {
-                (Shape.Rock, Shape.Paper) => (int)Outcome.Win,
-                (Shape.Paper, Shape.Scissors) => (int)Outcome.Win,
-                (Shape.Scissors, Shape.Rock) => (int)Outcome.Win,
-                (_, _) => (int)Outcome.Lose
+                (Shape.Rock, Shape.Paper) => (int)Result.Win,
+                (Shape.Paper, Shape.Scissors) => (int)Result.Win,
+                (Shape.Scissors, Shape.Rock) => (int)Result.Win,
+                (_, _) => (int)Result.Lose
             };
     }
-
+    
     private enum Shape
     {
         Rock = 1,
@@ -91,7 +91,7 @@ public class Day02 : IDayEnumerable
         Scissors
     }
 
-    private enum Outcome
+    private enum Result
     {
         Lose = 0,
         Draw = 3,

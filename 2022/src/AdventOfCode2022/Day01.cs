@@ -2,7 +2,7 @@
 
 namespace AdventOfCode2022;
 
-public class Day01 : IDayString
+public class Day01 : IDay<string>
 {
     public int Part1(string input)
     {

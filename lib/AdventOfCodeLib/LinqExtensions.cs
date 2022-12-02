@@ -31,7 +31,7 @@ public static class LinqExtensions
             .ToArray();
     }
 
-    public static IEnumerable<(T item, int index)> WithIndex<T>(this IEnumerable<T> input)
+    public static IEnumerable<(T Item, int Index)> WithIndex<T>(this IEnumerable<T> input)
     {
         return input.Select((item, index) => (item, index));
     }
