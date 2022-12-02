@@ -16,6 +16,7 @@ public class Day01Tests
 
     private static IEnumerable<string> TestData => FetchFile(@"..\..\..\Data\Day01_Test.txt", ReadAsEnumerable);
     private static IEnumerable<string> RealData => FetchFile(@"..\..\..\Data\Day01.txt", ReadAsEnumerable);
+    private static string TestData1 => FetchFile(@"..\..\..\Data\Day01_Test.txt", ReadAsString);
 
     public static TheoryData<IEnumerable<string>, int> Part1Data => new()
     {
@@ -27,6 +28,11 @@ public class Day01Tests
     {
         { TestData, 45000 },
         { RealData, 208437 }
+    };
+    
+    public static TheoryData<string, int> Part1Test => new()
+    {
+        { TestData1, 24000 },
     };
 
     [Theory]
@@ -49,6 +55,18 @@ public class Day01Tests
     {
         // Act
         var result = _sut.Part2(values);
+
+        // Assert
+        result.Should().Be(expected);
+    }
+    
+    [Theory]
+    [MemberData(nameof(Part1Test))]
+    [Description("How many total Calories is that Elf carrying?")]
+    public void Part1Test_ShouldReturnInteger_WhenSearchingTheElfCarryingTheMostCalories(string values, int expected)
+    {
+        // Act
+        var result = _sut.Part1(values);
 
         // Assert
         result.Should().Be(expected);

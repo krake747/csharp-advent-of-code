@@ -1,10 +1,17 @@
-﻿using AdventOfCodeLib;
+﻿using System.Text.RegularExpressions;
+using AdventOfCodeLib;
 
 namespace AdventOfCode2022;
 
 public class Day01 : IDay<IEnumerable<string>>
 {
     public int Part1(IEnumerable<string> input)
+    {
+        return TotalCaloriesPerElf(input)
+            .Max();
+    }
+    
+    public int Part1(string input)
     {
         return TotalCaloriesPerElf(input)
             .Max();
@@ -23,6 +30,16 @@ public class Day01 : IDay<IEnumerable<string>>
         return string.Join("|", calories)
             .Split("||")
             .Select(inventory => inventory.Split("|")
+                .Select(int.Parse)
+                .Sum());
+    }
+    
+    private static IEnumerable<int> TotalCaloriesPerElf(string calories)
+    {
+        var result = Regex.Replace(calories, "\r\n", "\n");
+        return result
+            .Split("\n\n")
+            .Select(inventory => inventory.Split("\n")
                 .Select(int.Parse)
                 .Sum());
     }
