@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Text.RegularExpressions;
 
 namespace AdventOfCodeLib;
 
@@ -21,6 +22,9 @@ public static class TextFileReaderService
     
     public static string ReadAsString(string path)
     {
-        return File.ReadAllText(path, Encoding.UTF8).TrimEnd();
+        var result = File.ReadAllText(path, Encoding.UTF8);
+        return Regex.Match(result, @"\\r\\n").Success 
+            ? Regex.Replace(result, @"\\r\\n", @"\\n") 
+            : result;
     }
 }
