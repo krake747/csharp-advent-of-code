@@ -3,37 +3,74 @@
 namespace AdventOfCode2022;
 
 public class Day02 : IDayEnumerable
-{
-    private readonly Dictionary<string, Shape> _decrypter = new()
-    {
-        { "A", Shape.Rock },
-        { "B", Shape.Paper },
-        { "C", Shape.Scissors },
-        { "X", Shape.Rock },
-        { "Y", Shape.Paper },
-        { "Z", Shape.Scissors }
-    };
-
+{ 
     public int Part1(IEnumerable<string> input)
     {
-        return input.Select(code => Decrypt(_decrypter, code))
+        return input.Select(code => Decrypt(code, ShapeDecrypter, ShapeDecrypter))
             .Sum(Score);
     }
 
     public int Part2(IEnumerable<string> input)
     {
-        return 1;
+        var x = input.Select(code => Decrypt(code, ShapeDecrypter, OutcomeDecrypter)).Select(Score);
+        return input.Select(code => Decrypt(code, ShapeDecrypter, OutcomeDecrypter))
+            .Sum(Score);
     }
-
-
-    private static (Shape, Shape) Decrypt(Dictionary<string, Shape> decrypter, string code)
+    
+    private static (TL, TR) Decrypt<TL, TR>(string code, 
+        Func<char, TL> leftDecrypter, 
+        Func<char, TR> rightDecrypter)
     {
-        if (decrypter is null)
-            throw new ArgumentNullException(nameof(decrypter));
-
-        var split = code.Split(" ");
-        return (decrypter[split[0]], decrypter[split[1]]);
+        var span = code.AsSpan();
+        return (leftDecrypter(span[0]), rightDecrypter(span[^1]));
     }
+    
+    private static (TL, TR) Decrypt<TL, TR>(string code, 
+        Func<char, TL> leftDecrypter, 
+        Func<char, char, TR> rightDecrypter)
+    {
+        var span = code.AsSpan();
+        return (leftDecrypter(span[0]), rightDecrypter(span[0], span[^1]));
+    }
+
+    private static Shape ShapeDecrypter(char character)
+    {
+        return character switch
+        {
+            'A' or 'X' => Shape.Rock,
+            'B' or 'Y' => Shape.Paper,
+            'C' or 'Z' => Shape.Scissors,
+            _ => throw new ArgumentOutOfRangeException(nameof(character), "Matching pattern is not defined")
+        };
+    }
+    
+    private static Shape OutcomeDecrypter(char leftCharacter, char rightCharacter)
+    {
+        var winCondition = rightCharacter switch
+        {
+            'X' => Outcome.Lose,
+            'Y' => Outcome.Draw,
+            'Z' => Outcome.Win,
+            _ => throw new ArgumentOutOfRangeException(nameof(rightCharacter), "Matching pattern is not defined")
+        };
+        
+        var losesTo = new Dictionary<Shape, Shape>
+        {
+            { Shape.Paper, Shape.Rock },
+            { Shape.Rock, Shape.Scissors },
+            { Shape.Scissors, Shape.Paper },
+        };
+
+        var leftShape = ShapeDecrypter(leftCharacter);
+        return winCondition switch
+        {
+            Outcome.Draw => leftShape,
+            Outcome.Lose => losesTo[leftShape],
+            _ => losesTo.First(shape => shape.Value == leftShape).Key
+        };
+    }
+
+
 
     private static int Score((Shape, Shape) shapes)
     {
