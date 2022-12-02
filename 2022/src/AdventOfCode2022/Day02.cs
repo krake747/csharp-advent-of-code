@@ -6,31 +6,31 @@ public class Day02 : IDayEnumerable
 { 
     public int Part1(IEnumerable<string> input)
     {
-        return input.Select(code => Decrypt(code, ShapeDecrypter, ShapeDecrypter))
+        return input.Select(code => Decrypt(code, ShapeDecrypter))
             .Sum(Score);
     }
 
     public int Part2(IEnumerable<string> input)
     {
-        var x = input.Select(code => Decrypt(code, ShapeDecrypter, OutcomeDecrypter)).Select(Score);
-        return input.Select(code => Decrypt(code, ShapeDecrypter, OutcomeDecrypter))
+        return input.Select(code => Decrypt(code, ShapeDecrypter, PredictOutcome, OutcomeDecrypter))
             .Sum(Score);
     }
     
-    private static (TL, TR) Decrypt<TL, TR>(string code, 
-        Func<char, TL> leftDecrypter, 
-        Func<char, TR> rightDecrypter)
+    private static (T, T) Decrypt<T>(string code, Func<char, T> decrypter)
     {
         var span = code.AsSpan();
-        return (leftDecrypter(span[0]), rightDecrypter(span[^1]));
+        return (decrypter(span[0]), decrypter(span[^1]));
     }
     
-    private static (TL, TR) Decrypt<TL, TR>(string code, 
+    private static (TL, TR) Decrypt<TL, TR, TO>(string code, 
         Func<char, TL> leftDecrypter, 
-        Func<char, char, TR> rightDecrypter)
+        Func<char, TO> outcomePredictor, 
+        Func<TL, TO, TR> rightDecrypter)
     {
         var span = code.AsSpan();
-        return (leftDecrypter(span[0]), rightDecrypter(span[0], span[^1]));
+        var leftShape = leftDecrypter(span[0]);
+        var rightOutcome = outcomePredictor(span[^1]);
+        return (leftShape, rightDecrypter(leftShape, rightOutcome));
     }
 
     private static Shape ShapeDecrypter(char character)
@@ -44,34 +44,34 @@ public class Day02 : IDayEnumerable
         };
     }
     
-    private static Shape OutcomeDecrypter(char leftCharacter, char rightCharacter)
+    private static Outcome PredictOutcome(char rightCharacter)
     {
-        var winCondition = rightCharacter switch
+        return rightCharacter switch
         {
             'X' => Outcome.Lose,
             'Y' => Outcome.Draw,
             'Z' => Outcome.Win,
             _ => throw new ArgumentOutOfRangeException(nameof(rightCharacter), "Matching pattern is not defined")
         };
-        
+    }
+    
+    private static Shape OutcomeDecrypter(Shape leftShape, Outcome rightOutCome)
+    {
         var losesTo = new Dictionary<Shape, Shape>
         {
             { Shape.Paper, Shape.Rock },
             { Shape.Rock, Shape.Scissors },
             { Shape.Scissors, Shape.Paper },
         };
-
-        var leftShape = ShapeDecrypter(leftCharacter);
-        return winCondition switch
+        
+        return rightOutCome switch
         {
             Outcome.Draw => leftShape,
             Outcome.Lose => losesTo[leftShape],
             _ => losesTo.First(shape => shape.Value == leftShape).Key
         };
     }
-
-
-
+    
     private static int Score((Shape, Shape) shapes)
     {
         var (left, right) = shapes;
