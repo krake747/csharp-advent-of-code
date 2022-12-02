@@ -36,8 +36,7 @@ public class Day01 : IDay<IEnumerable<string>>
     
     private static IEnumerable<int> TotalCaloriesPerElf(string calories)
     {
-        var result = Regex.Replace(calories, "\r\n", "\n");
-        return result
+        return calories
             .Split("\n\n")
             .Select(inventory => inventory.Split("\n")
                 .Select(int.Parse)
