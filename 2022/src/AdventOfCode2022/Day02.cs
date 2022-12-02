@@ -6,13 +6,13 @@ public class Day02 : IDayEnumerable
 {
     public int Part1(IEnumerable<string> input)
     {
-        return input.Select(code => Decrypt(code, ShapeDecrypter))
+        return input.Select(code => Decrypt(code, ParseShape))
             .Sum(Score);
     }
 
     public int Part2(IEnumerable<string> input)
     {
-        return input.Select(code => Decrypt(code, ShapeDecrypter, DesiredOutcome, OutcomeDecrypter))
+        return input.Select(code => Decrypt(code, ParseShape, ParseOutcome, DesiredOutcome))
             .Sum(Score);
     }
 
@@ -22,40 +22,38 @@ public class Day02 : IDayEnumerable
         return (decrypter(span[0]), decrypter(span[^1]));
     }
 
-    private static (TL, TR) Decrypt<TL, TR, TO>(string code,
-        Func<char, TL> leftDecrypter,
-        Func<char, TO> outcomePredictor,
+    private static (TL, TR) Decrypt<TL, TR, TO>(string code, Func<char, TL> leftParser, Func<char, TO> rightParser,
         Func<TL, TO, TR> rightDecrypter)
     {
         var span = code.AsSpan();
-        var leftShape = leftDecrypter(span[0]);
-        var rightOutcome = outcomePredictor(span[^1]);
+        var leftShape = leftParser(span[0]);
+        var rightOutcome = rightParser(span[^1]);
         return (leftShape, rightDecrypter(leftShape, rightOutcome));
     }
 
-    private static Shape ShapeDecrypter(char character)
+    private static Shape ParseShape(char c)
     {
-        return character switch
+        return c switch
         {
             'A' or 'X' => Shape.Rock,
             'B' or 'Y' => Shape.Paper,
             'C' or 'Z' => Shape.Scissors,
-            _ => throw new ArgumentOutOfRangeException(nameof(character), "Matching pattern is not defined")
+            _ => throw new ArgumentOutOfRangeException(nameof(c), "Matching pattern is not defined")
         };
     }
 
-    private static Outcome DesiredOutcome(char rightCharacter)
+    private static Outcome ParseOutcome(char c)
     {
-        return rightCharacter switch
+        return c switch
         {
             'X' => Outcome.Lose,
             'Y' => Outcome.Draw,
             'Z' => Outcome.Win,
-            _ => throw new ArgumentOutOfRangeException(nameof(rightCharacter), "Matching pattern is not defined")
+            _ => throw new ArgumentOutOfRangeException(nameof(c), "Matching pattern is not defined")
         };
     }
 
-    private static Shape OutcomeDecrypter(Shape leftShape, Outcome rightOutCome)
+    private static Shape DesiredOutcome(Shape leftShape, Outcome rightOutCome)
     {
         var losesTo = new Dictionary<Shape, Shape>
         {

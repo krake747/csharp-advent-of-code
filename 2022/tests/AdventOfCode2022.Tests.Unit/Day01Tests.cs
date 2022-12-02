@@ -14,8 +14,8 @@ public class Day01Tests
         _sut = new Day01();
     }
 
-    private static string TestData => FetchFile(@"..\..\..\TestInput\Day01.txt", ReadAsString);
-    private static string RealData => FetchFile(@"..\..\..\Input\Day01.txt", ReadAsString);
+    private static string TestData => FetchFile(@"..\..\..\Data\Day01_Test.txt", ReadAsString);
+    private static string RealData => FetchFile(@"..\..\..\Data\Day01.txt", ReadAsString);
 
     public static TheoryData<string, int> Part1Data => new()
     {

@@ -14,8 +14,8 @@ public class Day02Tests
         _sut = new Day02();
     }
 
-    private static IEnumerable<string> TestData => FetchFile(@"..\..\..\TestInput\Day02.txt", ReadAsEnumerable);
-    private static IEnumerable<string> RealData => FetchFile(@"..\..\..\Input\Day02.txt", ReadAsEnumerable);
+    private static IEnumerable<string> TestData => FetchFile(@"..\..\..\Data\Day02_Test.txt", ReadAsEnumerable);
+    private static IEnumerable<string> RealData => FetchFile(@"..\..\..\Data\Day02.txt", ReadAsEnumerable);
 
     public static TheoryData<IEnumerable<string>, int> Part1Data => new()
     {
