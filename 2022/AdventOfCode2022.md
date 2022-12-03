@@ -6,4 +6,4 @@ Instructions to the puzzle problems are found on: https://adventofcode.com/2022/
 |:--------------------------------|:------:|:------:|
 | Day 1 - Calorie Counting        | :star: | :star: |
 | Day 2 - Rock Paper Scissors     | :star: | :star: |
-| Day 3 - Rucksack Reorganization | :star: |        |
+| Day 3 - Rucksack Reorganization | :star: | :star: |

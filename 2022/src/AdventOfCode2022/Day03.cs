@@ -1,15 +1,11 @@
-﻿using AdventOfCodeLib;
+﻿using System.Collections.Immutable;
+using AdventOfCodeLib;
 
 namespace AdventOfCode2022;
 
 public class Day03 : IDay<IEnumerable<string>>
 {
     private const string Alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-    public Day03()
-    {
-    }
-
     
     public int Part1(IEnumerable<string> input)
     {
@@ -18,12 +14,13 @@ public class Day03 : IDay<IEnumerable<string>>
             .Select(DistinctItemFromBothCompartments)
             .Sum(item => priorities[item]);
     }
-
-
-
+    
     public int Part2(IEnumerable<string> input)
     {
-        return 1;
+        var priorities = CreatePriorities(Alphabet);
+        return input.GroupBackpacksBy(3)
+            .Select(DistinctItemFromGroupOfBackpacks)
+            .Sum(item => priorities[item]);
     }
 
     private static Dictionary<char, int> CreatePriorities(string alphabet)
@@ -43,7 +40,25 @@ public class Day03 : IDay<IEnumerable<string>>
         return compartment.First.Intersect(compartment.Second).First();
     }
 
-    private record PriorityItem(int Priority, char Item);
-    
+    private static char DistinctItemFromGroupOfBackpacks(IEnumerable<string> backpacks)
+    {
+        var input = backpacks.ToArray();
+        return input.Skip(1).Aggregate(ImmutableHashSet.Create(input.First().ToCharArray()), (h, e) => h.Intersect(e))
+                .First();
+    }
+
     private record Compartment(string First, string Second);
+}
+
+internal static class Day03Extensions
+{
+    internal static IEnumerable<IEnumerable<string>> GroupBackpacksBy(this IEnumerable<string> backpacks, 
+        int count)
+    {
+        var input = backpacks.ToArray();
+        for (var backpack = 0; backpack < input.Length; backpack += count)
+        {
+            yield return input.Skip(backpack).Take(count);
+        }
+    }
 }
