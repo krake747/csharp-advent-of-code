@@ -18,16 +18,14 @@ public class Day02 : IDay<IEnumerable<string>>
 
     private static (T, T) Decrypt<T>(string code, Func<char, T> decrypter)
     {
-        var span = code.AsSpan();
-        return (decrypter(span[0]), decrypter(span[^1]));
+        return (decrypter(code[0]), decrypter(code[^1]));
     }
 
     private static (TL, TR) Decrypt<TL, TO, TR>(string code, Func<char, TL> leftParser, Func<char, TO> rightParser,
         Func<TL, TO, TR> rightDecrypter)
     {
-        var span = code.AsSpan();
-        var leftShape = leftParser(span[0]);
-        var rightOutcome = rightParser(span[^1]);
+        var leftShape = leftParser(code[0]);
+        var rightOutcome = rightParser(code[^1]);
         return (leftShape, rightDecrypter(leftShape, rightOutcome));
     }
 
