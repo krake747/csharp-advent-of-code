@@ -43,7 +43,7 @@ public class Day03Tests
 
     [Theory]
     [MemberData(nameof(Part2Data))]
-    [Description("")]
+    [Description("What is the sum of the priorities of those item types?")]
     public void Part2_ShouldReturnInteger(IEnumerable<string> values, int expected)
     {
         // Act
