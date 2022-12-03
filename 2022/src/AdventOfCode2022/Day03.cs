@@ -12,11 +12,6 @@ public class Day03 : IDay<IEnumerable<string>>
             .Sum(ParseItemPriorityValue);
     }
 
-    private static IEnumerable<string> ChunkBackpack(string backpack)
-    {
-        return backpack.Chunk(backpack.Length / 2).Select(compartment => string.Concat(compartment));
-    }
-
     public int Part2(IEnumerable<string> input)
     {
         return input.Chunk(3)
@@ -42,8 +37,8 @@ internal static class Day03Extensions
     internal static IEnumerable<IEnumerable<string>> ChunkBackpackBy(this IEnumerable<string> backpacks,
         int count)
     {
-        return backpacks.Select(backpack => backpack.Chunk(backpack.Length / count)
-            .Select(compartment => string.Concat(compartment)));
+        return backpacks.Select(backpack => 
+            backpack.Chunk(backpack.Length / count).Select(compartment => string.Concat(compartment)));
             
     }
     
