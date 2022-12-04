@@ -19,11 +19,23 @@ internal class Program
         
         var input = await GetInput(httpClient, url);
 
+        if (input == "Error")
+        {
+            Console.WriteLine("Error while fetching input data");
+            return;
+        }
+        
         var dayStr = int.Parse(day) < 10 ? $"0{day}" : $"{day}";
-        var directoryTo = $@"..\..\..\..\..\{year}\tests\AdventOfCode{year}.Tests.Unit\Data\";
+        var directoryTo = $@"..\..\..\..\..\tests\{year}\AdventOfCode{year}.Tests.Unit\Data\";
         var fullPath  = Path.GetFullPath(directoryTo);
         var fileName = @$"Day{dayStr}.txt";
 
+        if (!Directory.Exists(directoryTo))
+        {
+            Console.WriteLine("Directory does not exist");
+            Directory.CreateDirectory(directoryTo);
+        }
+        
         if (!File.Exists(fullPath + fileName))
         {
             Console.WriteLine($"File {fileName} does not exist");
@@ -47,10 +59,15 @@ internal class Program
         return "Error";
     }
 
-    private static (string Year, string Day) ReadArgs(IReadOnlyList<string> args)
+    private static (string, string) ReadArgs(IReadOnlyList<string> args)
     {
-        return args.Count != 0
-            ? (args[0], args[1])
-            : ("2022", "4");
+        if (args.Count != 0)
+            return (args[0], args[1]);
+        
+        Console.Write("Year: ");
+        var year = Console.ReadLine()!;
+        Console.Write(" Day: ");
+        var day = Console.ReadLine()!;
+        return (year, day);
     }
 }

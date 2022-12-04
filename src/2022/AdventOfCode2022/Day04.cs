@@ -47,7 +47,7 @@ internal readonly record struct Bounds(int Lower, int Upper)
 {
     internal static Bounds Create(IEnumerable<int> stream)
     {
-        var array = stream.ToArray();
+        var array = stream.Order().ToArray();
         return new Bounds(array.First(), array.Last());
     }
 }
