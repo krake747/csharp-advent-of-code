@@ -3,7 +3,7 @@ using static AdventOfCodeLib.TextFileReaderService;
 
 namespace AdventOfCode2022.Tests.Unit;
 
-[Description("day 01 - Calorie Counting")]
+[Description("Day 01 - Calorie Counting")]
 public class Day01Tests
 {
     private readonly Day01 _sut;

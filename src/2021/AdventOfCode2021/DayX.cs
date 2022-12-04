@@ -1,13 +1,15 @@
-﻿namespace AdventOfCode2021;
+﻿using AdventOfCodeLib;
 
-public static class DayX
+namespace AdventOfCode2021;
+
+public class Day01 : IDay<IEnumerable<string>>
 {
-    public static int Part1(IEnumerable<string> input)
+    public int Part1(IEnumerable<string> input)
     {
         return 1;
     }
 
-    public static int Part2(IEnumerable<string> input)
+    public int Part2(IEnumerable<string> input)
     {
         return 1;
     }
