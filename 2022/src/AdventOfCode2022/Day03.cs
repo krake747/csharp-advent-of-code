@@ -23,7 +23,7 @@ public class Day03 : IDay<IEnumerable<string>>
     {
         var input = backpacks.ToArray();
         return input.Skip(1).Aggregate(ImmutableHashSet.Create(input.First().ToCharArray()), (h, e) => h.Intersect(e))
-            .First();
+            .Single();
     }
 
     private static int ParseItemPriorityValue(char c)
