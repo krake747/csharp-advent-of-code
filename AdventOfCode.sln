@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCodeCli", "lib\Adve
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2020", "2020", "{D990BB12-ED36-48CF-8C25-5BE5787F6E75}"
 	ProjectSection(SolutionItems) = preProject
-		AdventOfCode2020.md = AdventOfCode2020.md
+		src\2020\README.md = src\2020\README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{3DEE8AA8-E581-4513-BB67-13136A18D08F}"
@@ -24,12 +24,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode2020", "src\202
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2021", "2021", "{79571A7E-73FE-41C8-A48F-CF0C480550E7}"
 	ProjectSection(SolutionItems) = preProject
-		AdventOfCode2021.md = AdventOfCode2021.md
+		src\2021\README.md = src\2021\README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2022", "2022", "{A8D2572F-66D5-4236-9867-43CE8661C552}"
 	ProjectSection(SolutionItems) = preProject
-		AdventOfCode2022.md = AdventOfCode2022.md
+		src\2022\README.md = src\2022\README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2021", "2021", "{2137B754-0FDD-4F82-88CA-DB33E57BAC9B}"
