@@ -9,11 +9,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <InternalsVisibleTo Include="AdventOfCode2021.Tests.Unit"/>
+        <InternalsVisibleTo Include="AdventOfCode2021.Tests.Unit" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\..\lib\AdventOfCodeLib\AdventOfCodeLib.csproj"/>
+        <ProjectReference Include="..\..\..\lib\AdventOfCodeLib\AdventOfCodeLib.csproj" />
     </ItemGroup>
 
 </Project>

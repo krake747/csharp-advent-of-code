@@ -20,14 +20,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode2020", "src\2020\AdventOfCode2020\AdventOfCode2020.csproj", "{74CFE68E-1CA1-4C75-841B-B11E1BBDA7A3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2021", "2021", "{79571A7E-73FE-41C8-A48F-CF0C480550E7}"
-	ProjectSection(SolutionItems) = preProject
-		src\2021\AdventOfCode2021.md = src\2021\AdventOfCode2021.md
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2022", "2022", "{A8D2572F-66D5-4236-9867-43CE8661C552}"
-	ProjectSection(SolutionItems) = preProject
-		src\2022\AdventOfCode2022.md = src\2022\AdventOfCode2022.md
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2021", "2021", "{2137B754-0FDD-4F82-88CA-DB33E57BAC9B}"
 EndProject
