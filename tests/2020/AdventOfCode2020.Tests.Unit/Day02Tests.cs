@@ -3,35 +3,35 @@ using static AdventOfCodeLib.TextFileReaderService;
 
 namespace AdventOfCode2020.Tests.Unit;
 
-[Description("Day 01 - Report Repair")]
-public class Day01Tests
+[Description("Day 02 - Password Philosophy")]
+public class Day02Tests
 {
-    private readonly Day01 _sut;
+    private readonly Day02 _sut;
 
-    public Day01Tests()
+    public Day02Tests()
     {
         // Arrange
-        _sut = new Day01();
+        _sut = new Day02();
     }
 
-    private static IEnumerable<string> TestData => FetchFile(@"..\..\..\Data\Day01_Test.txt", ReadAsEnumerable);
-    private static IEnumerable<string> RealData => FetchFile(@"..\..\..\Data\Day01.txt", ReadAsEnumerable);
+    private static IEnumerable<string> TestData => FetchFile(@"..\..\..\Data\Day02_Test.txt", ReadAsEnumerable);
+    private static IEnumerable<string> RealData => FetchFile(@"..\..\..\Data\Day02.txt", ReadAsEnumerable);
 
     public static TheoryData<IEnumerable<string>, int> Part1Data => new()
     {
-        { TestData, 514579 },
-        { RealData, 935419 }
+        { TestData, 2 },
+        { RealData, 572 }
     };
 
     public static TheoryData<IEnumerable<string>, int> Part2Data => new()
     {
-        { TestData, 241861950 },
-        { RealData, 49880012 }
+        { TestData, 1 },
+        { RealData, 306 }
     };
 
     [Theory]
     [MemberData(nameof(Part1Data))]
-    [Description("Find the two entries that sum to 2020; what do you get if you multiply them together?")]
+    [Description("How many passwords are valid according to their policies?")]
     public void Part1_ShouldReturnInteger(IEnumerable<string> values, int expected)
     {
         // Act
@@ -43,7 +43,7 @@ public class Day01Tests
 
     [Theory]
     [MemberData(nameof(Part2Data))]
-    [Description("In your expense report, what is the product of the three entries that sum to 2020?")]
+    [Description("How many passwords are valid according to the new interpretation of the policies?")]
     public void Part2_ShouldReturnInteger(IEnumerable<string> values, int expected)
     {
         // Act
