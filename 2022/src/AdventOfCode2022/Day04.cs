@@ -17,7 +17,7 @@ public class Day04 : IDay<IEnumerable<string>>
             .Select(sections => sections.Chunk(2))
             .Count(sectionsRanges => SectionsRanges(sectionsRanges, AreBoundsOverlapping));
     }
-    
+
     private static IEnumerable<int> CreateAssignedSections(string pairOfElves)
     {
         return pairOfElves.Split(',', '-').Select(int.Parse);
@@ -36,7 +36,7 @@ public class Day04 : IDay<IEnumerable<string>>
     {
         return leftSection.IsWithin(rightSection);
     }
-    
+
     private static bool AreBoundsOverlapping(Bounds leftSection, Bounds rightSection)
     {
         return leftSection.IsOverlapping(rightSection);
@@ -50,7 +50,7 @@ internal readonly record struct Bounds(int Lower, int Upper)
         var array = stream.ToArray();
         return new Bounds(array.First(), array.Last());
     }
-};
+}
 
 internal static class Day04Extensions
 {
@@ -61,9 +61,9 @@ internal static class Day04Extensions
 
     internal static bool IsOverlapping(this Bounds leftSection, Bounds rightSection)
     {
-        return leftSection.Lower.IsNumberWithin(rightSection) || leftSection.Upper.IsNumberWithin(rightSection);;
+        return leftSection.Lower <= rightSection.Upper && rightSection.Lower <= leftSection.Upper;
     }
-    
+
     private static bool IsNumberWithin(this int number, Bounds bounds)
     {
         return bounds.Lower <= number && number <= bounds.Upper;
