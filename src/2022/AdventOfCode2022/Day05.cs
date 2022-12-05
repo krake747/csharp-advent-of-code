@@ -44,8 +44,7 @@ public class Day05 : IDay<IEnumerable<string>, string>
             .ToArray();
 
         var stacks = chunks.Last()
-            .Select(stack => stack.Where(s => s != ' ').Select(_ => new Stack<char>()))
-            .SelectMany(s => s)
+            .SelectMany(stack => stack.Where(s => s != ' ').Select(_ => new Stack<char>()))
             .Reverse()
             .ToArray();
 
@@ -64,15 +63,11 @@ public class Day05 : IDay<IEnumerable<string>, string>
     {
         const string regex = @"move (\d*) from (\d*) to (\d*)";
         return instructions.Select(instruction => Regex.Match(instruction, regex))
-            .Select(m =>
+            .Select(m => new Rearrangement
             {
-                var r = new
-                {
-                    Amount = int.Parse(m.Groups[1].Value),
-                    From = int.Parse(m.Groups[2].Value),
-                    To = int.Parse(m.Groups[3].Value)
-                };
-                return new Rearrangement(r.Amount, r.From, r.To);
+                Amount = int.Parse(m.Groups[1].Value),
+                From = int.Parse(m.Groups[2].Value),
+                To = int.Parse(m.Groups[3].Value)
             });
     }
 
