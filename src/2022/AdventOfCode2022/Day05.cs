@@ -81,7 +81,7 @@ public class Day05 : IDay<IEnumerable<string>, string>
         IEnumerable<Rearrangement> rearrangements,
         IDictionary<int, Stack<char>> containerStacks)
     {
-        var finalStacks = new Dictionary<int, Stack<char>>(containerStacks);
+        var finalStacks = containerStacks.ToDictionary(kv => kv.Key, kv => new Stack<char>(kv.Value));
         foreach (var move in rearrangements) crateMover(finalStacks, move);
 
         return finalStacks;
