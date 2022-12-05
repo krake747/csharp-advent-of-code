@@ -2,9 +2,9 @@
 
 public static class LinqExtensions
 {
-    public static IEnumerable<int> RollingSum(this IEnumerable<int> input, int window)
+    public static IEnumerable<int> RollingSum(this IEnumerable<int> source, int window)
     {
-        var numbers = input.ToList();
+        var numbers = source.ToList();
         var rollingSums = new List<int>();
 
         if (numbers.Count < window) return new List<int>();
@@ -16,23 +16,23 @@ public static class LinqExtensions
         return rollingSums;
     }
 
-    public static T[] GetColumn<T>(this T[][] input, int columnNumber)
+    public static T[] GetColumn<T>(this T[][] source, int columnNumber)
     {
-        return Enumerable.Range(0, input.GetLength(0))
-            .Select(x => input[x][columnNumber])
+        return Enumerable.Range(0, source.GetLength(0))
+            .Select(x => source[x][columnNumber])
             .ToArray();
     }
 
 
-    public static T[] GetRow<T>(this T[][] input, int rowNumber)
+    public static T[] GetRow<T>(this T[][] source, int rowNumber)
     {
-        return Enumerable.Range(0, input.GetLength(0))
-            .Select(x => input[rowNumber][x])
+        return Enumerable.Range(0, source.GetLength(0))
+            .Select(x => source[rowNumber][x])
             .ToArray();
     }
 
-    public static IEnumerable<(T Item, int Index)> WithIndex<T>(this IEnumerable<T> input)
+    public static IEnumerable<(T Item, int Index)> WithIndex<T>(this IEnumerable<T> source)
     {
-        return input.Select((item, index) => (item, index));
+        return source.Select((item, index) => (item, index));
     }
 }

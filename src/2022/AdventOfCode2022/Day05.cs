@@ -11,7 +11,7 @@ public class Day05 : IDay<IEnumerable<string>, string>
         var containerStacks = CreateContainerStacks(cargoShip);
         var rearrangements = CreateRearrangements(instructions);
         var finalStacks = CargoCraneOperator(CrateMover9000, rearrangements, containerStacks);
-        return string.Concat(finalStacks.Select(stack => stack.Value.Peek()));
+        return string.Concat(finalStacks.Select(stack => stack.Peek()));
     }
 
     public string Part2(IEnumerable<string> input)
@@ -20,7 +20,7 @@ public class Day05 : IDay<IEnumerable<string>, string>
         var containerStacks = CreateContainerStacks(cargoShip);
         var rearrangements = CreateRearrangements(instructions);
         var finalStacks = CargoCraneOperator(CrateMover9001, rearrangements, containerStacks);
-        return string.Concat(finalStacks.Select(stack => stack.Value.Peek()));
+        return string.Concat(finalStacks.Select(stack => stack.Peek()));
     }
 
     private static (IEnumerable<string> CargoShip, IEnumerable<string> Instructions) SplitCargoShipFromInstructions(
@@ -33,7 +33,7 @@ public class Day05 : IDay<IEnumerable<string>, string>
         return (cargoShip, instructions);
     }
 
-    private static Dictionary<int, Stack<char>> CreateContainerStacks(IEnumerable<string> cargoShip)
+    private static IEnumerable<Stack<char>> CreateContainerStacks(IEnumerable<string> cargoShip)
     {
         var chunks = cargoShip.Select(stack => stack.Chunk(4))
             .ToArray();
@@ -55,57 +55,42 @@ public class Day05 : IDay<IEnumerable<string>, string>
             if (item != ' ') stacks[index].Push(item);
         }
 
-        return Enumerable.Range(1, stacks.Length)
-            .ToDictionary(k => k, v => stacks[v - 1]);
+        return stacks;
     }
 
-    private static IEnumerable<Rearrangement> CreateRearrangements(IEnumerable<string> instructions)
+    private static IEnumerable<Move> CreateRearrangements(IEnumerable<string> instructions)
     {
         const string regex = @"move (\d*) from (\d*) to (\d*)";
         return instructions.Select(instruction => Regex.Match(instruction, regex))
-            .Select(m => new Rearrangement
+            .Select(m => new Move
             {
                 Amount = int.Parse(m.Groups[1].Value),
-                From = int.Parse(m.Groups[2].Value),
-                To = int.Parse(m.Groups[3].Value)
+                From = int.Parse(m.Groups[2].Value) - 1,
+                To = int.Parse(m.Groups[3].Value) - 1
             });
     }
 
-    private static Dictionary<int, Stack<char>> CargoCraneOperator(
-        Action<IDictionary<int, Stack<char>>, Rearrangement> crateMover,
-        IEnumerable<Rearrangement> rearrangements,
-        IDictionary<int, Stack<char>> containerStacks)
+    private static IEnumerable<Stack<char>> CargoCraneOperator(Action<Move, Stack<char>, Stack<char>> crateMover,
+        IEnumerable<Move> rearrangements, IEnumerable<Stack<char>> containerStacks)
     {
-        var finalStacks = containerStacks.ToDictionary(kv => kv.Key, kv => new Stack<char>(kv.Value.Reverse()));
-        foreach (var move in rearrangements.ToArray()) crateMover(finalStacks, move);
+        var finalStacks = containerStacks.Select(s => new Stack<char>(s.Reverse())).ToArray();
+        foreach (var move in rearrangements.ToArray()) crateMover(move, finalStacks[move.From], finalStacks[move.To]);
 
         return finalStacks;
     }
 
-    private static void CrateMover9000(IDictionary<int, Stack<char>> stacks, Rearrangement move)
+    private static void CrateMover9000(Move move, Stack<char> from, Stack<char> to)
     {
-        foreach (var _ in Enumerable.Range(1, move.Amount))
-        {
-            var crate = stacks[move.From].Pop();
-            stacks[move.To].Push(crate);
-        }
+        Enumerable.Range(1, move.Amount).ToList()
+            .ForEach(_ => to.Push(from.Pop()));
     }
 
-    private static void CrateMover9001(IDictionary<int, Stack<char>> stacks, Rearrangement move)
+    private static void CrateMover9001(Move move, Stack<char> from, Stack<char> to)
     {
-        var tempStack = new Stack<char>();
-        foreach (var _ in Enumerable.Range(1, move.Amount))
-        {
-            var crate = stacks[move.From].Pop();
-            tempStack.Push(crate);
-        }
-
-        foreach (var _ in Enumerable.Range(1, move.Amount))
-        {
-            var crate = tempStack.Pop();
-            stacks[move.To].Push(crate);
-        }
+        var temp = new Stack<char>();
+        CrateMover9000(move, from, temp);
+        CrateMover9000(move, temp, to);
     }
 
-    private readonly record struct Rearrangement(int Amount, int From, int To);
+    private readonly record struct Move(int Amount, int From, int To);
 }
