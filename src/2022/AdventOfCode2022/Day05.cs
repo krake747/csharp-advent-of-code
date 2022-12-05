@@ -64,13 +64,16 @@ public class Day05 : IDay<IEnumerable<string>, string>
     {
         const string regex = @"move (\d*) from (\d*) to (\d*)";
         return instructions.Select(instruction => Regex.Match(instruction, regex))
-            .Select(m => new
+            .Select(m =>
             {
-                Amount = int.Parse(m.Groups[1].Value),
-                From = int.Parse(m.Groups[2].Value),
-                To = int.Parse(m.Groups[3].Value)
-            })
-            .Select(r => new Rearrangement(r.Amount, r.From, r.To));
+                var r = new
+                {
+                    Amount = int.Parse(m.Groups[1].Value),
+                    From = int.Parse(m.Groups[2].Value),
+                    To = int.Parse(m.Groups[3].Value)
+                };
+                return new Rearrangement(r.Amount, r.From, r.To);
+            });
     }
 
     private static Dictionary<int, Stack<char>> CargoCraneOperator(
