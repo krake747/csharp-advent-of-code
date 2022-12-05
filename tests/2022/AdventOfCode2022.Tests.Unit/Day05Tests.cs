@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using static AdventOfCodeLib.TextFileReaderService;
+
 // ReSharper disable StringLiteralTypo
 
 namespace AdventOfCode2022.Tests.Unit;
@@ -27,7 +28,7 @@ public class Day05Tests
     public static TheoryData<IEnumerable<string>, string> Part2Data => new()
     {
         { TestData, "MCD" },
-        { RealData, "CMZ" }
+        { RealData, "PRTTGRFPB" }
     };
 
     [Theory]
@@ -49,7 +50,7 @@ public class Day05Tests
     {
         // Act
         var result = _sut.Part2(values);
-    
+
         // Assert
         result.Should().Be(expected);
     }
