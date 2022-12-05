@@ -8,3 +8,4 @@ Instructions to the puzzle problems are found on: https://adventofcode.com/2022/
 | Day 2 - Rock Paper Scissors     | :star: | :star: |
 | Day 3 - Rucksack Reorganization | :star: | :star: |
 | Day 4 - Camp Cleanup            | :star: | :star: |
+| Day 5 - Supply Stacks           | :star: | :star: |
