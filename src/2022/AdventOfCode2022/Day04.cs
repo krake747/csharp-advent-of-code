@@ -2,7 +2,7 @@
 
 namespace AdventOfCode2022;
 
-public class Day04 : IDay<IEnumerable<string>>
+public class Day04 : IDay<IEnumerable<string>, int>
 {
     public int Part1(IEnumerable<string> input)
     {

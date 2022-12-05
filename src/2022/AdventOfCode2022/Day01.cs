@@ -3,7 +3,7 @@ using AdventOfCodeLib;
 
 namespace AdventOfCode2022;
 
-public class Day01 : IDay<string>
+public class Day01 : IDay<string, int>
 {
     public int Part1(string input)
     {

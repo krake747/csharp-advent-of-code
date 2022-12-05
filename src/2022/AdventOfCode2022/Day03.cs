@@ -3,7 +3,7 @@ using AdventOfCodeLib;
 
 namespace AdventOfCode2022;
 
-public class Day03 : IDay<IEnumerable<string>>
+public class Day03 : IDay<IEnumerable<string>, int>
 {
     public int Part1(IEnumerable<string> input)
     {

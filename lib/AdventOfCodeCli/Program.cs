@@ -25,10 +25,11 @@ internal class Program
             return;
         }
         
-        var dayStr = int.Parse(day) < 10 ? $"0{day}" : $"{day}";
         var directoryTo = $@"..\..\..\..\..\tests\{year}\AdventOfCode{year}.Tests.Unit\Data\";
         var fullPath  = Path.GetFullPath(directoryTo);
+        var dayStr = int.Parse(day) < 10 ? $"0{day}" : $"{day}";
         var fileName = @$"Day{dayStr}.txt";
+        var fileNameTest = @$"Day{dayStr}_Test.txt";
 
         if (!Directory.Exists(directoryTo))
         {
@@ -40,6 +41,7 @@ internal class Program
         {
             Console.WriteLine($"File {fileName} does not exist");
             await File.WriteAllTextAsync(fullPath + fileName, input);
+            await File.WriteAllTextAsync(fullPath + fileNameTest, "");
             Console.WriteLine($"File {fileName} was written to {fullPath}");
         }
         else

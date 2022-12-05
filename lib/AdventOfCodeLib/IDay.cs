@@ -1,7 +1,7 @@
 ﻿namespace AdventOfCodeLib;
 
-public interface IDay<in T>
+public interface IDay<in T, out TResult>
 {
-    public int Part1(T input);
-    public int Part2(T input);
+    public TResult Part1(T input);
+    public TResult Part2(T input);
 }
