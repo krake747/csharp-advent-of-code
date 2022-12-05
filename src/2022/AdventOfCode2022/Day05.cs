@@ -7,20 +7,24 @@ public class Day05 : IDay<IEnumerable<string>, string>
 {
     public string Part1(IEnumerable<string> input)
     {
-        var (cargoShip, instructions) = SplitCargoShipFromInstructions(input);
-        var containerStacks = CreateContainerStacks(cargoShip);
-        var rearrangements = CreateRearrangements(instructions);
-        var finalStacks = CargoCraneOperator(CrateMover9000, rearrangements, containerStacks);
+        var rearrangementPlan = CreateRearrangementPlan(input);
+        var finalStacks = CargoCraneOperator(CrateMover9000, rearrangementPlan);
         return string.Concat(finalStacks.Select(stack => stack.Peek()));
     }
 
     public string Part2(IEnumerable<string> input)
     {
+        var rearrangementPlan = CreateRearrangementPlan(input);
+        var finalStacks = CargoCraneOperator(CrateMover9001, rearrangementPlan);
+        return string.Concat(finalStacks.Select(stack => stack.Peek()));
+    }
+
+    private static RearrangementPlan CreateRearrangementPlan(IEnumerable<string> input)
+    {
         var (cargoShip, instructions) = SplitCargoShipFromInstructions(input);
         var containerStacks = CreateContainerStacks(cargoShip);
         var rearrangements = CreateRearrangements(instructions);
-        var finalStacks = CargoCraneOperator(CrateMover9001, rearrangements, containerStacks);
-        return string.Concat(finalStacks.Select(stack => stack.Peek()));
+        return new RearrangementPlan(containerStacks, rearrangements);
     }
 
     private static (IEnumerable<string> CargoShip, IEnumerable<string> Instructions) SplitCargoShipFromInstructions(
@@ -71,8 +75,9 @@ public class Day05 : IDay<IEnumerable<string>, string>
     }
 
     private static IEnumerable<Stack<char>> CargoCraneOperator(Action<Move, Stack<char>, Stack<char>> crateMover,
-        IEnumerable<Move> rearrangements, IEnumerable<Stack<char>> containerStacks)
+        RearrangementPlan rearrangementPlan)
     {
+        var (containerStacks, rearrangements) = rearrangementPlan;
         var finalStacks = containerStacks.Select(s => new Stack<char>(s.Reverse())).ToArray();
         foreach (var move in rearrangements.ToArray()) crateMover(move, finalStacks[move.From], finalStacks[move.To]);
 
@@ -91,6 +96,8 @@ public class Day05 : IDay<IEnumerable<string>, string>
         CrateMover9000(move, from, temp);
         CrateMover9000(move, temp, to);
     }
+
+    private record RearrangementPlan(IEnumerable<Stack<char>> InitialStacks, IEnumerable<Move> Instructions);
 
     private readonly record struct Move(int Amount, int From, int To);
 }
