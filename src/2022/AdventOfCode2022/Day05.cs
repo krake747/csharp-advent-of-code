@@ -45,12 +45,12 @@ public class Day05 : IDay<IEnumerable<string>, string>
 
         var stacks = chunks.Last()
             .Select(stack => stack.Where(s => s != ' ').Select(_ => new Stack<char>()))
-            .SelectMany(x => x)
+            .SelectMany(s => s)
             .Reverse()
             .ToArray();
 
         foreach (var crateRow in crates)
-        foreach (var (crate, index) in crateRow.WithIndex())
+        foreach (var (crate, index) in crateRow.WithIndex().ToArray())
         {
             var item = crate.SingleOrDefault(' ');
             if (item != ' ') stacks[index].Push(item);
@@ -81,8 +81,8 @@ public class Day05 : IDay<IEnumerable<string>, string>
         IEnumerable<Rearrangement> rearrangements,
         IDictionary<int, Stack<char>> containerStacks)
     {
-        var finalStacks = containerStacks.ToDictionary(kv => kv.Key, kv => new Stack<char>(kv.Value));
-        foreach (var move in rearrangements) crateMover(finalStacks, move);
+        var finalStacks = containerStacks.ToDictionary(kv => kv.Key, kv => new Stack<char>(kv.Value.Reverse()));
+        foreach (var move in rearrangements.ToArray()) crateMover(finalStacks, move);
 
         return finalStacks;
     }
