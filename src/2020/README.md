@@ -6,3 +6,4 @@ Instructions to the puzzle problems are found on: https://adventofcode.com/2020/
 |:----------------------------|:------:|:------:|
 | Day 1 - Report Repair       | :star: | :star: |
 | Day 2 - Password Philosophy | :star: | :star: |
+| Day 3 - Toboggan Trajectory | :star: | :star: |

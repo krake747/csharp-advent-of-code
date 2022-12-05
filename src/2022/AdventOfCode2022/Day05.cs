@@ -21,20 +21,13 @@ public class Day05 : IDay<IEnumerable<string>, string>
 
     private static RearrangementPlan CreateRearrangementPlan(IEnumerable<string> input)
     {
-        var (cargoShip, instructions) = SplitCargoShipFromInstructions(input);
-        var containerStacks = CreateContainerStacks(cargoShip);
-        var rearrangements = CreateRearrangements(instructions);
-        return new RearrangementPlan(containerStacks, rearrangements);
-    }
-
-    private static (IEnumerable<string> CargoShip, IEnumerable<string> Instructions) SplitCargoShipFromInstructions(
-        IEnumerable<string> input)
-    {
         var segments = input.ToList();
         var index = segments.IndexOf("");
         var cargoShip = segments.Take(index);
         var instructions = segments.Skip(index + 1);
-        return (cargoShip, instructions);
+        var containerStacks = CreateContainerStacks(cargoShip);
+        var rearrangements = CreateRearrangements(instructions);
+        return new RearrangementPlan(containerStacks, rearrangements);
     }
 
     private static IEnumerable<Stack<char>> CreateContainerStacks(IEnumerable<string> cargoShip)

@@ -6,9 +6,9 @@ public class Day01 : IDay<IEnumerable<string>, int>
 {
     public int Part1(IEnumerable<string> input)
     {
-        var integers = input.Select(int.Parse).ToArray();
-        return (from i in integers
-                from j in integers
+        var numbers = input.Select(int.Parse).ToArray();
+        return (from i in numbers
+                from j in numbers
                 select new[] { i, j })
             .First(n => n.Sum() == 2020)
             .Aggregate((i, j) => i * j);
@@ -16,10 +16,10 @@ public class Day01 : IDay<IEnumerable<string>, int>
 
     public int Part2(IEnumerable<string> input)
     {
-        var integers = input.Select(int.Parse).ToArray();
-        return (from i in integers
-                from j in integers
-                from k in integers
+        var numbers = input.Select(int.Parse).ToArray();
+        return (from i in numbers
+                from j in numbers
+                from k in numbers
                 select new[] { i, j, k })
             .First(n => n.Sum() == 2020)
             .Aggregate((i, j) => i * j);
