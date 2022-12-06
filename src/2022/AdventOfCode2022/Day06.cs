@@ -7,21 +7,23 @@ public class Day06 : IDay<string, int>
 {
     public int Part1(string input)
     {
-        const int window = 4;
-        return Enumerable.Range(0, input.Length - window + 1)
-            .First(n => input.IsStartOfMarker(n, window)) + window;
+        const int signalWindow = 4;
+        return Enumerable.Range(0, input.Length - signalWindow + 1)
+            .First(index => input.IsStartOfSignalMarker(index, signalWindow)) + signalWindow;
     }
 
     public int Part2(string input)
     {
-        return 1;
+        const int signalWindow = 14;
+        return Enumerable.Range(0, input.Length - signalWindow + 1)
+            .First(index => input.IsStartOfSignalMarker(index, signalWindow)) + signalWindow;
     }
 }
 
 internal static class Day06Extensions
 {
-    internal static bool IsStartOfMarker(this string source, int index ,int window)
+    internal static bool IsStartOfSignalMarker(this string source, int index ,int signalWindow)
     {
-        return source.Skip(index).Take(window).Distinct().ToArray().Length == window;
+        return source.Skip(index).Take(signalWindow).Distinct().ToArray().Length == signalWindow;
     }
 }

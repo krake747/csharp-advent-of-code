@@ -27,8 +27,8 @@ public class Day06Tests
 
     public static TheoryData<string, int> Part2Data => new()
     {
-        { TestData, 1 },
-        { RealData, 1 }
+        { TestData, 19 },
+        { RealData, 2383 }
     };
 
     [Theory]
@@ -45,7 +45,7 @@ public class Day06Tests
 
     [Theory]
     [MemberData(nameof(Part2Data))]
-    [Description("How many characters need to be processed before the first start-of-packet marker is detected?")]
+    [Description("How many characters need to be processed before the first start-of-message marker is detected?")]
     public void Part2_ShouldReturnInteger(string values, int expected)
     {
         // Act
