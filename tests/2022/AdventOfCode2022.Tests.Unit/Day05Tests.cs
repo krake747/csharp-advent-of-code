@@ -5,7 +5,7 @@ using static AdventOfCodeLib.TextFileReaderService;
 
 namespace AdventOfCode2022.Tests.Unit;
 
-[Description("Day 05 - ")]
+[Description("Day 05 - Supply Stacks")]
 public class Day05Tests
 {
     private readonly Day05 _sut;
