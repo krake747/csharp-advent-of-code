@@ -19,14 +19,14 @@ public class Day06 : IDay<string, int>
             .Sum(answers => answers.ToWhichYesWasAnsweredBy(Everyone).Count);
     }
     
-    private static ImmutableHashSet<char> Anyone(ImmutableHashSet<char> h, string e)
+    private static ImmutableHashSet<char> Anyone(ImmutableHashSet<char> hashSet, string s)
     {
-        return h.Union(e);
+        return hashSet.Union(s);
     }
     
-    private static ImmutableHashSet<char> Everyone(ImmutableHashSet<char> h, string e)
+    private static ImmutableHashSet<char> Everyone(ImmutableHashSet<char> hashSet, string s)
     {
-        return h.Intersect(e);
+        return hashSet.Intersect(s);
     }
 }
 
