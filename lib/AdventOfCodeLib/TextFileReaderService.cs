@@ -23,8 +23,8 @@ public static class TextFileReaderService
     public static string ReadAsString(string path)
     {
         var result = File.ReadAllText(path, Encoding.UTF8);
-        return Regex.Match(result, "\r\n").Success 
+        return (Regex.Match(result, "\r\n").Success 
             ? Regex.Replace(result, "\r\n", "\n") 
-            : result;
+            : result).TrimEnd();
     }
 }

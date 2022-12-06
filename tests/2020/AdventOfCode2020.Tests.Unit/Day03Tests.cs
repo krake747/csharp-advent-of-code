@@ -32,7 +32,7 @@ public class Day03Tests
     [Theory]
     [MemberData(nameof(Part1Data))]
     [Description("Following a slope of right 3 and down 1, how many trees would you encounter?")]
-    public void Part1_ShouldReturnInteger(IEnumerable<string> values, long expected)
+    public void Part1_ShouldReturnLong(IEnumerable<string> values, long expected)
     {
         // Act
         var result = _sut.Part1(values);
@@ -44,7 +44,7 @@ public class Day03Tests
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("What do you get if you multiply together the number of trees encountered on each of the slopes?")]
-    public void Part2_ShouldReturnInteger(IEnumerable<string> values, long expected)
+    public void Part2_ShouldReturnLong(IEnumerable<string> values, long expected)
     {
         // Act
         var result = _sut.Part2(values);
