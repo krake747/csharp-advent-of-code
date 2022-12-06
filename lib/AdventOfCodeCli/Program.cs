@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using TextCopy;
 
 namespace AdventOfCodeCli;
 
@@ -41,12 +42,25 @@ internal class Program
         {
             Console.WriteLine($"File {fileName} does not exist");
             await File.WriteAllTextAsync(fullPath + fileName, input);
-            await File.WriteAllTextAsync(fullPath + fileNameTest, "");
             Console.WriteLine($"File {fileName} was written to {fullPath}");
         }
         else
         {
             Console.WriteLine($"File {fileName} exists in {fullPath}");
+        }
+
+        if (!File.Exists(fullPath + fileNameTest))
+        {
+            Console.WriteLine($"File {fileNameTest} does not exist");
+            Console.WriteLine("Awaiting copy from clipboard...");
+            await ClipboardService.SetTextAsync("");
+            string? clipboard;
+            do
+            {
+                clipboard = await ClipboardService.GetTextAsync();
+            } while (clipboard is null or "");
+            await File.WriteAllTextAsync(fullPath + fileNameTest, clipboard);
+            Console.WriteLine($"File {fileNameTest} was written to {fullPath}");
         }
     }
 
