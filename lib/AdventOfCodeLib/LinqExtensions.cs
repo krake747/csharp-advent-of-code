@@ -2,6 +2,14 @@
 
 public static class LinqExtensions
 {
+    public static IEnumerable<T[]> Window<T>(this IEnumerable<T> source, int window)
+    {
+        var array = source.ToArray();
+        return Enumerable.Range(0, array.Length - window + 1)
+            .Select(n => array.Skip(n).Take(window).ToArray());
+    }
+
+
     public static IEnumerable<int> RollingSum(this IEnumerable<int> source, int window)
     {
         var numbers = source.ToList();

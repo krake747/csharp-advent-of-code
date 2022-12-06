@@ -11,13 +11,12 @@ public class Day05 : IDay<IEnumerable<string>, int>
 
     public int Part2(IEnumerable<string> input)
     {
-        var seatIds = OrderedPlaneSeatIds(input);
-        return seatIds.Skip(1)
-            .Zip(seatIds, (above, below) => (Seat: below + 1, Delta: above - below))
-            .Single(seat => seat.Delta == 2).Seat;
+        return OrderedPlaneSeatIds(input).Window(2)
+            .Single(seat => seat[1] - seat[0] == 2)
+            .First() + 1;
     }
 
-    private static int[] OrderedPlaneSeatIds(IEnumerable<string> input)
+    private static IEnumerable<int> OrderedPlaneSeatIds(IEnumerable<string> input)
     {
         return input.Select(boardingPass => string.Concat(boardingPass.Select(ReplaceLetterToBinary)))
             .Select(DecodePlaneSeatId)
