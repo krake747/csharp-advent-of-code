@@ -1,5 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using AdventOfCodeLib;
+﻿using AdventOfCodeLib;
 
 namespace AdventOfCode2022;
 
@@ -22,7 +21,7 @@ public class Day06 : IDay<string, int>
 
 internal static class Day06Extensions
 {
-    internal static bool IsStartOfSignalMarker(this string source, int index ,int signalWindow)
+    internal static bool IsStartOfSignalMarker(this string source, int index, int signalWindow)
     {
         return source.Skip(index).Take(signalWindow).Distinct().ToArray().Length == signalWindow;
     }
