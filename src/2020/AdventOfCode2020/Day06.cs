@@ -8,19 +8,34 @@ public class Day06 : IDay<string, int>
     public int Part1(string input)
     {
         return input.Split("\n\n")
-            .Sum(groups => groups.Split("\n").SelectMany(answers => answers).Distinct().Count());
+            .Select(groups => groups.Split("\n").Select(answers => answers))
+            .Sum(answers => answers.ToWhichYesWasAnsweredBy(Anyone).Count);
     }
-
+    
     public int Part2(string input)
     {
         return input.Split("\n\n")
-            .Select(groups => groups.Split("\n").Select(answers => answers).ToArray())
-            .Sum(CountQuestionsWhereEveryoneAnsweredYes);
+            .Select(groups => groups.Split("\n").Select(answers => answers))
+            .Sum(answers => answers.ToWhichYesWasAnsweredBy(Everyone).Count);
     }
-
-    private static int CountQuestionsWhereEveryoneAnsweredYes(string[] answers)
+    
+    private static ImmutableHashSet<char> Anyone(ImmutableHashSet<char> h, string e)
     {
-        return answers.Skip(1).Aggregate(ImmutableHashSet.Create(answers.First().ToCharArray()),
-            (h, e) => h.Intersect(e)).Count;
+        return h.Union(e);
+    }
+    
+    private static ImmutableHashSet<char> Everyone(ImmutableHashSet<char> h, string e)
+    {
+        return h.Intersect(e);
+    }
+}
+
+internal static class Day04Extensions
+{
+    internal static ImmutableHashSet<char> ToWhichYesWasAnsweredBy(this IEnumerable<string> source, 
+        Func<ImmutableHashSet<char>,string,ImmutableHashSet<char>> func)
+    {
+        var answers = source as string[] ?? source.ToArray();
+        return answers.Skip(1).Aggregate(ImmutableHashSet.Create(answers.First().ToCharArray()), func);
     }
 }
