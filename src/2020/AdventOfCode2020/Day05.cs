@@ -11,7 +11,7 @@ public class Day05 : IDay<IEnumerable<string>, int>
 
     public int Part2(IEnumerable<string> input)
     {
-        return OrderedPlaneSeatIds(input).Window(2)
+        return OrderedPlaneSeatIds(input).Chunk(2)
             .Single(seat => seat[1] - seat[0] == 2)
             .First() + 1;
     }
