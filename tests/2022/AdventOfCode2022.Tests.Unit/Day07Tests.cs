@@ -25,8 +25,8 @@ public class Day07Tests
 
     public static TheoryData<IEnumerable<string>, int> Part2Data => new()
     {
-        { TestData, 4 },
-        { RealData, 914 }
+        { TestData, 24933642 },
+        { RealData, 1117448 }
     };
 
     [Theory]
@@ -43,7 +43,7 @@ public class Day07Tests
 
     [Theory]
     [MemberData(nameof(Part2Data))]
-    [Description("Total size of at most 100000. What is the sum of the total sizes of those directories?")]
+    [Description("What is the total size of that directory?")]
     public void Part2_ShouldReturnInteger(IEnumerable<string> values, int expected)
     {
         // Act

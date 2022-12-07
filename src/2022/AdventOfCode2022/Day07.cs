@@ -38,7 +38,37 @@ public class Day07 : IDay<IEnumerable<string>, int>
 
     public int Part2(IEnumerable<string> input)
     {
-        return 1;
+        const int totalDiskSpace = 70000000;
+        const int minimumRequiredDiskSpace = 30000000;
+        
+        var paths = new Stack<string>();
+        var directories = new Dictionary<string, int>{ {"/", 0} };
+
+        foreach (var line in input)
+        {
+            var parameters = line.Split(' ');
+            if (Regex.IsMatch(line, @"^\$ cd (\w+|/)"))
+            {
+                paths.Push(string.Concat(paths) + parameters[^1]);
+            }
+            else if (Regex.IsMatch(line, @"^\$ cd (..)"))
+            {
+                paths.Pop();
+            }
+            else if (Regex.IsMatch(line, @"^(\d+)"))
+            {
+                var size = int.Parse(parameters[0]);
+                foreach (var parent in paths)
+                {
+                    directories[parent] = directories.GetValueOrDefault(parent) + size;
+                }
+            }
+        }
+
+        var unusedDiskSpace = totalDiskSpace - directories["/"];
+        var requiredDiskSpace = minimumRequiredDiskSpace - unusedDiskSpace;
+        return directories.OrderBy(kvp => kvp.Value)
+            .First(kvp => kvp.Value > requiredDiskSpace).Value;
     }
 
 }
