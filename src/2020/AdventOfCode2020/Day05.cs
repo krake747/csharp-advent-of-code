@@ -1,4 +1,5 @@
 ﻿using AdventOfCodeLib;
+using AdventOfCodeLib.Interfaces;
 
 namespace AdventOfCode2020;
 

@@ -1,4 +1,4 @@
-﻿namespace AdventOfCodeLib;
+﻿namespace AdventOfCodeLib.Interfaces;
 
 public interface IDay<in T, out TResult>
 {
