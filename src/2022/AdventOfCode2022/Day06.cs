@@ -1,5 +1,4 @@
-﻿using AdventOfCodeLib;
-using AdventOfCodeLib.Interfaces;
+﻿using AdventOfCodeLib.Interfaces;
 
 namespace AdventOfCode2022;
 
@@ -7,23 +6,17 @@ public class Day06 : IDay<string, int>
 {
     public int Part1(string input)
     {
-        const int signalWindow = 4;
-        return Enumerable.Range(0, input.Length - signalWindow + 1)
-            .First(index => input.IsStartOfSignalMarker(index, signalWindow)) + signalWindow;
+        return SignalMarker(input, 4);
     }
 
     public int Part2(string input)
     {
-        const int signalWindow = 14;
-        return Enumerable.Range(0, input.Length - signalWindow + 1)
-            .First(index => input.IsStartOfSignalMarker(index, signalWindow)) + signalWindow;
+        return SignalMarker(input, 14);
     }
-}
 
-internal static class Day06Extensions
-{
-    internal static bool IsStartOfSignalMarker(this string source, int index, int signalWindow)
+    private static int SignalMarker(string input, int window)
     {
-        return source.Skip(index).Take(signalWindow).Distinct().ToArray().Length == signalWindow;
+        return Enumerable.Range(window, input.Length)
+            .First(index => input.Substring(index - window, window).ToHashSet().Count == window);
     }
 }
