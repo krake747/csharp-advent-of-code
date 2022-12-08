@@ -26,7 +26,7 @@ public class Day08Tests
     public static TheoryData<IEnumerable<string>, int> Part2Data => new()
     {
         { TestData, 8 },
-        { RealData, 21 }
+        { RealData, 383520 }
     };
 
     [Theory]
@@ -43,7 +43,7 @@ public class Day08Tests
 
     [Theory]
     [MemberData(nameof(Part2Data))]
-    [Description("")]
+    [Description("Consider your map. What is the highest scenic score possible for any tree?")]
     public void Part2_ShouldReturnInteger(IEnumerable<string> values, int expected)
     {
         // Act

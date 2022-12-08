@@ -57,4 +57,14 @@ public static class LinqExtensions
     {
         return source.Select((item, index) => (item, index));
     }
+    
+    public static IEnumerable<T> TakeUntil<T>(this IEnumerable<T> source, Func<T, bool> predicate)
+    {
+        foreach(var item in source)
+        {
+            yield return item;
+            if (predicate(item))
+                yield break;
+        }
+    }
 }
