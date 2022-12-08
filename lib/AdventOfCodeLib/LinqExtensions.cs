@@ -38,6 +38,20 @@ public static class LinqExtensions
             .Select(x => source[rowNumber][x])
             .ToArray();
     }
+    
+    public static T[] GetColumn<T>(this T[,] source, int columnNumber)
+    {
+        return Enumerable.Range(0, source.GetLength(0))
+            .Select(x => source[x, columnNumber])
+            .ToArray();
+    }
+    
+    public static T[] GetRow<T>(this T[,] source, int rowNumber)
+    {
+        return Enumerable.Range(0, source.GetLength(0))
+            .Select(x => source[rowNumber, x])
+            .ToArray();
+    }
 
     public static IEnumerable<(T Item, int Index)> WithIndex<T>(this IEnumerable<T> source)
     {
