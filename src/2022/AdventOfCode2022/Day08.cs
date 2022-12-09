@@ -8,19 +8,17 @@ public class Day08 : IDay<IEnumerable<string>, int>
 {
     public int Part1(IEnumerable<string> input)
     {
-        var forest = CreateForest(input);
-        var treeCoverGrid = DetermineForest(forest, TreeCoverScore);
+        var treeCoverGrid = DetermineForest(input, TreeCoverScore);
         return treeCoverGrid.Cast<int>().Sum();
     }
 
     public int Part2(IEnumerable<string> input)
     {
-        var forest = CreateForest(input);
-        var treeScenicGrid = DetermineForest(forest, TreeScenicScore);
+        var treeScenicGrid = DetermineForest(input, TreeScenicScore);
         return treeScenicGrid.Cast<int>().Max();
     }
 
-    private static int[,] CreateForest(IEnumerable<string> input)
+    private static int[,] DetermineForest(IEnumerable<string> input, Func<int[,], int, int, int> func)
     {
         var map = input.Select(trees => trees.Select(t => int.Parse(t.ToString())).ToArray())
             .ToArray();
@@ -31,19 +29,12 @@ public class Day08 : IDay<IEnumerable<string>, int>
         for (var row = 0; row < forest.GetLength(0); row++)
         for (var col = 0; col < forest.GetLength(1); col++) 
             forest[row, col] = map[row][col];
-        
-        return forest;
-    }
-    
-    private static int[,] DetermineForest(int[,] forest, Func<int[,], int, int, int> func)
-    {
-        var rows = forest.GetLength(0);
-        var cols = forest.GetLength(1);
+
         var treeGrid = new int[rows, cols];
         for (var row = 0; row < treeGrid.GetLength(0); row++)
         for (var col = 0; col < treeGrid.GetLength(1); col++) 
             treeGrid[row, col] = func(forest, row, col);
-        
+
         return treeGrid;
     }
 
