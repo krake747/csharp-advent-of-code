@@ -60,24 +60,26 @@ public class Day08 : IDay<IEnumerable<string>, int>
     private static bool TreeVisibleFromAnyDirection(int[,] forest, int row, int col)
     {
         var tree = forest[row, col];
-        if (forest.GetColumn(col).All(height => height < tree) && forest.GetRow(row).All(height => height < tree))
+        var treesOnColum = forest.GetColumn(col).ToArray();
+        var treesOnRow = forest.GetRow(row).ToArray();
+        if (treesOnColum.All(height => height < tree) && treesOnRow.All(height => height < tree))
         {
             return true;
         }
         
-        var treesToNorth = forest.GetColumn(col)
+        var treesToNorth = treesOnColum
             .Where((_, idx) => idx < row)
             .All(height => height < tree);
 
-        var treesToSouth = forest.GetColumn(col)
+        var treesToSouth = treesOnColum
             .Where((_, idx) => idx > row)
             .All(height => height < tree);
 
-        var treesToWest = forest.GetRow(row)
+        var treesToWest = treesOnRow
             .Where((_, idx) => idx < col)
             .All(height => height < tree);
 
-        var treesToEast = forest.GetRow(row)
+        var treesToEast = treesOnRow
             .Where((_, idx) => idx > col)
             .All(height => height < tree);
 
