@@ -41,11 +41,9 @@ public class Day08 : IDay<IEnumerable<string>, int>
         var cols = forest.GetLength(1);
         var treeGrid = new int[rows, cols];
         for (var row = 0; row < treeGrid.GetLength(0); row++)
-        for (var col = 0; col < treeGrid.GetLength(1); col++)
-        {
+        for (var col = 0; col < treeGrid.GetLength(1); col++) 
             treeGrid[row, col] = func(forest, row, col);
-        }
-
+        
         return treeGrid;
     }
 
@@ -58,27 +56,24 @@ public class Day08 : IDay<IEnumerable<string>, int>
 
     private static bool TreeOnBorder(int[,] forest, int row, int col)
     {
-        bool OnNorthOrWestBorder(int value)
+        bool OnBorder(int value, int limit)
         {
-            return value == 0;
-        }
-
-        bool OnSouthOrEastBorder(int value, int limit)
-        {
-            return value + 1 >= limit;
+            return value == Math.Min(value, 0) || value + 1 >= Math.Max(value + 1, limit);
         }
         
         var rows = forest.GetLength(0);
         var cols = forest.GetLength(1);
-        return OnNorthOrWestBorder(row) ||
-               OnSouthOrEastBorder(col, cols) ||
-               OnSouthOrEastBorder(row, rows) ||
-               OnNorthOrWestBorder(col);
+        return OnBorder(row, rows) || OnBorder(col, cols);
     }
 
     private static bool TreeVisibleFromAnyDirection(int[,] forest, int row, int col)
     {
         var tree = forest[row, col];
+        if (forest.GetColumn(col).All(height => height < tree) && forest.GetRow(row).All(height => height < tree))
+        {
+            return true;
+        }
+        
         var treesToNorth = forest.GetColumn(col)
             .Where((_, idx) => idx < row)
             .All(height => height < tree);
