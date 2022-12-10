@@ -62,25 +62,22 @@ public class Day08 : IDay<IEnumerable<string>, int>
         var tree = forest[row, col];
         var treesOnColum = forest.GetColumn(col).ToArray();
         var treesOnRow = forest.GetRow(row).ToArray();
+        
         if (treesOnColum.All(height => height < tree) && treesOnRow.All(height => height < tree))
         {
             return true;
         }
         
-        var treesToNorth = treesOnColum
-            .Where((_, idx) => idx < row)
+        var treesToNorth = treesOnColum.Where((_, idx) => idx < row)
             .All(height => height < tree);
 
-        var treesToSouth = treesOnColum
-            .Where((_, idx) => idx > row)
+        var treesToSouth = treesOnColum.Where((_, idx) => idx > row)
             .All(height => height < tree);
 
-        var treesToWest = treesOnRow
-            .Where((_, idx) => idx < col)
+        var treesToWest = treesOnRow.Where((_, idx) => idx < col)
             .All(height => height < tree);
 
-        var treesToEast = treesOnRow
-            .Where((_, idx) => idx > col)
+        var treesToEast = treesOnRow.Where((_, idx) => idx > col)
             .All(height => height < tree);
 
         return treesToNorth || treesToSouth || treesToWest || treesToEast;
@@ -89,25 +86,24 @@ public class Day08 : IDay<IEnumerable<string>, int>
     private static int TreeScenicScore(int[,] forest, int row, int col)
     {
         var tree = forest[row, col];
-        var treesToNorth = forest.GetColumn(col)
-            .Where((_, idx) => idx < row)
+        var treesOnColum = forest.GetColumn(col).ToArray();
+        var treesOnRow = forest.GetRow(row).ToArray();
+        
+        var treesToNorth = treesOnColum.Where((_, idx) => idx < row)
             .Reverse()
             .TakeUntil(height => height >= tree)
             .Count();
 
-        var treesToSouth = forest.GetColumn(col)
-            .Where((_, idx) => idx > row)
+        var treesToSouth = treesOnColum.Where((_, idx) => idx > row)
             .TakeUntil(height => height >= tree)
             .Count();
 
-        var treesToWest = forest.GetRow(row)
-            .Where((_, idx) => idx < col)
+        var treesToWest = treesOnRow.Where((_, idx) => idx < col)
             .Reverse()
             .TakeUntil(height => height >= tree)
             .Count();
 
-        var treesToEast = forest.GetRow(row)
-            .Where((_, idx) => idx > col)
+        var treesToEast = treesOnRow.Where((_, idx) => idx > col)
             .TakeUntil(height => height >= tree)
             .Count();
 
