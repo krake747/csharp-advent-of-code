@@ -9,93 +9,80 @@ public class Day09 : IDay<IEnumerable<string>, int>
 {
     public int Part1(IEnumerable<string> input)
     {
-        var points = SeriesOfMotions(input).SelectMany(p => p).ToArray();
-        return points.Select(point => point.Tail)
-            .ToHashSet()
-            .Count;
+        return TailCoordinates(input, 2).ToHashSet().Count;
     }
 
     public int Part2(IEnumerable<string> input)
     {
+        ;
         return 1;
     }
 
-    private static IEnumerable<(Point Head, Point Tail)[]> SeriesOfMotions(IEnumerable<string> input)
+    private static IEnumerable<Knot> TailCoordinates(IEnumerable<string> input, int ropeLength)
     {
-        var motions = input.ToArray();
-        var head = new Point(0, 0);
-        var tail = new Point(0, 0);
-        yield return new[] { (head, tail) };
-        foreach (var motion in motions)
+        var commands = input.ToArray();
+        var rope = Enumerable.Repeat(new Knot(0, 0), ropeLength).ToArray();
+        yield return rope.Last();
+        foreach (var command in commands)
         {
-            var newPoints = ParseMotions(motion, head, tail).ToArray();
-            head = newPoints.Last().Head;
-            tail = newPoints.Last().Tail;
-            yield return newPoints;
+            var parts = command.Split(' ');
+            var direction = char.Parse(parts[0]);
+            var move = int.Parse(parts[^1]);
+            for (var i = 0; i < move; i++)
+            {
+                var newRope = MoveHead(rope, direction).ToArray();
+                yield return newRope.Last();
+            }
         }
     }
 
-    private static IEnumerable<(Point Head, Point Tail)> ParseMotions(string motion, Point head, Point tail)
+    private static IEnumerable<Knot> MoveHead(IList<Knot> rope, char direction)
     {
-        var parts = motion.Split(' ');
-        var direction = char.Parse(parts[0]);
-        var move = int.Parse(parts[^1]);
-        var startHead = head;
-        var startTail = tail;
-        for (var i = 0; i < move; i++)
+        rope[0] = direction switch
         {
-            var newHeadPoint = MoveHeadToPoint(startHead, direction);
-            var newTailPoint = MoveTailToPoint(newHeadPoint, startTail, direction);
-            startHead = newHeadPoint;
-            startTail = newTailPoint;
-            yield return (newHeadPoint, newTailPoint);
-        }
-    }
-
-    private static Point MoveHeadToPoint(Point head, char direction)
-    {
-        return direction switch
-        {
-            'U' => head with { Y = head.Y + 1 },
-            'R' => head with { X = head.X + 1 },
-            'D' => head with { Y = head.Y - 1 },
-            'L' => head with { X = head.X - 1 },
+            'U' => rope[0] with { Y = rope[0].Y + 1 },
+            'R' => rope[0] with { X = rope[0].X + 1 },
+            'D' => rope[0] with { Y = rope[0].Y - 1 },
+            'L' => rope[0] with { X = rope[0].X - 1 },
             _ => throw new UnreachableException("Direction is not defined.")
         };
-    }
-
-    private static Point MoveTailToPoint(Point head, Point tail, char direction)
-    {
-        return Point.AreTouching(head, tail)
-            ? tail
-            : direction switch
-            {
-                'U' => head with { Y = head.Y - 1 },
-                'R' => head with { X = head.X - 1 },
-                'D' => head with { Y = head.Y + 1 },
-                'L' => head with { X = head.X + 1 },
-                _ => throw new UnreachableException("Direction is not defined.")
-            };
-    }
-
-    private readonly record struct Point(int X, int Y)
-    {
-        internal static bool AreTouching(Point p1, Point p2)
+        yield return rope[0];
+        
+        for (var k = 1; k < rope.Count; k++)
         {
-            return AreAdjacent(p1, p2) || AreDiagonal(p1, p2);
+            rope[k] = Knot.AreTouching(rope[k - 1], rope[k])
+                ? rope[k]
+                : direction switch
+                {
+                    'U' => rope[k - 1] with { Y = rope[k - 1].Y - 1 },
+                    'R' => rope[k - 1] with { X = rope[k - 1].X - 1 },
+                    'D' => rope[k - 1] with { Y = rope[k - 1].Y + 1 },
+                    'L' => rope[k - 1] with { X = rope[k - 1].X + 1 },
+                    _ => throw new UnreachableException("Direction is not defined.")
+                };
+            yield return rope[k];
         }
 
-        private static bool AreAdjacent(Point p1, Point p2)
+    }
+
+    private readonly record struct Knot(int X, int Y)
+    {
+        internal static bool AreTouching(Knot k1, Knot k2)
         {
-            var deltaX = p2.X - p1.X;
-            var deltaY = p2.Y - p1.Y;
+            return AreAdjacent(k1, k2) || AreDiagonal(k1, k2);
+        }
+
+        private static bool AreAdjacent(Knot k1, Knot k2)
+        {
+            var deltaX = k2.X - k1.X;
+            var deltaY = k2.Y - k1.Y;
             return (Math.Abs(deltaX) <= 1 && deltaY == 0) || (Math.Abs(deltaY) <= 1 && deltaX == 0);
         }
 
-        private static bool AreDiagonal(Point p1, Point p2)
+        private static bool AreDiagonal(Knot k1, Knot k2)
         {
-            var deltaX = p2.X - p1.X;
-            var deltaY = p2.Y - p1.Y;
+            var deltaX = k2.X - k1.X;
+            var deltaY = k2.Y - k1.Y;
             return Math.Abs(deltaX) == Math.Abs(deltaY);
         }
     }

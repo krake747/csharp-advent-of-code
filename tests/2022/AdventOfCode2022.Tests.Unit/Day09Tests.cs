@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel;
+using AdventOfCodeLib;
 using static AdventOfCodeLib.TextFileReaderService;
 
 namespace AdventOfCode2022.Tests.Unit;
 
-[Description("Day 09 - Treetop Tree House")]
+[AocPuzzle(2022, 9, "Rope Bridge")]
 public class Day09Tests
 {
     private readonly Day09 _sut;
@@ -15,6 +16,7 @@ public class Day09Tests
     }
 
     private static IEnumerable<string> TestData => FetchFile(@"..\..\..\Data\Day09_Test.txt", ReadAsEnumerable);
+    private static IEnumerable<string> TestData2 => FetchFile(@"..\..\..\Data\Day09_Test_2.txt", ReadAsEnumerable);
     private static IEnumerable<string> RealData => FetchFile(@"..\..\..\Data\Day09.txt", ReadAsEnumerable);
 
     public static TheoryData<IEnumerable<string>, int> Part1Data => new()
@@ -25,7 +27,8 @@ public class Day09Tests
 
     public static TheoryData<IEnumerable<string>, int> Part2Data => new()
     {
-        { TestData, 2 },
+        { TestData, 1 },
+        { TestData2, 36 },
         { RealData, 2 }
     };
 
