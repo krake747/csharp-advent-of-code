@@ -12,4 +12,4 @@ Instructions to the puzzle problems are found on: https://adventofcode.com/2022/
 | Day 6 - Tuning Trouble          | :star: | :star: |
 | Day 7 - No Space Left On Device | :star: | :star: |
 | Day 8 - Treetop Tree House      | :star: | :star: |
-| Day 9 - Rope Bridge             | :star: |        |
+| Day 9 - Rope Bridge             | :star: | :star: |

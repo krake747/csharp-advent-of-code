@@ -9,16 +9,15 @@ public class Day09 : IDay<IEnumerable<string>, int>
 {
     public int Part1(IEnumerable<string> input)
     {
-        return TailCoordinates(input, 2).ToHashSet().Count;
+        return TailPositions(input, 2).ToHashSet().Count;
     }
 
     public int Part2(IEnumerable<string> input)
     {
-        ;
-        return 1;
+        return TailPositions(input, 10).ToHashSet().Count;
     }
 
-    private static IEnumerable<Knot> TailCoordinates(IEnumerable<string> input, int ropeLength)
+    private static IEnumerable<Knot> TailPositions(IEnumerable<string> input, int ropeLength)
     {
         var commands = input.ToArray();
         var rope = Enumerable.Repeat(new Knot(0, 0), ropeLength).ToArray();
@@ -30,14 +29,16 @@ public class Day09 : IDay<IEnumerable<string>, int>
             var move = int.Parse(parts[^1]);
             for (var i = 0; i < move; i++)
             {
-                var newRope = MoveHead(rope, direction).ToArray();
+                var newRope = MoveHeadOfTheRope(rope, direction).ToArray();
                 yield return newRope.Last();
             }
         }
     }
 
-    private static IEnumerable<Knot> MoveHead(IList<Knot> rope, char direction)
+    private static IEnumerable<Knot> MoveHeadOfTheRope(IList<Knot> rope, char direction)
     {
+        // Updates the coordinates of the first knot in the rope to reflect the direction in which the head is moving.
+        // It then yields this updated knot.
         rope[0] = direction switch
         {
             'U' => rope[0] with { Y = rope[0].Y + 1 },
@@ -47,44 +48,33 @@ public class Day09 : IDay<IEnumerable<string>, int>
             _ => throw new UnreachableException("Direction is not defined.")
         };
         yield return rope[0];
-        
+
+        // Next, the method loops through the remaining knots in the rope and calculates the change in the x and y
+        // coordinates between the current knot and the previous one.
+        // If the knots are not touching, the method updates the coordinates of the current knot to be one unit closer
+        // to the previous knot in the x and y directions.
         for (var k = 1; k < rope.Count; k++)
         {
-            rope[k] = Knot.AreTouching(rope[k - 1], rope[k])
+            var (deltaX, deltaY) = Knot.Delta(rope[k], rope[k - 1]);
+            var moveX = Math.Sign(deltaX);
+            var moveY = Math.Sign(deltaY);
+            yield return Knot.AreTouching(rope[k - 1], rope[k])
                 ? rope[k]
-                : direction switch
-                {
-                    'U' => rope[k - 1] with { Y = rope[k - 1].Y - 1 },
-                    'R' => rope[k - 1] with { X = rope[k - 1].X - 1 },
-                    'D' => rope[k - 1] with { Y = rope[k - 1].Y + 1 },
-                    'L' => rope[k - 1] with { X = rope[k - 1].X + 1 },
-                    _ => throw new UnreachableException("Direction is not defined.")
-                };
-            yield return rope[k];
+                : rope[k] = new Knot(rope[k].X + moveX, rope[k].Y + moveY);
         }
-
     }
 
     private readonly record struct Knot(int X, int Y)
     {
         internal static bool AreTouching(Knot k1, Knot k2)
         {
-            return AreAdjacent(k1, k2) || AreDiagonal(k1, k2);
+            var (deltaX, deltaY) = Delta(k1, k2);
+            return Math.Abs(deltaX) <= 1 && Math.Abs(deltaY) <= 1;
         }
 
-        private static bool AreAdjacent(Knot k1, Knot k2)
+        internal static (int DeltaX, int DeltaY) Delta(Knot k1, Knot k2)
         {
-            var deltaX = k2.X - k1.X;
-            var deltaY = k2.Y - k1.Y;
-            return (Math.Abs(deltaX) <= 1 && deltaY == 0) || (Math.Abs(deltaY) <= 1 && deltaX == 0);
-        }
-
-        private static bool AreDiagonal(Knot k1, Knot k2)
-        {
-            var deltaX = k2.X - k1.X;
-            var deltaY = k2.Y - k1.Y;
-            return Math.Abs(deltaX) == Math.Abs(deltaY);
+            return (k2.X - k1.X, k2.Y - k1.Y);
         }
     }
 }
-
