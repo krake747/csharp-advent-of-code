@@ -4,25 +4,24 @@ using static AdventOfCodeLib.TextFileReaderService;
 
 namespace AdventOfCode2022.Tests.Unit;
 
-[AocPuzzle(2022, 9, "Rope Bridge")]
-public class Day09Tests
+[AocPuzzle(2022, 10, "Cathode-Ray Tube")]
+public class Day10Tests
 {
-    private readonly Day09 _sut;
+    private readonly Day10 _sut;
 
-    public Day09Tests()
+    public Day10Tests()
     {
         // Arrange
-        _sut = new Day09();
+        _sut = new Day10();
     }
 
-    private static IEnumerable<string> TestData => FetchFile(@"..\..\..\Data\Day09_Test.txt", ReadAsEnumerable);
-    private static IEnumerable<string> TestData2 => FetchFile(@"..\..\..\Data\Day09_Test_2.txt", ReadAsEnumerable);
-    private static IEnumerable<string> RealData => FetchFile(@"..\..\..\Data\Day09.txt", ReadAsEnumerable);
+    private static IEnumerable<string> TestData => FetchFile(@"..\..\..\Data\Day10_Test.txt", ReadAsEnumerable);
+    private static IEnumerable<string> RealData => FetchFile(@"..\..\..\Data\Day10.txt", ReadAsEnumerable);
 
     public static TheoryData<IEnumerable<string>, int> Part1Data => new()
     {
         { TestData, 13140 },
-        { RealData, 13140 }
+        { RealData, 13740 }
     };
 
     public static TheoryData<IEnumerable<string>, int> Part2Data => new()
@@ -33,7 +32,7 @@ public class Day09Tests
 
     [Theory]
     [MemberData(nameof(Part1Data))]
-    [Description("How many positions does the tail of the rope visit at least once?")]
+    [Description("What is the sum of these six signal strengths?")]
     public void Part1_ShouldReturnInteger(IEnumerable<string> values, int expected)
     {
         // Act
@@ -45,7 +44,7 @@ public class Day09Tests
 
     [Theory]
     [MemberData(nameof(Part2Data))]
-    [Description("How many positions does the tail of the rope visit at least once?")]
+    [Description("What is the sum of these six signal strengths?")]
     public void Part2_ShouldReturnInteger(IEnumerable<string> values, int expected)
     {
         // Act
