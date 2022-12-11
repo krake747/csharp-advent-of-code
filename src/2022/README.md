@@ -14,3 +14,4 @@ Instructions to the puzzle problems are found on: https://adventofcode.com/2022/
 | Day  8 - Treetop Tree House      | :star: | :star: |
 | Day  9 - Rope Bridge             | :star: | :star: |
 | Day 10 - Cathode-Ray Tube        | :star: | :star: |
+| Day 11 - Monkey in the Middle    | :star: | :star: |

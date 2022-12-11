@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Text.RegularExpressions;
 using AdventOfCodeLib;
 using AdventOfCodeLib.Interfaces;
@@ -13,57 +12,65 @@ public partial class Day11 : IDay<IEnumerable<string>, long>
     {
         var monkeys = CreateMonkeys(input).ToList();
         var rounds = Enumerable.Range(1, 20)
-            .Select(round => StuffSlingingSimianShenanigans(monkeys, 3))
-            .ToList();
-        
-        return rounds.Last()
-            .OrderByDescending(kvp => kvp.Value)
-            .Take(2)
-            .Aggregate(1L, (seed, inspections) => seed * inspections.Value);
+            .Select(_ => StuffSlingingSimianShenanigans(monkeys, w => w / 3L))
+            .ToArray();
+
+        return EvaluateMonkeyBusiness(rounds.Last());
     }
 
     public long Part2(IEnumerable<string> input)
     {
         var monkeys = CreateMonkeys(input).ToList();
-        var rounds = Enumerable.Range(1, 10000)
-            .Select(round => StuffSlingingSimianShenanigans(monkeys, 3))
-            .ToList();
-
-        // var rounds = new List<IDictionary<int, long>>();
-        // foreach (var round in Enumerable.Range(1, 10000))
-        // {
-        //     var end = StuffSlingingSimianShenanigansNoWorry(monkeys);
-        //     rounds.Add(end);
-        // }
         
-        return rounds.Last()
-            .OrderByDescending(kvp => kvp.Value)
-            .Take(2)
-            .Aggregate(1L, (seed, inspections) => seed * inspections.Value);
+        // The modulo trick (Modular arithmetic)
+        // One needs to guarantee that the divisibility check produces the same result because that check determines
+        // the path the items take. One calculates a common multiple divisor x. This keeps the worry numbers
+        // small for the divisibility check. Otherwise the worry will keep increasing, leading to an integer overflow.
+        //
+        // The formula w = w % x achieves this goal.
+        //
+        // How to find x? One way to find x is to multiply the test divisors together. That way, we obtain a common
+        // multiplier that is guaranteed to be divisible by all test values in the data set. In this case all test
+        // values are prime numbers, as such the common multiplier is the Least Common Multiple (LCM) 
+        //
+        // The modulo operator % gives us the remainder of a division, which is always smaller than the divider.
+        // By doing w % x, we map every worry to a value between 0 and x - 1, keeping it inside our repeating pattern.
+        //
+        // For full explanation: https://github.com/blemelin/advent-of-code-2022/blob/main/src/day11.rs
+        var x = monkeys.Aggregate(1L, (mod, monkey) => mod * monkey.Test);
+        var rounds = Enumerable.Range(1, 10000)
+            .Select(_ => StuffSlingingSimianShenanigans(monkeys, w => w % x))
+            .ToArray();
+
+        return EvaluateMonkeyBusiness(rounds.Last());
     }
 
-    private static IDictionary<int, long> StuffSlingingSimianShenanigans(List<Monkey> monkeys, long worryFactor)
+    private static long EvaluateMonkeyBusiness(IEnumerable<long> monkeyInspections)
+    {
+        return monkeyInspections.OrderDescending()
+            .Take(2)
+            .Aggregate(1L, (seed, inspection) => seed * inspection);
+    }
+
+    private static IEnumerable<long> StuffSlingingSimianShenanigans(IList<Monkey> monkeys, Func<long, long> adjustWorry)
     {
         foreach (var monkey in monkeys)
-        {
-            var initialQueueCount = monkey.Items.Count;
-            for (var i = 0; i < initialQueueCount; i++)
+            while (monkey.Items.Any())
             {
                 var worry = monkey.Items.Dequeue();
                 monkey.Inspections += 1;
                 var newWorry = monkey.Operation(worry);
-                var boredWorry = newWorry / worryFactor;
+                var boredWorry = adjustWorry(newWorry);
                 var throwToMonkey = boredWorry % monkey.Test == 0
                     ? monkey.IfTrue
                     : monkey.IfFalse;
                 monkeys[throwToMonkey].Items.Enqueue(boredWorry);
             }
-        }
 
-        return monkeys.ToDictionary(k => k.Id, v => v.Inspections);
+        return monkeys.Select(m => m.Inspections)
+            .ToArray();
     }
 
-    
     private static IEnumerable<Monkey> CreateMonkeys(IEnumerable<string> input)
     {
         var monkeys = input.Where(l => !string.IsNullOrWhiteSpace(l))
