@@ -18,19 +18,20 @@ public class Day01 : IDay<IEnumerable<string>, int>
 
     private static int Fuel(int mass)
     {
-        return (int)(Math.Floor(mass / 3.0) - 2);
+        // return (int)(Math.Floor(mass / 3.0) - 2);
+        return mass / 3 - 2;
     }
 
     private static IEnumerable<int> FuelRequirements(int mass)
     {
-        var totalFuel = Fuel(mass);
+        var fuel = Fuel(mass);
         while (true)
         {
-            if (totalFuel < 0)
+            if (fuel < 0)
                 yield break;
             
-            yield return totalFuel;
-            totalFuel = Fuel(totalFuel);
+            yield return fuel;
+            fuel = Fuel(fuel);
         }
     }
     
