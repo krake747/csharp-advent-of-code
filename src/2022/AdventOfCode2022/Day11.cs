@@ -100,7 +100,7 @@ public partial class Day11 : IDay<IEnumerable<string>, long>
         {
             var m = RegexNumber().Match(id);
             return m.Success
-                ? m.Groups[1].ToString()
+                ? m.Groups[1].Value
                 : throw new ArgumentException($"Can't match Id in {id}");
         }
     }
