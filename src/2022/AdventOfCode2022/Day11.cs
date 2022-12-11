@@ -34,7 +34,7 @@ public partial class Day11 : IDay<IEnumerable<string>, long>
         // values are prime numbers, as such the common multiplier is the Least Common Multiple (LCM) 
         //
         // The modulo operator % gives us the remainder of a division, which is always smaller than the divider.
-        // By doing w % x, we map every worry to a value between 0 and x - 1, keeping it inside our repeating pattern.
+        // By doing w % x, we map every worry to a value between 0 and x, keeping it inside our repeating pattern.
         //
         // For full explanation: https://github.com/blemelin/advent-of-code-2022/blob/main/src/day11.rs
         var x = monkeys.Aggregate(1L, (mod, monkey) => mod * monkey.Test);
