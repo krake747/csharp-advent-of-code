@@ -26,7 +26,7 @@ public class Day01 : IDay<IEnumerable<string>, int>
         var totalFuel = Fuel(mass);
         while (true)
         {
-            if (totalFuel <= 0)
+            if (totalFuel < 0)
                 yield break;
             
             yield return totalFuel;
