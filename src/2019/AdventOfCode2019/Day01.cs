@@ -13,8 +13,7 @@ public class Day01 : IDay<IEnumerable<string>, int>
     public int Part2(IEnumerable<string> input)
     {
         return input.Select(int.Parse)
-            .SelectMany(FuelRequirements)
-            .Sum();
+            .Sum(TotalFuel);
     }
 
     private static int Fuel(int mass)
@@ -33,5 +32,15 @@ public class Day01 : IDay<IEnumerable<string>, int>
             yield return totalFuel;
             totalFuel = Fuel(totalFuel);
         }
+    }
+    
+    private static int TotalFuel(int mass)
+    {
+        var fuel = Fuel(mass);
+        return fuel switch
+        {
+            < 0 => 0,
+            _ => fuel + TotalFuel(fuel)
+        };
     }
 }
