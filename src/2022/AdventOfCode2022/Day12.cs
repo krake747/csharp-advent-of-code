@@ -16,6 +16,7 @@ public sealed class Day12 : IDay<IEnumerable<string>, int>
         {
             var currentCoords = path.Peek();
             var neighborLocations = Coordinates.NeighborLocations(map, currentCoords);
+            var x = path.Dequeue();
         }
 
         return 1;
