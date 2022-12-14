@@ -26,8 +26,8 @@ public class Day13Tests
 
     public static TheoryData<IEnumerable<string>, int> Part2Data => new()
     {
-        { TestData, 2 },
-        { RealData, 2 }
+        { TestData, 140 },
+        { RealData, 20952 }
     };
 
     [Theory]

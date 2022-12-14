@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Collections.Immutable;
+using System.Text.Json;
 using System.Text.Json.Nodes;
 using AdventOfCodeLib;
 using AdventOfCodeLib.Interfaces;
@@ -11,22 +12,26 @@ public sealed class Day13 : IDay<IEnumerable<string>, int>
     public int Part1(IEnumerable<string> input)
     {
         return PacketNodes(input).Chunk(2)
-            .Select((packets, idx) => (Index: idx + 1, Order: ComparePackets(packets[0], packets[^1])))
+            .Select((pair, idx) => (Index: idx + 1, Order: ComparePackets(pair[0], pair[^1])))
             .Where(packets => packets.Order < 0)
             .Sum(packets => packets.Index);
     }
 
     public int Part2(IEnumerable<string> input)
     {
-        var packets = PacketPairs(input);
-        return 1;
+        var dividers = PacketNodes(new[] { "[[2]]", "[[6]]" }).ToImmutableList();
+        var packets = PacketNodes(input).Concat(dividers).ToImmutableList();
+        return packets.Sort(ComparePackets)
+            .Select((packet, idx) => (Index: idx + 1, Packet: packet))
+            .Where(p => dividers.Contains(p.Packet))
+            .Aggregate(1, (seed, p) => seed * p.Index);
     }
     
     private static int ComparePackets(JsonNode? left, JsonNode? right)
     {
         return (left, right) switch
         {
-            (JsonValue lhs, JsonValue rhs) => lhs.GetValue<int>().CompareTo(rhs.GetValue<int>()),
+            (JsonValue lhs, JsonValue rhs) => lhs.GetValue<int>().CompareTo((int)rhs),
             (JsonValue lhs, JsonArray rhs) => ComparePackets(new JsonArray((int)lhs), rhs),
             (JsonArray lhs, JsonValue rhs) => ComparePackets(lhs, new JsonArray((int)rhs)),
             (JsonArray lhs, JsonArray rhs) => lhs.Zip(rhs, ComparePackets)
