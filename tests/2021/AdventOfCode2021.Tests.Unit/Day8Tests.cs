@@ -1,6 +1,5 @@
-﻿using FluentAssertions;
-using System.Collections;
-using System.Security.Cryptography;
+﻿using System.Collections;
+using FluentAssertions;
 using Xunit;
 
 namespace AdventOfCode2021.Tests.Unit;
@@ -30,14 +29,13 @@ public class Day8Tests
     }
 }
 
-
 public class Day8Part1TestData : IEnumerable<object[]>
 {
     public IEnumerator<object[]> GetEnumerator()
     {
         yield return new object[]
         {
-            new string[]
+            new[]
             {
                 "be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb | fdgacbe cefdb cefbgd gcbe",
                 "edbfga begcd cbg gc gcadebf fbgde acbgfd abcde gfcbed gfec | fcgedb cgb dgebacf gc",
@@ -54,7 +52,10 @@ public class Day8Part1TestData : IEnumerable<object[]>
         };
     }
 
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
 }
 
 public class Day8Part2TestData : IEnumerable<object[]>
@@ -63,7 +64,7 @@ public class Day8Part2TestData : IEnumerable<object[]>
     {
         yield return new object[]
         {
-            new string[]
+            new[]
             {
                 "be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb | fdgacbe cefdb cefbgd gcbe",
                 "edbfga begcd cbg gc gcadebf fbgde acbgfd abcde gfcbed gfec | fcgedb cgb dgebacf gc",
@@ -80,5 +81,8 @@ public class Day8Part2TestData : IEnumerable<object[]>
         };
     }
 
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
 }

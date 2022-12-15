@@ -1,5 +1,5 @@
-﻿using FluentAssertions;
-using System.Collections;
+﻿using System.Collections;
+using FluentAssertions;
 using Xunit;
 
 namespace AdventOfCode2021.Tests.Unit;
@@ -51,14 +51,13 @@ public class Day5Tests
     }
 }
 
-
 public class Day5Part1TestData : IEnumerable<object[]>
 {
     public IEnumerator<object[]> GetEnumerator()
     {
         yield return new object[]
         {
-            new string[]
+            new[]
             {
                 "0,9 -> 5,9", // Horizontal
                 "8,0 -> 0,8", // Anti-diagonal
@@ -69,13 +68,16 @@ public class Day5Part1TestData : IEnumerable<object[]>
                 "0,9 -> 2,9", // Horizontal
                 "3,4 -> 1,4", // Horizontal
                 "0,0 -> 8,8", // Diagonal
-                "5,5 -> 8,2"  // Anti-diagonal
+                "5,5 -> 8,2" // Anti-diagonal
             },
             5
         };
     }
 
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
 }
 
 public class Day5Part2TestData : IEnumerable<object[]>
@@ -84,7 +86,7 @@ public class Day5Part2TestData : IEnumerable<object[]>
     {
         yield return new object[]
         {
-            new string[]
+            new[]
             {
                 "0,9 -> 5,9", // Horizontal
                 "8,0 -> 0,8", // Anti-diagonal
@@ -95,11 +97,14 @@ public class Day5Part2TestData : IEnumerable<object[]>
                 "0,9 -> 2,9", // Horizontal
                 "3,4 -> 1,4", // Horizontal
                 "0,0 -> 8,8", // Diagonal
-                "5,5 -> 8,2"  // Anti-diagonal
+                "5,5 -> 8,2" // Anti-diagonal
             },
             12
         };
     }
 
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
 }

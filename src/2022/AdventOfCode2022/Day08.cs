@@ -27,12 +27,12 @@ public class Day08 : IDay<IEnumerable<string>, int>
         var cols = map[0].Length;
         var forest = new int[rows, cols];
         for (var row = 0; row < forest.GetLength(0); row++)
-        for (var col = 0; col < forest.GetLength(1); col++) 
+        for (var col = 0; col < forest.GetLength(1); col++)
             forest[row, col] = map[row][col];
 
         var treeGrid = new int[rows, cols];
         for (var row = 0; row < treeGrid.GetLength(0); row++)
-        for (var col = 0; col < treeGrid.GetLength(1); col++) 
+        for (var col = 0; col < treeGrid.GetLength(1); col++)
             treeGrid[row, col] = func(forest, row, col);
 
         return treeGrid;
@@ -51,7 +51,7 @@ public class Day08 : IDay<IEnumerable<string>, int>
         {
             return value == Math.Min(value, 0) || value + 1 >= Math.Max(value + 1, limit);
         }
-        
+
         var rows = forest.GetLength(0);
         var cols = forest.GetLength(1);
         return OnBorder(row, rows) || OnBorder(col, cols);
@@ -62,12 +62,9 @@ public class Day08 : IDay<IEnumerable<string>, int>
         var tree = forest[row, col];
         var treesOnColum = forest.GetColumn(col).ToArray();
         var treesOnRow = forest.GetRow(row).ToArray();
-        
-        if (treesOnColum.All(height => height < tree) && treesOnRow.All(height => height < tree))
-        {
-            return true;
-        }
-        
+
+        if (treesOnColum.All(height => height < tree) && treesOnRow.All(height => height < tree)) return true;
+
         var treesToNorth = treesOnColum.Where((_, idx) => idx < row)
             .All(height => height < tree);
 
@@ -88,7 +85,7 @@ public class Day08 : IDay<IEnumerable<string>, int>
         var tree = forest[row, col];
         var treesOnColum = forest.GetColumn(col).ToArray();
         var treesOnRow = forest.GetRow(row).ToArray();
-        
+
         var treesToNorth = treesOnColum.Where((_, idx) => idx < row)
             .Reverse()
             .TakeUntil(height => height >= tree)

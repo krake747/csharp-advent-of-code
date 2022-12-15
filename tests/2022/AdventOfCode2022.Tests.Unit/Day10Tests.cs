@@ -57,7 +57,7 @@ public class Day10Tests
     public void Part2_ShouldWriteToOutputTestResult(IEnumerable<string> values)
     {
         // Arrange
-        const string expected = 
+        const string expected =
             "##..##..##..##..##..##..##..##..##..##..\n" +
             "###...###...###...###...###...###...###.\n" +
             "####....####....####....####....####....\n" +
@@ -70,7 +70,7 @@ public class Day10Tests
 
         // Assert
         result.Should().Be(expected);
-        
+
         // Output
         _testOutputHelper.WriteLine(result);
     }
@@ -81,7 +81,7 @@ public class Day10Tests
     public void Part2_ShouldWriteToOutputRealResult(IEnumerable<string> values)
     {
         // Arrange
-        const string expected = 
+        const string expected =
             "####.#..#.###..###..####.####..##..#....\n" +
             "...#.#..#.#..#.#..#.#....#....#..#.#....\n" +
             "..#..#..#.#..#.#..#.###..###..#....#....\n" +
@@ -94,7 +94,7 @@ public class Day10Tests
 
         // Assert
         result.Should().Be(expected);
-        
+
         // Output
         _testOutputHelper.WriteLine(result);
     }

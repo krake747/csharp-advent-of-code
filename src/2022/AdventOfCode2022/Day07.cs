@@ -10,7 +10,7 @@ public class Day07 : IDay<IEnumerable<string>, int>
     public int Part1(IEnumerable<string> input)
     {
         var paths = new Stack<string>();
-        var directories = new Dictionary<string, int>{ {"/", 0} };
+        var directories = new Dictionary<string, int> { { "/", 0 } };
 
         foreach (var line in input)
         {
@@ -26,13 +26,10 @@ public class Day07 : IDay<IEnumerable<string>, int>
             else if (Regex.IsMatch(line, @"^(\d+)"))
             {
                 var size = int.Parse(parameters[0]);
-                foreach (var parent in paths)
-                {
-                    directories[parent] = directories.GetValueOrDefault(parent) + size;
-                }
+                foreach (var parent in paths) directories[parent] = directories.GetValueOrDefault(parent) + size;
             }
         }
-        
+
         return directories.Where(kvp => kvp.Value < 100000).Sum(kvp => kvp.Value);
     }
 
@@ -40,9 +37,9 @@ public class Day07 : IDay<IEnumerable<string>, int>
     {
         const int totalDiskSpace = 70000000;
         const int minimumRequiredDiskSpace = 30000000;
-        
+
         var paths = new Stack<string>();
-        var directories = new Dictionary<string, int>{ {"/", 0} };
+        var directories = new Dictionary<string, int> { { "/", 0 } };
 
         foreach (var line in input)
         {
@@ -58,10 +55,7 @@ public class Day07 : IDay<IEnumerable<string>, int>
             else if (Regex.IsMatch(line, @"^(\d+)"))
             {
                 var size = int.Parse(parameters[0]);
-                foreach (var parent in paths)
-                {
-                    directories[parent] = directories.GetValueOrDefault(parent) + size;
-                }
+                foreach (var parent in paths) directories[parent] = directories.GetValueOrDefault(parent) + size;
             }
         }
 
@@ -70,5 +64,4 @@ public class Day07 : IDay<IEnumerable<string>, int>
         return directories.OrderBy(kvp => kvp.Value)
             .First(kvp => kvp.Value > requiredDiskSpace).Value;
     }
-
 }

@@ -29,12 +29,12 @@ public class Day01 : IDay<IEnumerable<string>, int>
         {
             if (fuel < 0)
                 yield break;
-            
+
             yield return fuel;
             fuel = Fuel(fuel);
         }
     }
-    
+
     private static int TotalFuel(int mass)
     {
         var fuel = Fuel(mass);

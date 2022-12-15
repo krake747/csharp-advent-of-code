@@ -1,5 +1,4 @@
 ﻿using System.Collections.Immutable;
-using AdventOfCodeLib;
 using AdventOfCodeLib.Interfaces;
 
 namespace AdventOfCode2022;
@@ -38,11 +37,10 @@ internal static class Day03Extensions
     internal static IEnumerable<IEnumerable<string>> ChunkBackpackBy(this IEnumerable<string> backpacks,
         int count)
     {
-        return backpacks.Select(backpack => 
+        return backpacks.Select(backpack =>
             backpack.Chunk(backpack.Length / count).Select(compartment => string.Concat(compartment)));
-            
     }
-    
+
     internal static IEnumerable<IEnumerable<string>> GroupBackpacksBy(this IEnumerable<string> backpacks,
         int count)
     {

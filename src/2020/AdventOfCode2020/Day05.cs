@@ -1,5 +1,4 @@
-﻿using AdventOfCodeLib;
-using AdventOfCodeLib.Interfaces;
+﻿using AdventOfCodeLib.Interfaces;
 
 namespace AdventOfCode2020;
 
@@ -31,7 +30,7 @@ public class Day05 : IDay<IEnumerable<string>, int>
         var col = Convert.ToInt32(binaryBoardingPass[7..], 2);
         return row * 8 + col;
     }
-    
+
     private static char ReplaceLetterToBinary(char c)
     {
         return c switch

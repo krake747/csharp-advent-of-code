@@ -1,6 +1,6 @@
 ﻿using System.Collections;
-using Xunit;
 using FluentAssertions;
+using Xunit;
 
 namespace AdventOfCode2021.Tests.Unit;
 
@@ -29,12 +29,11 @@ public class Day4Tests
     }
 }
 
-
 public class Day4Part1TestData : IEnumerable<object[]>
 {
     public IEnumerator<object[]> GetEnumerator()
     {
-        yield return new object[] 
+        yield return new object[]
         {
             new[]
             {
@@ -56,13 +55,16 @@ public class Day4Part1TestData : IEnumerable<object[]>
                 "10 16 15  9 19",
                 "18  8 23 26 20",
                 "22 11 13  6  5",
-                " 2  0 12  3  7",
+                " 2  0 12  3  7"
             },
             4512
         };
     }
 
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
 }
 
 public class Day4Part2TestData : IEnumerable<object[]>
@@ -91,11 +93,14 @@ public class Day4Part2TestData : IEnumerable<object[]>
                 "10 16 15  9 19",
                 "18  8 23 26 20",
                 "22 11 13  6  5",
-                " 2  0 12  3  7",
+                " 2  0 12  3  7"
             },
             1924
         };
     }
 
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
 }

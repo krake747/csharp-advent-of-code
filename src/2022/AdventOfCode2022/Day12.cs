@@ -9,7 +9,7 @@ public sealed class Day12 : IDay<IEnumerable<string>, int>
     public int Part1(IEnumerable<string> input)
     {
         var (start, end, map) = CreateMap(input);
-        
+
         var path = new Queue<Coordinates>();
         path.Enqueue(start);
         while (path.Any())
@@ -72,7 +72,7 @@ public sealed class Day12 : IDay<IEnumerable<string>, int>
             };
         }
     }
-    
+
     private record Coordinates(int Row, int Column)
     {
         internal static IDictionary<Direction, Location> NeighborLocations(Location[,] grid, Coordinates c)
@@ -84,7 +84,7 @@ public sealed class Day12 : IDay<IEnumerable<string>, int>
                 (Direction.Right, c with { Column = c.Column + 1 }),
                 (Direction.Left, c with { Column = c.Column - 1 })
             };
-            
+
             return (
                 from neighbor in neighbors
                 where IsOnGrid(grid, neighbor.Item2)

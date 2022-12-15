@@ -26,7 +26,7 @@ public sealed class Day13 : IDay<IEnumerable<string>, int>
             .Where(p => dividers.Contains(p.Packet))
             .Aggregate(1, (seed, p) => seed * p.Index);
     }
-    
+
     private static int ComparePackets(JsonNode? left, JsonNode? right)
     {
         return (left, right) switch
@@ -35,7 +35,7 @@ public sealed class Day13 : IDay<IEnumerable<string>, int>
             (JsonValue lhs, JsonArray rhs) => ComparePackets(new JsonArray((int)lhs), rhs),
             (JsonArray lhs, JsonValue rhs) => ComparePackets(lhs, new JsonArray((int)rhs)),
             (JsonArray lhs, JsonArray rhs) => lhs.Zip(rhs, ComparePackets)
-                                                 .FirstOrDefault(v => v != 0, lhs.Count - rhs.Count),
+                .FirstOrDefault(v => v != 0, lhs.Count - rhs.Count),
             _ => throw new ArgumentOutOfRangeException($"{left}, {right}")
         };
     }
@@ -44,7 +44,7 @@ public sealed class Day13 : IDay<IEnumerable<string>, int>
     // It uses System.Text.Json.Nodes which was introduced in .NET 6
     private static IEnumerable<JsonNode?> PacketNodes(IEnumerable<string> input)
     {
-        return input.Where(l => !string.IsNullOrWhiteSpace(l))
+        return input.Where(line => !string.IsNullOrWhiteSpace(line))
             .Select(packets => JsonNode.Parse(packets));
     }
 

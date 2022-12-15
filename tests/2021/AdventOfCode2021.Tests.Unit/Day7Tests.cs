@@ -29,22 +29,24 @@ public class Day7Tests
     }
 }
 
-
 public class Day7Part1TestData : IEnumerable<object[]>
 {
     public IEnumerator<object[]> GetEnumerator()
     {
         yield return new object[]
         {
-            new string[]
+            new[]
             {
-                "16,1,2,0,4,2,7,1,2,14",
+                "16,1,2,0,4,2,7,1,2,14"
             },
             37
         };
     }
 
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
 }
 
 public class Day7Part2TestData : IEnumerable<object[]>
@@ -53,13 +55,16 @@ public class Day7Part2TestData : IEnumerable<object[]>
     {
         yield return new object[]
         {
-            new string[]
+            new[]
             {
-                "16,1,2,0,4,2,7,1,2,14",
+                "16,1,2,0,4,2,7,1,2,14"
             },
             168
         };
     }
 
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
 }

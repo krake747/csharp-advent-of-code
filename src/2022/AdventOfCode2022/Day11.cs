@@ -21,7 +21,7 @@ public partial class Day11 : IDay<IEnumerable<string>, long>
     public long Part2(IEnumerable<string> input)
     {
         var monkeys = CreateMonkeys(input).ToList();
-        
+
         // The modulo trick (Modular arithmetic)
         // One needs to guarantee that the divisibility check produces the same result because that check determines
         // the path the items take. One calculates a common multiple divisor x. This keeps the worry numbers

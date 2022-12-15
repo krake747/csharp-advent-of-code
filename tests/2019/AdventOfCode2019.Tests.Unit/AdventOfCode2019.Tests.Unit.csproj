@@ -9,9 +9,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="FluentAssertions" Version="6.8.0" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.0" />
-        <PackageReference Include="xunit" Version="2.4.2" />
+        <PackageReference Include="FluentAssertions" Version="6.8.0"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.0"/>
+        <PackageReference Include="xunit" Version="2.4.2"/>
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
@@ -23,9 +23,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\lib\AdventOfCodeCli\AdventOfCodeCli.csproj" />
-      <ProjectReference Include="..\..\..\lib\AdventOfCodeLib\AdventOfCodeLib.csproj" />
-      <ProjectReference Include="..\..\..\src\2019\AdventOfCode2019\AdventOfCode2019.csproj" />
+        <ProjectReference Include="..\..\..\lib\AdventOfCodeCli\AdventOfCodeCli.csproj"/>
+        <ProjectReference Include="..\..\..\lib\AdventOfCodeLib\AdventOfCodeLib.csproj"/>
+        <ProjectReference Include="..\..\..\src\2019\AdventOfCode2019\AdventOfCode2019.csproj"/>
     </ItemGroup>
 
 </Project>
