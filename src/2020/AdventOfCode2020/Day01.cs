@@ -9,7 +9,7 @@ public sealed class Day01 : IAocDay<int>
         var numbers = input.Lines
             .Select(int.Parse)
             .ToArray();
-        
+
         return (from i in numbers
                 from j in numbers
                 select new[] { i, j })
@@ -22,7 +22,7 @@ public sealed class Day01 : IAocDay<int>
         var numbers = input.Lines
             .Select(int.Parse)
             .ToArray();
-        
+
         return (from i in numbers
                 from j in numbers
                 from k in numbers
