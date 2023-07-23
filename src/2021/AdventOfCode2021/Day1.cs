@@ -20,8 +20,22 @@ public static class Day1
     /// </summary>
     public static int Part2(IEnumerable<int> input)
     {
-        var rollingSums = input.RollingSum(3);
-
+        var rollingSums = RollingSum(input, 3);
         return Part1(rollingSums);
     }
+    
+    private static IEnumerable<int> RollingSum(IEnumerable<int> source, int window)
+    {
+        var numbers = source.ToList();
+        var rollingSums = new List<int>();
+
+        if (numbers.Count < window) return new List<int>();
+
+        Enumerable.Range(0, numbers.Count - window + 1)
+            .ToList()
+            .ForEach(n => rollingSums.Add(numbers.Skip(n).Take(window).Sum()));
+
+        return rollingSums;
+    }
+
 }
