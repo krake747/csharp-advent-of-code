@@ -1,44 +1,44 @@
 using System.ComponentModel;
-using static AdventOfCodeLib.TextFileReaderService;
+using AdventOfCodeLib;
+using static AdventOfCodeLib.AocFileReaderService;
 
 namespace AdventOfCode2020.Tests.Unit;
 
 [Description("Day 04 - Toboggan Trajectory")]
-public class Day04Tests
+public sealed class Day04Tests
 {
     private readonly Day04 _sut;
+    private const string Day = nameof(Day04);
+    private const string TestData = @$"..\..\..\Data\{Day}_Test.txt";
+    private const string TestValidData = @$"..\..\..\Data\{Day}_Test_Valid.txt";
+    private const string TestInvalidData = @$"..\..\..\Data\{Day}_Test_Invalid.txt";
+    private const string RealData = @$"..\..\..\Data\{Day}.txt";
 
+    public static TheoryData<AocInput, long> Part1Data => new()
+    {
+        { ReadInput(TestData), 2 },
+        { ReadInput(RealData), 170 }
+    };
+
+    public static TheoryData<AocInput, long> Part2Data => new()
+    {
+        { ReadInput(TestInvalidData), 0 },
+        { ReadInput(TestValidData), 4 },
+        { ReadInput(RealData), 103 }
+    };
+    
     public Day04Tests()
     {
-        // Arrange
         _sut = new Day04();
     }
-
-    private static string TestData => FetchFile(@"..\..\..\Data\Day04_Test.txt", ReadAsString);
-    private static string RealData => FetchFile(@"..\..\..\Data\Day04.txt", ReadAsString);
-    private static string TestInvalidData => FetchFile(@"..\..\..\Data\Day04_Test_Invalid.txt", ReadAsString);
-    private static string TestValidData => FetchFile(@"..\..\..\Data\Day04_Test_Valid.txt", ReadAsString);
-
-    public static TheoryData<string, int> Part1Data => new()
-    {
-        { TestData, 2 },
-        { RealData, 170 }
-    };
-
-    public static TheoryData<string, int> Part2Data => new()
-    {
-        { TestInvalidData, 0 },
-        { TestValidData, 4 },
-        { RealData, 103 }
-    };
 
     [Theory]
     [MemberData(nameof(Part1Data))]
     [Description("Count the number of valid passports. In your batch file, how many passports are valid?")]
-    public void Part1_ShouldReturnInteger(string values, int expected)
+    public void Part1_ShouldReturnInteger(AocInput input, int expected)
     {
         // Act
-        var result = _sut.Part1(values);
+        var result = Day04.Part1(input);
 
         // Assert
         result.Should().Be(expected);
@@ -47,10 +47,10 @@ public class Day04Tests
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("Count the number of valid passports. In your batch file, how many passports are valid?")]
-    public void Part2_ShouldReturnInteger(string values, int expected)
+    public void Part2_ShouldReturnInteger(AocInput input, int expected)
     {
         // Act
-        var result = _sut.Part2(values);
+        var result = Day04.Part2(input);
 
         // Assert
         result.Should().Be(expected);

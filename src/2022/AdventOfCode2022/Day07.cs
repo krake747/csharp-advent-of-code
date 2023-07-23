@@ -1,18 +1,17 @@
 ﻿using System.Text.RegularExpressions;
 using AdventOfCodeLib;
-using AdventOfCodeLib.Interfaces;
 
 namespace AdventOfCode2022;
 
 [AocPuzzle(2022, 7, "No Space Left On Device")]
-public class Day07 : IDay<IEnumerable<string>, int>
+public sealed class Day07 : IAocDay<int>
 {
-    public int Part1(IEnumerable<string> input)
+    public static int Part1(AocInput input)
     {
         var paths = new Stack<string>();
         var directories = new Dictionary<string, int> { { "/", 0 } };
 
-        foreach (var line in input)
+        foreach (var line in input.Lines)
         {
             var parameters = line.Split(' ');
             if (Regex.IsMatch(line, @"^\$ cd (\w+|/)"))
@@ -32,7 +31,7 @@ public class Day07 : IDay<IEnumerable<string>, int>
         return directories.Where(kvp => kvp.Value < 100000).Sum(kvp => kvp.Value);
     }
 
-    public int Part2(IEnumerable<string> input)
+    public static int Part2(AocInput input)
     {
         const int totalDiskSpace = 70000000;
         const int minimumRequiredDiskSpace = 30000000;
@@ -40,7 +39,7 @@ public class Day07 : IDay<IEnumerable<string>, int>
         var paths = new Stack<string>();
         var directories = new Dictionary<string, int> { { "/", 0 } };
 
-        foreach (var line in input)
+        foreach (var line in input.Lines)
         {
             var parameters = line.Split(' ');
             if (Regex.IsMatch(line, @"^\$ cd (\w+|/)"))

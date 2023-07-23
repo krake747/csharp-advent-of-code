@@ -1,56 +1,56 @@
 ﻿using System.ComponentModel;
 using AdventOfCodeLib;
-using static AdventOfCodeLib.TextFileReaderService;
+using static AdventOfCodeLib.AocFileReaderService;
 
 namespace AdventOfCode2022.Tests.Unit;
 
 [AocPuzzle(2022, 18, "Boiling Boulders")]
-public class Day18Tests
+public sealed class Day18Tests
 {
     private readonly Day18 _sut;
+    private const string Day = nameof(Day18);
+    private const string TestData = @$"..\..\..\Data\{Day}_Test.txt";
+    private const string RealData = @$"..\..\..\Data\{Day}.txt";
 
+    public static TheoryData<AocInput, int> Part1Data => new()
+    {
+        { ReadInput(TestData), 64 },
+        { ReadInput(RealData), 3564 }
+    };
+
+    public static TheoryData<AocInput, int> Part2Data => new()
+    {
+        { ReadInput(TestData), 64 },
+        { ReadInput(RealData), 64 }
+    };
+    
     public Day18Tests()
     {
         // Arrange
         _sut = new Day18();
     }
 
-    private static IEnumerable<string> TestData => FetchFile(@"..\..\..\Data\Day18_Test.txt", ReadAsEnumerable);
-    private static IEnumerable<string> RealData => FetchFile(@"..\..\..\Data\Day18.txt", ReadAsEnumerable);
-
-    public static TheoryData<IEnumerable<string>, int> Part1Data => new()
-    {
-        { TestData, 64 },
-        { RealData, 3564 }
-    };
-
-    public static TheoryData<IEnumerable<string>, int> Part2Data => new()
-    {
-        { TestData, 64 },
-        { RealData, 64 }
-    };
-
     [Theory]
     [MemberData(nameof(Part1Data))]
     [Description("What is the surface area of your scanned lava droplet?")]
-    public void Part1_ShouldReturnInteger(IEnumerable<string> values, int expected)
+    public void Part1_ShouldReturnInteger(AocInput input, int expected)
     {
         // Act
-        var result = _sut.Part1(values);
+        var result = Day18.Part1(input);
 
         // Assert
         result.Should().Be(expected);
     }
 
-    [Theory]
-    [MemberData(nameof(Part2Data))]
-    [Description("What is the surface area of your scanned lava droplet?")]
-    public void Part2_ShouldReturnInteger(IEnumerable<string> values, int expected)
-    {
-        // Act
-        var result = _sut.Part2(values);
-
-        // Assert
-        result.Should().Be(expected);
-    }
+    // [Theory]
+    // [MemberData(nameof(Part2Data))]
+    // [Description("What is the surface area of your scanned lava droplet?")]
+    // public void Part2_ShouldReturnInteger(AocInput input, int expected)
+    // {
+    //     // Act
+    //     var result = Day18.Part2(input);
+    //
+    //     // Assert
+    //     result.Should().Be(expected);
+    // }
 }

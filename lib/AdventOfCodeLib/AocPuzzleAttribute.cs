@@ -1,7 +1,7 @@
 ﻿namespace AdventOfCodeLib;
 
 [AttributeUsage(AttributeTargets.Class)]
-public class AocPuzzleAttribute : Attribute
+public sealed class AocPuzzleAttribute : Attribute
 {
     public AocPuzzleAttribute(int year, int day, string name)
     {

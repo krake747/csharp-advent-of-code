@@ -1,20 +1,19 @@
 ﻿using Microsoft.Extensions.Configuration;
 using TextCopy;
 
+var (year, day) = ReadArgs(args);
+
 var config = new ConfigurationBuilder()
     .AddUserSecrets<Program>()
     .Build();
 
-var session = config["Session"];
-var (year, day) = ReadArgs(args);
-
-using var httpClient = new HttpClient();
 var url = $"https://adventofcode.com/{year}/day/{day}/input";
-httpClient.DefaultRequestHeaders.Add("Cookie", $"session={session}");
+using var httpClient = new HttpClient();
+httpClient.DefaultRequestHeaders.Add("Cookie", $"session={config["Session"]}");
 
 var input = await GetInput(httpClient, url);
 
-if (input == "Error")
+if (input is "Error")
 {
     Console.WriteLine("Error while fetching input data");
     return;
@@ -68,8 +67,7 @@ static async Task<string> GetInput(HttpClient httpClient, string url)
 
 static (string, string) ReadArgs(IReadOnlyList<string> args)
 {
-    if (args.Count != 0)
-        return (args[0], args[1]);
+    if (args.Count is not 0) return (args[0], args[1]);
 
     Console.Write("Year: ");
     var year = Console.ReadLine()!;

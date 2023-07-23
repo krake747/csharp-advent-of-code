@@ -1,41 +1,42 @@
 using System.ComponentModel;
-using static AdventOfCodeLib.TextFileReaderService;
+using AdventOfCodeLib;
+using static AdventOfCodeLib.AocFileReaderService;
 
 namespace AdventOfCode2020.Tests.Unit;
 
 [Description("Day 01 - Report Repair")]
-public class Day01Tests
+public sealed class Day01Tests
 {
     private readonly Day01 _sut;
+    private const string Day = nameof(Day01);
+    private const string TestData = @$"..\..\..\Data\{Day}_Test.txt";
+    private const string RealData = @$"..\..\..\Data\{Day}.txt";
 
+    public static TheoryData<AocInput, int> Part1Data => new()
+    {
+        { ReadInput(TestData), 514579 },
+        { ReadInput(RealData), 935419 }
+    };
+
+    public static TheoryData<AocInput, int> Part2Data => new()
+    {
+        { ReadInput(TestData), 241861950 },
+        { ReadInput(RealData), 49880012 }
+    };
+    
     public Day01Tests()
     {
         // Arrange
         _sut = new Day01();
     }
 
-    private static IEnumerable<string> TestData => FetchFile(@"..\..\..\Data\Day01_Test.txt", ReadAsEnumerable);
-    private static IEnumerable<string> RealData => FetchFile(@"..\..\..\Data\Day01.txt", ReadAsEnumerable);
-
-    public static TheoryData<IEnumerable<string>, int> Part1Data => new()
-    {
-        { TestData, 514579 },
-        { RealData, 935419 }
-    };
-
-    public static TheoryData<IEnumerable<string>, int> Part2Data => new()
-    {
-        { TestData, 241861950 },
-        { RealData, 49880012 }
-    };
-
     [Theory]
     [MemberData(nameof(Part1Data))]
     [Description("Find the two entries that sum to 2020; what do you get if you multiply them together?")]
-    public void Part1_ShouldReturnInteger(IEnumerable<string> values, int expected)
+    public void Part1_ShouldReturnInteger(AocInput input, int expected)
     {
         // Act
-        var result = _sut.Part1(values);
+        var result = Day01.Part1(input);
 
         // Assert
         result.Should().Be(expected);
@@ -44,10 +45,10 @@ public class Day01Tests
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("In your expense report, what is the product of the three entries that sum to 2020?")]
-    public void Part2_ShouldReturnInteger(IEnumerable<string> values, int expected)
+    public void Part2_ShouldReturnInteger(AocInput input, int expected)
     {
         // Act
-        var result = _sut.Part2(values);
+        var result = Day01.Part2(input);
 
         // Assert
         result.Should().Be(expected);

@@ -1,20 +1,19 @@
 ﻿using AdventOfCodeLib;
-using AdventOfCodeLib.Interfaces;
 
 namespace AdventOfCode2022;
 
 [AocPuzzle(2022, 8, "Treetop Tree House")]
-public class Day08 : IDay<IEnumerable<string>, int>
+public sealed class Day08 : IAocDay<int>
 {
-    public int Part1(IEnumerable<string> input)
+    public static int Part1(AocInput input)
     {
-        var treeCoverGrid = DetermineForest(input, TreeCoverScore);
+        var treeCoverGrid = DetermineForest(input.Lines, TreeCoverScore);
         return treeCoverGrid.Cast<int>().Sum();
     }
 
-    public int Part2(IEnumerable<string> input)
+    public static int Part2(AocInput input)
     {
-        var treeScenicGrid = DetermineForest(input, TreeScenicScore);
+        var treeScenicGrid = DetermineForest(input.Lines, TreeScenicScore);
         return treeScenicGrid.Cast<int>().Max();
     }
 

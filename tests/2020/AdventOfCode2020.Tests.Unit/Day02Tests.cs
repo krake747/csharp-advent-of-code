@@ -1,41 +1,41 @@
 using System.ComponentModel;
-using static AdventOfCodeLib.TextFileReaderService;
+using AdventOfCodeLib;
+using static AdventOfCodeLib.AocFileReaderService;
 
 namespace AdventOfCode2020.Tests.Unit;
 
 [Description("Day 02 - Password Philosophy")]
-public class Day02Tests
+public sealed class Day02Tests
 {
     private readonly Day02 _sut;
+    private const string Day = nameof(Day02);
+    private const string TestData = @$"..\..\..\Data\{Day}_Test.txt";
+    private const string RealData = @$"..\..\..\Data\{Day}.txt";
 
+    public static TheoryData<AocInput, int> Part1Data => new()
+    {
+        { ReadInput(TestData), 2 },
+        { ReadInput(RealData), 572 }
+    };
+
+    public static TheoryData<AocInput, int> Part2Data => new()
+    {
+        { ReadInput(TestData), 1 },
+        { ReadInput(RealData), 306 }
+    };
+    
     public Day02Tests()
     {
-        // Arrange
         _sut = new Day02();
     }
-
-    private static IEnumerable<string> TestData => FetchFile(@"..\..\..\Data\Day02_Test.txt", ReadAsEnumerable);
-    private static IEnumerable<string> RealData => FetchFile(@"..\..\..\Data\Day02.txt", ReadAsEnumerable);
-
-    public static TheoryData<IEnumerable<string>, int> Part1Data => new()
-    {
-        { TestData, 2 },
-        { RealData, 572 }
-    };
-
-    public static TheoryData<IEnumerable<string>, int> Part2Data => new()
-    {
-        { TestData, 1 },
-        { RealData, 306 }
-    };
 
     [Theory]
     [MemberData(nameof(Part1Data))]
     [Description("How many passwords are valid according to their policies?")]
-    public void Part1_ShouldReturnInteger(IEnumerable<string> values, int expected)
+    public void Part1_ShouldReturnInteger(AocInput input, int expected)
     {
         // Act
-        var result = _sut.Part1(values);
+        var result = Day02.Part1(input);
 
         // Assert
         result.Should().Be(expected);
@@ -44,10 +44,10 @@ public class Day02Tests
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("How many passwords are valid according to the new interpretation of the policies?")]
-    public void Part2_ShouldReturnInteger(IEnumerable<string> values, int expected)
+    public void Part2_ShouldReturnInteger(AocInput input, int expected)
     {
         // Act
-        var result = _sut.Part2(values);
+        var result = Day02.Part2(input);
 
         // Assert
         result.Should().Be(expected);

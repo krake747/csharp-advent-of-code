@@ -4,18 +4,18 @@ using AdventOfCodeLib;
 namespace AdventOfCode2022;
 
 [AocPuzzle(2022, 10, "Cathode-Ray Tube")]
-public class Day10
+public sealed class Day10 : IAocDay<int, string>
 {
-    public int Part1(IEnumerable<string> input)
+    public static int Part1(AocInput input)
     {
         var cycles = ArithmeticSequence(20, 40, 6).ToArray();
-        return ProcessSignals(input).Where(signal => cycles.Contains(signal.Cycle))
+        return ProcessSignals(input.Lines).Where(signal => cycles.Contains(signal.Cycle))
             .Sum(s => s.Cycle * s.X);
     }
 
-    public string Part2(IEnumerable<string> input)
+    public static string Part2(AocInput input)
     {
-        var signals = ProcessSignals(input).Chunk(40).ToArray();
+        var signals = ProcessSignals(input.Lines).Chunk(40).ToArray();
         var screenRows = new List<string>();
         foreach (var signal in signals)
         {

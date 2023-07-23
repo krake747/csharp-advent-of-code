@@ -1,18 +1,18 @@
-﻿using AdventOfCodeLib.Interfaces;
+﻿using AdventOfCodeLib;
 
 namespace AdventOfCode2020;
 
-public class Day03 : IDay<IEnumerable<string>, long>
+public sealed class Day03 : IAocDay<long>
 {
-    public long Part1(IEnumerable<string> input)
+    public static long Part1(AocInput input)
     {
-        var treeMap = CreateTreeMap(input);
+        var treeMap = CreateTreeMap(input.Lines);
         return CountTreesOnSlope(treeMap, new Slope(1, 3));
     }
 
-    public long Part2(IEnumerable<string> input)
+    public static long Part2(AocInput input)
     {
-        var treeMap = CreateTreeMap(input);
+        var treeMap = CreateTreeMap(input.Lines);
         return new[]
             {
                 new Slope(1, 1),

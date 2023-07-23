@@ -1,15 +1,14 @@
-﻿using AdventOfCode2021;
-using static AdventOfCodeLib.TextFileReaderService;
+﻿
 
-var inputDay1 = FetchFile(@"..\..\..\Inputs\day01.txt", ReadAsEnumerable)
-    .Select(int.Parse)
-    .ToList();
-
-var result1 = Day1.Part1(inputDay1);
-var result2 = Day1.Part2(inputDay1);
-
-Console.WriteLine(result1);
-Console.WriteLine(result2);
+// var inputDay1 = FetchFile(@"..\..\..\Inputs\day01.txt", StreamReader)
+//     .Select(int.Parse)
+//     .ToList();
+//
+// var result1 = Day1.Part1(inputDay1);
+// var result2 = Day1.Part2(inputDay1);
+//
+// Console.WriteLine(result1);
+// Console.WriteLine(result2);
 
 //var inputDay2 = parser.Fetch("day02.txt")
 //                      .ToList();

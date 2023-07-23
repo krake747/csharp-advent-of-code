@@ -1,19 +1,19 @@
-﻿using AdventOfCodeLib.Interfaces;
+﻿using AdventOfCodeLib;
 
 namespace AdventOfCode2022;
 
-public class Day04 : IDay<IEnumerable<string>, int>
+public sealed class Day04 : IAocDay<int>
 {
-    public int Part1(IEnumerable<string> input)
+    public static int Part1(AocInput input)
     {
-        return input.Select(CreateAssignedSections)
+        return input.Lines.Select(CreateAssignedSections)
             .Select(sections => sections.Chunk(2))
             .Count(sectionsRanges => SectionsRanges(sectionsRanges, AreBoundsWithin));
     }
 
-    public int Part2(IEnumerable<string> input)
+    public static int Part2(AocInput input)
     {
-        return input.Select(CreateAssignedSections)
+        return input.Lines.Select(CreateAssignedSections)
             .Select(sections => sections.Chunk(2))
             .Count(sectionsRanges => SectionsRanges(sectionsRanges, AreBoundsOverlapping));
     }

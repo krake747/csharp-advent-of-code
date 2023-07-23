@@ -1,10 +1,11 @@
 using System.ComponentModel;
 using AdventOfCodeLib;
+using FluentAssertions;
 using static AdventOfCodeLib.AocFileReaderService;
 
-namespace AdventOfCode2019.Tests.Unit;
+namespace AdventOfCode2015.Tests.Unit;
 
-[AocPuzzle(2022, 1, "The Tyranny of the Rocket Equation")]
+[Description("Day 01 - Not Quite Lisp")]
 public sealed class Day01Tests
 {
     private readonly Day01 _sut;
@@ -14,26 +15,25 @@ public sealed class Day01Tests
 
     public static TheoryData<AocInput, int> Part1Data => new()
     {
-        { ReadInput(TestData), 34241 },
-        { ReadInput(RealData), 3296269 }
+        { ReadInput(TestData), 2 },
+        { ReadInput(RealData), 2 }
     };
 
     public static TheoryData<AocInput, int> Part2Data => new()
     {
-        { ReadInput(TestData), 51316 },
-        { ReadInput(RealData), 4941547 }
+        { ReadInput(TestData), 2 },
+        { ReadInput(RealData), 2 }
     };
     
     public Day01Tests()
     {
-        // Arrange
         _sut = new Day01();
     }
-    
+
     [Theory]
     [MemberData(nameof(Part1Data))]
-    [Description("What is the sum of the fuel requirements for all of the modules on your spacecraft?")]
-    public void Part1_ShouldReturnInteger(AocInput input, int expected)
+    [Description("How many total Calories is that Elf carrying?")]
+    public void Part1_ShouldReturnInteger_WhenSantaDeliversPresents(AocInput input, int expected)
     {
         // Act
         var result = Day01.Part1(input);
@@ -44,8 +44,9 @@ public sealed class Day01Tests
 
     [Theory]
     [MemberData(nameof(Part2Data))]
-    [Description("What is the sum of the fuel requirements for all of the modules on your spacecraft?")]
-    public void Part2_ShouldReturnInteger(AocInput input, int expected)
+    [Description("How many Calories are those Elves carrying in total?")]
+    public void Part2_ShouldReturnInteger_WhenSearchingTheTopThreeElvesCarryingTheMostCalories(AocInput input,
+        int expected)
     {
         // Act
         var result = Day01.Part2(input);

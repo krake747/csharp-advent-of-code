@@ -1,18 +1,18 @@
 ﻿using System.Text.RegularExpressions;
-using AdventOfCodeLib.Interfaces;
+using AdventOfCodeLib;
 
 namespace AdventOfCode2020;
 
-public class Day04 : IDay<string, int>
+public sealed class Day04 : IAocDay<int>
 {
-    public int Part1(string input)
+    public static int Part1(AocInput input)
     {
-        return CreatePassports(input)
+        return CreatePassports(input.Text)
             .Count(passport => AreAllKeysPresent(passport) || OptionalCountryId(passport));
     }
 
-    public int Part2(string input) =>
-        CreatePassports(input)
+    public static int Part2(AocInput input) =>
+        CreatePassports(input.Text)
             .Count(AreAllPassportValuesValid);
 
     private static bool AreAllPassportValuesValid(IDictionary<string, string> passport) =>

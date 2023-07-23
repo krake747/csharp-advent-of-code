@@ -1,41 +1,41 @@
 ﻿using System.ComponentModel;
-using static AdventOfCodeLib.TextFileReaderService;
+using AdventOfCodeLib;
+using static AdventOfCodeLib.AocFileReaderService;
 
 namespace AdventOfCode2022.Tests.Unit;
 
 [Description("Day 02 - Rock Paper Scissors")]
-public class Day02Tests
+public sealed class Day02Tests
 {
     private readonly Day02 _sut;
+    private const string Day = nameof(Day02);
+    private const string TestData = @$"..\..\..\Data\{Day}_Test.txt";
+    private const string RealData = @$"..\..\..\Data\{Day}.txt";
 
+    public static TheoryData<AocInput, int> Part1Data => new()
+    {
+        { ReadInput(TestData), 15 },
+        { ReadInput(RealData), 9241 }
+    };
+
+    public static TheoryData<AocInput, int> Part2Data => new()
+    {
+        { ReadInput(TestData), 12 },
+        { ReadInput(RealData), 14610 }
+    };
+    
     public Day02Tests()
     {
-        // Arrange
         _sut = new Day02();
     }
-
-    private static IEnumerable<string> TestData => FetchFile(@"..\..\..\Data\Day02_Test.txt", ReadAsEnumerable);
-    private static IEnumerable<string> RealData => FetchFile(@"..\..\..\Data\Day02.txt", ReadAsEnumerable);
-
-    public static TheoryData<IEnumerable<string>, int> Part1Data => new()
-    {
-        { TestData, 15 },
-        { RealData, 9241 }
-    };
-
-    public static TheoryData<IEnumerable<string>, int> Part2Data => new()
-    {
-        { TestData, 12 },
-        { RealData, 14610 }
-    };
 
     [Theory]
     [MemberData(nameof(Part1Data))]
     [Description("What would your total score be if everything goes exactly according to your strategy guide?")]
-    public void Part1_ShouldReturnInteger_WhenFollowingTheShapeStrategyGuide(IEnumerable<string> values, int expected)
+    public void Part1_ShouldReturnInteger_WhenFollowingTheShapeStrategyGuide(AocInput input, int expected)
     {
         // Act
-        var result = _sut.Part1(values);
+        var result = Day02.Part1(input);
 
         // Assert
         result.Should().Be(expected);
@@ -44,10 +44,10 @@ public class Day02Tests
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("What would your total score be if everything goes exactly according to your strategy guide?")]
-    public void Part2_ShouldReturnInteger_WhenFollowingTheOutcomeStrategyGuide(IEnumerable<string> values, int expected)
+    public void Part2_ShouldReturnInteger_WhenFollowingTheOutcomeStrategyGuide(AocInput input, int expected)
     {
         // Act
-        var result = _sut.Part2(values);
+        var result = Day02.Part2(input);
 
         // Assert
         result.Should().Be(expected);

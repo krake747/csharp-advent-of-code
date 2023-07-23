@@ -2,25 +2,24 @@
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using AdventOfCodeLib;
-using AdventOfCodeLib.Interfaces;
 
 namespace AdventOfCode2022;
 
 [AocPuzzle(2022, 13, "Distress Signal")]
-public sealed class Day13 : IDay<IEnumerable<string>, int>
+public sealed class Day13 : IAocDay<int>
 {
-    public int Part1(IEnumerable<string> input)
+    public static int Part1(AocInput input)
     {
-        return PacketNodes(input).Chunk(2)
+        return PacketNodes(input.Lines).Chunk(2)
             .Select((pair, idx) => (Index: idx + 1, Order: ComparePackets(pair[0], pair[^1])))
             .Where(packets => packets.Order < 0)
             .Sum(packets => packets.Index);
     }
 
-    public int Part2(IEnumerable<string> input)
+    public static int Part2(AocInput input)
     {
         var dividers = PacketNodes(new[] { "[[2]]", "[[6]]" }).ToImmutableList();
-        var packets = PacketNodes(input).Concat(dividers).ToImmutableList();
+        var packets = PacketNodes(input.Lines).Concat(dividers).ToImmutableList();
         return packets.Sort(ComparePackets)
             .Select((packet, idx) => (Index: idx + 1, Packet: packet))
             .Where(p => dividers.Contains(p.Packet))

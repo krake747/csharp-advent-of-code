@@ -1,19 +1,18 @@
 ﻿using AdventOfCodeLib;
-using AdventOfCodeLib.Interfaces;
 
 namespace AdventOfCode2022;
 
 [AocPuzzle(2022, 18, "Boiling Boulders")]
-public sealed class Day18 : IDay<IEnumerable<string>, int>
+public sealed class Day18 : IAocDay<int>
 {
-    public int Part1(IEnumerable<string> input)
+    public static int Part1(AocInput input)
     {
-        var lavaLocations = LavaLocations(input).ToHashSet();
+        var lavaLocations = LavaLocations(input.Lines).ToHashSet();
         return lavaLocations.SelectMany(Neighbors)
             .Count(lavaLocation => !lavaLocations.Contains(lavaLocation));
     }
 
-    public int Part2(IEnumerable<string> input) => 1;
+    public static int Part2(AocInput input) => 1;
 
     private static IEnumerable<Point> LavaLocations(IEnumerable<string> input)
     {

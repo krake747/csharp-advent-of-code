@@ -1,12 +1,15 @@
-﻿using AdventOfCodeLib.Interfaces;
+﻿using AdventOfCodeLib;
 
 namespace AdventOfCode2020;
 
-public class Day01 : IDay<IEnumerable<string>, int>
+public sealed class Day01 : IAocDay<int>
 {
-    public int Part1(IEnumerable<string> input)
+    public static int Part1(AocInput input)
     {
-        var numbers = input.Select(int.Parse).ToArray();
+        var numbers = input.Lines
+            .Select(int.Parse)
+            .ToArray();
+        
         return (from i in numbers
                 from j in numbers
                 select new[] { i, j })
@@ -14,9 +17,12 @@ public class Day01 : IDay<IEnumerable<string>, int>
             .Aggregate((i, j) => i * j);
     }
 
-    public int Part2(IEnumerable<string> input)
+    public static int Part2(AocInput input)
     {
-        var numbers = input.Select(int.Parse).ToArray();
+        var numbers = input.Lines
+            .Select(int.Parse)
+            .ToArray();
+        
         return (from i in numbers
                 from j in numbers
                 from k in numbers

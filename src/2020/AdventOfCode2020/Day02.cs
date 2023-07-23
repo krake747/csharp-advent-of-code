@@ -1,16 +1,18 @@
-﻿using AdventOfCodeLib.Interfaces;
+﻿using AdventOfCodeLib;
 
 namespace AdventOfCode2020;
 
-public class Day02 : IDay<IEnumerable<string>, int>
+public sealed class Day02 : IAocDay<int>
 {
-    public int Part1(IEnumerable<string> input) =>
-        input.Select(ParseLine)
+    public static int Part1(AocInput input) =>
+        input.Lines
+            .Select(ParseLine)
             .Select(CreatePasswordPolicy)
             .Count(IsPasswordPolicyValid);
 
-    public int Part2(IEnumerable<string> input) =>
-        input.Select(ParseLine)
+    public static int Part2(AocInput input) =>
+        input.Lines
+            .Select(ParseLine)
             .Select(CreatePasswordPolicy)
             .Count(IsNewPasswordPolicyValid);
 
@@ -39,5 +41,5 @@ public class Day02 : IDay<IEnumerable<string>, int>
             .Count(m => m == passwordPolicy.Letter) == 1;
     }
 
-    private record PasswordPolicy(int Min, int Max, char Letter, string Password);
+    private sealed record PasswordPolicy(int Min, int Max, char Letter, string Password);
 }

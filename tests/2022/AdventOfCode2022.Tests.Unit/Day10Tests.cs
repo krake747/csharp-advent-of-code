@@ -1,16 +1,35 @@
 ﻿using System.ComponentModel;
 using AdventOfCodeLib;
 using Xunit.Abstractions;
-using static AdventOfCodeLib.TextFileReaderService;
+using static AdventOfCodeLib.AocFileReaderService;
 
 namespace AdventOfCode2022.Tests.Unit;
 
 [AocPuzzle(2022, 10, "Cathode-Ray Tube")]
-public class Day10Tests
+public sealed class Day10Tests
 {
     private readonly Day10 _sut;
     private readonly ITestOutputHelper _testOutputHelper;
+    private const string Day = nameof(Day10);
+    private const string TestData = @$"..\..\..\Data\{Day}_Test.txt";
+    private const string RealData = @$"..\..\..\Data\{Day}.txt";
 
+    public static TheoryData<AocInput, int> Part1Data => new()
+    {
+        { ReadInput(TestData), 13140 },
+        { ReadInput(RealData), 13740 }
+    };
+
+    public static TheoryData<AocInput> Part2TestData => new()
+    {
+        ReadInput(TestData)
+    };
+
+    public static TheoryData<AocInput> Part2RealData => new()
+    {
+        ReadInput(RealData)
+    };
+    
     public Day10Tests(ITestOutputHelper testOutputHelper)
     {
         _testOutputHelper = testOutputHelper;
@@ -19,33 +38,13 @@ public class Day10Tests
         _sut = new Day10();
     }
 
-    private static IEnumerable<string> TestData => FetchFile(@"..\..\..\Data\Day10_Test.txt", ReadAsEnumerable);
-    private static IEnumerable<string> RealData => FetchFile(@"..\..\..\Data\Day10.txt", ReadAsEnumerable);
-
-    public static TheoryData<IEnumerable<string>, int> Part1Data => new()
-    {
-        { TestData, 13140 },
-        { RealData, 13740 }
-    };
-
-    public static TheoryData<IEnumerable<string>> Part2TestData => new()
-    {
-        TestData
-    };
-
-    public static TheoryData<IEnumerable<string>> Part2RealData => new()
-    {
-        RealData
-    };
-
-
     [Theory]
     [MemberData(nameof(Part1Data))]
     [Description("What is the sum of these six signal strengths?")]
-    public void Part1_ShouldReturnInteger(IEnumerable<string> values, int expected)
+    public void Part1_ShouldReturnInteger(AocInput input, int expected)
     {
         // Act
-        var result = _sut.Part1(values);
+        var result = Day10.Part1(input);
 
         // Assert
         result.Should().Be(expected);
@@ -54,7 +53,7 @@ public class Day10Tests
     [Theory]
     [MemberData(nameof(Part2TestData))]
     [Description("What eight capital letters appear on your CRT?")]
-    public void Part2_ShouldWriteToOutputTestResult(IEnumerable<string> values)
+    public void Part2_ShouldWriteToOutputTestResult(AocInput input)
     {
         // Arrange
         const string expected =
@@ -66,7 +65,7 @@ public class Day10Tests
             "#######.......#######.......#######.....";
 
         // Act
-        var result = _sut.Part2(values);
+        var result = Day10.Part2(input);
 
         // Assert
         result.Should().Be(expected);
@@ -78,7 +77,7 @@ public class Day10Tests
     [Theory]
     [MemberData(nameof(Part2RealData))]
     [Description("What eight capital letters appear on your CRT?")]
-    public void Part2_ShouldWriteToOutputRealResult(IEnumerable<string> values)
+    public void Part2_ShouldWriteToOutputRealResult(AocInput input)
     {
         // Arrange
         const string expected =
@@ -90,7 +89,7 @@ public class Day10Tests
             "####..##..#....#..#.#....####..##..####.";
 
         // Act
-        var result = _sut.Part2(values);
+        var result = Day10.Part2(input);
 
         // Assert
         result.Should().Be(expected);

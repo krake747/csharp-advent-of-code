@@ -1,40 +1,40 @@
 using System.ComponentModel;
-using static AdventOfCodeLib.TextFileReaderService;
+using AdventOfCodeLib;
+using static AdventOfCodeLib.AocFileReaderService;
 
 namespace AdventOfCode2020.Tests.Unit;
 
 [Description("Day 05 - Binary Boarding")]
-public class Day05Tests
+public sealed class Day05Tests
 {
     private readonly Day05 _sut;
+    private const string Day = nameof(Day05);
+    private const string TestData = @$"..\..\..\Data\{Day}_Test.txt";
+    private const string RealData = @$"..\..\..\Data\{Day}.txt";
 
+    public static TheoryData<AocInput, int> Part1Data => new()
+    {
+        { ReadInput(TestData), 820 },
+        { ReadInput(RealData), 930 }
+    };
+
+    public static TheoryData<AocInput, int> Part2Data => new()
+    {
+        { ReadInput(RealData), 515 }
+    };
+    
     public Day05Tests()
     {
-        // Arrange
         _sut = new Day05();
     }
-
-    private static IEnumerable<string> TestData => FetchFile(@"..\..\..\Data\Day05_Test.txt", ReadAsEnumerable);
-    private static IEnumerable<string> RealData => FetchFile(@"..\..\..\Data\Day05.txt", ReadAsEnumerable);
-
-    public static TheoryData<IEnumerable<string>, int> Part1Data => new()
-    {
-        { TestData, 820 },
-        { RealData, 930 }
-    };
-
-    public static TheoryData<IEnumerable<string>, int> Part2Data => new()
-    {
-        { RealData, 515 }
-    };
 
     [Theory]
     [MemberData(nameof(Part1Data))]
     [Description("What is the highest seat ID on a boarding pass?")]
-    public void Part1_ShouldReturnInteger(IEnumerable<string> values, int expected)
+    public void Part1_ShouldReturnInteger(AocInput input, int expected)
     {
         // Act
-        var result = _sut.Part1(values);
+        var result = Day05.Part1(input);
 
         // Assert
         result.Should().Be(expected);
@@ -43,10 +43,10 @@ public class Day05Tests
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("What is the ID of your seat?")]
-    public void Part2_ShouldReturnInteger(IEnumerable<string> values, int expected)
+    public void Part2_ShouldReturnInteger(AocInput input, int expected)
     {
         // Act
-        var result = _sut.Part2(values);
+        var result = Day05.Part2(input);
 
         // Assert
         result.Should().Be(expected);

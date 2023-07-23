@@ -1,12 +1,12 @@
-﻿using AdventOfCodeLib.Interfaces;
+﻿using AdventOfCodeLib;
 
 namespace AdventOfCode2022;
 
-public class Day06 : IDay<string, int>
+public sealed class Day06 : IAocDay<int>
 {
-    public int Part1(string input) => SignalMarker(input, 4);
+    public static int Part1(AocInput input) => SignalMarker(input.Text, 4);
 
-    public int Part2(string input) => SignalMarker(input, 14);
+    public static int Part2(AocInput input) => SignalMarker(input.Text, 14);
 
     private static int SignalMarker(string input, int window)
     {

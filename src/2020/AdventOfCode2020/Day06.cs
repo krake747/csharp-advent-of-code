@@ -1,20 +1,22 @@
 ﻿using System.Collections.Immutable;
-using AdventOfCodeLib.Interfaces;
+using AdventOfCodeLib;
 
 namespace AdventOfCode2020;
 
-public class Day06 : IDay<string, int>
+public sealed class Day06 : IAocDay<int>
 {
-    public int Part1(string input)
+    public static int Part1(AocInput input)
     {
-        return input.Split("\n\n")
+        return input.Text
+            .Split("\n\n")
             .Select(groups => groups.Split("\n").Select(answers => answers))
             .Sum(answers => answers.ToWhichYesWasAnsweredBy(Anyone).Count);
     }
 
-    public int Part2(string input)
+    public static int Part2(AocInput input)
     {
-        return input.Split("\n\n")
+        return input.Text
+            .Split("\n\n")
             .Select(groups => groups.Split("\n").Select(answers => answers))
             .Sum(answers => answers.ToWhichYesWasAnsweredBy(Everyone).Count);
     }

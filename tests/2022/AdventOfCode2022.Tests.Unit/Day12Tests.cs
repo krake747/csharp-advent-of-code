@@ -1,43 +1,43 @@
 ﻿using System.ComponentModel;
 using AdventOfCodeLib;
-using static AdventOfCodeLib.TextFileReaderService;
+using static AdventOfCodeLib.AocFileReaderService;
 
 namespace AdventOfCode2022.Tests.Unit;
 
 [AocPuzzle(2022, 12, "Hill Climbing Algorithm")]
-public class Day12Tests
+public sealed class Day12Tests
 {
     private readonly Day12 _sut;
+    private const string Day = nameof(Day12);
+    private const string TestData = @$"..\..\..\Data\{Day}_Test.txt";
+    private const string RealData = @$"..\..\..\Data\{Day}.txt";
 
+    public static TheoryData<AocInput, int> Part1Data => new()
+    {
+        { ReadInput(TestData), 1 },
+        { ReadInput(RealData), 1 }
+    };
+
+    public static TheoryData<AocInput, int> Part2Data => new()
+    {
+        { ReadInput(TestData), 1 },
+        { ReadInput(RealData), 1 }
+    };
+    
     public Day12Tests()
     {
         // Arrange
         _sut = new Day12();
     }
 
-    private static IEnumerable<string> TestData => FetchFile(@"..\..\..\Data\Day12_Test.txt", ReadAsEnumerable);
-    private static IEnumerable<string> RealData => FetchFile(@"..\..\..\Data\Day12.txt", ReadAsEnumerable);
-
-    public static TheoryData<IEnumerable<string>, int> Part1Data => new()
-    {
-        { TestData, 1 },
-        { RealData, 1 }
-    };
-
-    public static TheoryData<IEnumerable<string>, int> Part2Data => new()
-    {
-        { TestData, 1 },
-        { RealData, 1 }
-    };
-
     [Theory]
     [MemberData(nameof(Part1Data))]
     [Description("What is the fewest steps required to move from your current position to the location that should " +
                  "get the best signal?")]
-    public void Part1_ShouldReturnInteger(IEnumerable<string> values, int expected)
+    public void Part1_ShouldReturnInteger(AocInput input, int expected)
     {
         // Act
-        var result = _sut.Part1(values);
+        var result = Day12.Part1(input);
 
         // Assert
         result.Should().Be(expected);
@@ -47,10 +47,10 @@ public class Day12Tests
     [MemberData(nameof(Part2Data))]
     [Description("What is the fewest steps required to move from your current position to the location that should " +
                  "get the best signal?")]
-    public void Part2_ShouldReturnInteger(IEnumerable<string> values, int expected)
+    public void Part2_ShouldReturnInteger(AocInput input, int expected)
     {
         // Act
-        var result = _sut.Part2(values);
+        var result = Day12.Part2(input);
 
         // Assert
         result.Should().Be(expected);

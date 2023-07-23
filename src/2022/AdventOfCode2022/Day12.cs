@@ -1,14 +1,13 @@
 ﻿using AdventOfCodeLib;
-using AdventOfCodeLib.Interfaces;
 
 namespace AdventOfCode2022;
 
 [AocPuzzle(2022, 12, "Hill Climbing Algorithm")]
-public sealed class Day12 : IDay<IEnumerable<string>, int>
+public sealed class Day12 : IAocDay<int>
 {
-    public int Part1(IEnumerable<string> input)
+    public static int Part1(AocInput input)
     {
-        var (start, end, map) = CreateMap(input);
+        var (start, end, map) = CreateMap(input.Lines);
 
         var path = new Queue<Coordinates>();
         path.Enqueue(start);
@@ -22,7 +21,7 @@ public sealed class Day12 : IDay<IEnumerable<string>, int>
         return 1;
     }
 
-    public int Part2(IEnumerable<string> input) => 1;
+    public static int Part2(AocInput input) => 1;
 
     private static (Coordinates Start, Coordinates End, Location[,] Map) CreateMap(IEnumerable<string> input)
     {

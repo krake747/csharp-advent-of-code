@@ -1,41 +1,41 @@
 ﻿using System.ComponentModel;
-using static AdventOfCodeLib.TextFileReaderService;
+using AdventOfCodeLib;
+using static AdventOfCodeLib.AocFileReaderService;
 
 namespace AdventOfCode2022.Tests.Unit;
 
 [Description("Day 08 - Treetop Tree House")]
-public class Day08Tests
+public sealed class Day08Tests
 {
     private readonly Day08 _sut;
+    private const string Day = nameof(Day08);
+    private const string TestData = @$"..\..\..\Data\{Day}_Test.txt";
+    private const string RealData = @$"..\..\..\Data\{Day}.txt";
 
+    public static TheoryData<AocInput, int> Part1Data => new()
+    {
+        { ReadInput(TestData), 21 },
+        { ReadInput(RealData), 1816 }
+    };
+
+    public static TheoryData<AocInput, int> Part2Data => new()
+    {
+        { ReadInput(TestData), 8 },
+        { ReadInput(RealData), 383520 }
+    };
+    
     public Day08Tests()
     {
-        // Arrange
         _sut = new Day08();
     }
-
-    private static IEnumerable<string> TestData => FetchFile(@"..\..\..\Data\Day08_Test.txt", ReadAsEnumerable);
-    private static IEnumerable<string> RealData => FetchFile(@"..\..\..\Data\Day08.txt", ReadAsEnumerable);
-
-    public static TheoryData<IEnumerable<string>, int> Part1Data => new()
-    {
-        { TestData, 21 },
-        { RealData, 1816 }
-    };
-
-    public static TheoryData<IEnumerable<string>, int> Part2Data => new()
-    {
-        { TestData, 8 },
-        { RealData, 383520 }
-    };
 
     [Theory]
     [MemberData(nameof(Part1Data))]
     [Description("Consider your map. How many trees are visible from outside the grid?")]
-    public void Part1_ShouldReturnInteger(IEnumerable<string> values, int expected)
+    public void Part1_ShouldReturnInteger(AocInput input, int expected)
     {
         // Act
-        var result = _sut.Part1(values);
+        var result = Day08.Part1(input);
 
         // Assert
         result.Should().Be(expected);
@@ -44,10 +44,10 @@ public class Day08Tests
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("Consider your map. What is the highest scenic score possible for any tree?")]
-    public void Part2_ShouldReturnInteger(IEnumerable<string> values, int expected)
+    public void Part2_ShouldReturnInteger(AocInput input, int expected)
     {
         // Act
-        var result = _sut.Part2(values);
+        var result = Day08.Part2(input);
 
         // Assert
         result.Should().Be(expected);

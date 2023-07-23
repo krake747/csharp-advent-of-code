@@ -1,41 +1,41 @@
 ﻿using System.ComponentModel;
-using static AdventOfCodeLib.TextFileReaderService;
+using AdventOfCodeLib;
+using static AdventOfCodeLib.AocFileReaderService;
 
 namespace AdventOfCode2022.Tests.Unit;
 
 [Description("Day 03 - Rucksack Reorganization")]
-public class Day03Tests
+public sealed class Day03Tests
 {
     private readonly Day03 _sut;
+    private const string Day = nameof(Day03);
+    private const string TestData = @$"..\..\..\Data\{Day}_Test.txt";
+    private const string RealData = @$"..\..\..\Data\{Day}.txt";
 
+    public static TheoryData<AocInput, int> Part1Data => new()
+    {
+        { ReadInput(TestData), 157 },
+        { ReadInput(RealData), 8202 }
+    };
+
+    public static TheoryData<AocInput, int> Part2Data => new()
+    {
+        { ReadInput(TestData), 70 },
+        { ReadInput(RealData), 2864 }
+    };
+    
     public Day03Tests()
     {
-        // Arrange
         _sut = new Day03();
     }
-
-    private static IEnumerable<string> TestData => FetchFile(@"..\..\..\Data\Day03_Test.txt", ReadAsEnumerable);
-    private static IEnumerable<string> RealData => FetchFile(@"..\..\..\Data\Day03.txt", ReadAsEnumerable);
-
-    public static TheoryData<IEnumerable<string>, int> Part1Data => new()
-    {
-        { TestData, 157 },
-        { RealData, 8202 }
-    };
-
-    public static TheoryData<IEnumerable<string>, int> Part2Data => new()
-    {
-        { TestData, 70 },
-        { RealData, 2864 }
-    };
 
     [Theory]
     [MemberData(nameof(Part1Data))]
     [Description("What is the sum of the priorities of those item types?")]
-    public void Part1_ShouldReturnInteger(IEnumerable<string> values, int expected)
+    public void Part1_ShouldReturnInteger(AocInput input, int expected)
     {
         // Act
-        var result = _sut.Part1(values);
+        var result = Day03.Part1(input);
 
         // Assert
         result.Should().Be(expected);
@@ -44,10 +44,10 @@ public class Day03Tests
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("What is the sum of the priorities of those item types?")]
-    public void Part2_ShouldReturnInteger(IEnumerable<string> values, int expected)
+    public void Part2_ShouldReturnInteger(AocInput input, int expected)
     {
         // Act
-        var result = _sut.Part2(values);
+        var result = Day03.Part2(input);
 
         // Assert
         result.Should().Be(expected);

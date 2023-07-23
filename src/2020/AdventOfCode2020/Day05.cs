@@ -1,14 +1,14 @@
-﻿using AdventOfCodeLib.Interfaces;
+﻿using AdventOfCodeLib;
 
 namespace AdventOfCode2020;
 
-public class Day05 : IDay<IEnumerable<string>, int>
+public sealed class Day05 : IAocDay<int>
 {
-    public int Part1(IEnumerable<string> input) => OrderedPlaneSeatIds(input).Last();
+    public static int Part1(AocInput input) => OrderedPlaneSeatIds(input.Lines).Last();
 
-    public int Part2(IEnumerable<string> input)
+    public static int Part2(AocInput input)
     {
-        return OrderedPlaneSeatIds(input).Chunk(2)
+        return OrderedPlaneSeatIds(input.Lines).Chunk(2)
             .Single(seat => seat[1] - seat[0] == 2)
             .First() + 1;
     }

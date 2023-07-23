@@ -1,15 +1,16 @@
-﻿using AdventOfCodeLib.Interfaces;
+﻿using AdventOfCodeLib;
 
 namespace AdventOfCode2022;
 
-public class Day01 : IDay<string, int>
+[AocPuzzle(2022, 1, "The Tyranny of the Rocket Equation")]
+public sealed class Day01 : IAocDay<int>
 {
-    public int Part1(string input) =>
-        TotalCaloriesPerElf(input)
+    public static int Part1(AocInput input) =>
+        TotalCaloriesPerElf(input.Text)
             .Max();
 
-    public int Part2(string input) =>
-        TotalCaloriesPerElf(input)
+    public static int Part2(AocInput input) =>
+        TotalCaloriesPerElf(input.Text)
             .OrderDescending()
             .Take(3)
             .Sum();

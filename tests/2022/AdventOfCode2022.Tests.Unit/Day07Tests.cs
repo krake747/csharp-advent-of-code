@@ -1,41 +1,42 @@
 ﻿using System.ComponentModel;
-using static AdventOfCodeLib.TextFileReaderService;
+using AdventOfCodeLib;
+using static AdventOfCodeLib.AocFileReaderService;
 
 namespace AdventOfCode2022.Tests.Unit;
 
 [Description("Day 07 - No Space Left On Device")]
-public class Day07Tests
+public sealed class Day07Tests
 {
     private readonly Day07 _sut;
+    private const string Day = nameof(Day07);
+    private const string TestData = @$"..\..\..\Data\{Day}_Test.txt";
+    private const string RealData = @$"..\..\..\Data\{Day}.txt";
 
+    public static TheoryData<AocInput, int> Part1Data => new()
+    {
+        { ReadInput(TestData), 95437 },
+        { ReadInput(RealData), 1543140 }
+    };
+
+    public static TheoryData<AocInput, int> Part2Data => new()
+    {
+        { ReadInput(TestData), 24933642 },
+        { ReadInput(RealData), 1117448 }
+    };
+    
     public Day07Tests()
     {
         // Arrange
         _sut = new Day07();
     }
 
-    private static IEnumerable<string> TestData => FetchFile(@"..\..\..\Data\Day07_Test.txt", ReadAsEnumerable);
-    private static IEnumerable<string> RealData => FetchFile(@"..\..\..\Data\Day07.txt", ReadAsEnumerable);
-
-    public static TheoryData<IEnumerable<string>, int> Part1Data => new()
-    {
-        { TestData, 95437 },
-        { RealData, 1543140 }
-    };
-
-    public static TheoryData<IEnumerable<string>, int> Part2Data => new()
-    {
-        { TestData, 24933642 },
-        { RealData, 1117448 }
-    };
-
     [Theory]
     [MemberData(nameof(Part1Data))]
     [Description("Total size of at most 100000. What is the sum of the total sizes of those directories?")]
-    public void Part1_ShouldReturnInteger(IEnumerable<string> values, int expected)
+    public void Part1_ShouldReturnInteger(AocInput input, int expected)
     {
         // Act
-        var result = _sut.Part1(values);
+        var result = Day07.Part1(input);
 
         // Assert
         result.Should().Be(expected);
@@ -44,10 +45,10 @@ public class Day07Tests
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("What is the total size of that directory?")]
-    public void Part2_ShouldReturnInteger(IEnumerable<string> values, int expected)
+    public void Part2_ShouldReturnInteger(AocInput input, int expected)
     {
         // Act
-        var result = _sut.Part2(values);
+        var result = Day07.Part2(input);
 
         // Assert
         result.Should().Be(expected);

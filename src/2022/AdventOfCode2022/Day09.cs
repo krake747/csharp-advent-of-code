@@ -1,15 +1,14 @@
 ﻿using System.Diagnostics;
 using AdventOfCodeLib;
-using AdventOfCodeLib.Interfaces;
 
 namespace AdventOfCode2022;
 
 [AocPuzzle(2022, 9, "Rope Bridge")]
-public class Day09 : IDay<IEnumerable<string>, int>
+public sealed class Day09 : IAocDay<int>
 {
-    public int Part1(IEnumerable<string> input) => TailPositions(input, 2).ToHashSet().Count;
+    public static int Part1(AocInput input) => TailPositions(input.Lines, 2).ToHashSet().Count;
 
-    public int Part2(IEnumerable<string> input) => TailPositions(input, 10).ToHashSet().Count;
+    public static int Part2(AocInput input) => TailPositions(input.Lines, 10).ToHashSet().Count;
 
     private static IEnumerable<Knot> TailPositions(IEnumerable<string> input, int ropeLength)
     {

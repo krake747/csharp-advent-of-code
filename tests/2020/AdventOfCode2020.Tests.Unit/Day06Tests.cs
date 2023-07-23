@@ -1,12 +1,28 @@
 using System.ComponentModel;
-using static AdventOfCodeLib.TextFileReaderService;
+using AdventOfCodeLib;
+using static AdventOfCodeLib.AocFileReaderService;
 
 namespace AdventOfCode2020.Tests.Unit;
 
 [Description("Day 06 - Custom Customs")]
-public class Day06Tests
+public sealed class Day06Tests
 {
     private readonly Day06 _sut;
+    private const string Day = nameof(Day06);
+    private const string TestData = @$"..\..\..\Data\{Day}_Test.txt";
+    private const string RealData = @$"..\..\..\Data\{Day}.txt";
+
+    public static TheoryData<AocInput, int> Part1Data => new()
+    {
+        { ReadInput(TestData), 11 },
+        { ReadInput(RealData), 7027 }
+    };
+
+    public static TheoryData<AocInput, int> Part2Data => new()
+    {
+        { ReadInput(TestData), 6 },
+        { ReadInput(RealData), 3579 }
+    };
 
     public Day06Tests()
     {
@@ -14,28 +30,13 @@ public class Day06Tests
         _sut = new Day06();
     }
 
-    private static string TestData => FetchFile(@"..\..\..\Data\Day06_Test.txt", ReadAsString);
-    private static string RealData => FetchFile(@"..\..\..\Data\Day06.txt", ReadAsString);
-
-    public static TheoryData<string, int> Part1Data => new()
-    {
-        { TestData, 11 },
-        { RealData, 7027 }
-    };
-
-    public static TheoryData<string, int> Part2Data => new()
-    {
-        { TestData, 6 },
-        { RealData, 3579 }
-    };
-
     [Theory]
     [MemberData(nameof(Part1Data))]
     [Description("Count the number of questions to which anyone answered yes. What is the sum of those counts?")]
-    public void Part1_ShouldReturnInteger(string values, int expected)
+    public void Part1_ShouldReturnInteger(AocInput input, int expected)
     {
         // Act
-        var result = _sut.Part1(values);
+        var result = Day06.Part1(input);
 
         // Assert
         result.Should().Be(expected);
@@ -44,10 +45,10 @@ public class Day06Tests
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("Count the number of questions to which everyone answered yes. What is the sum of those counts?")]
-    public void Part2_ShouldReturnInteger(string values, int expected)
+    public void Part2_ShouldReturnInteger(AocInput input, int expected)
     {
         // Act
-        var result = _sut.Part2(values);
+        var result = Day06.Part2(input);
 
         // Assert
         result.Should().Be(expected);

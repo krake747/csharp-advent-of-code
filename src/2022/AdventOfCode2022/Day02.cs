@@ -1,18 +1,20 @@
-﻿using AdventOfCodeLib.Interfaces;
+﻿using AdventOfCodeLib;
 
 namespace AdventOfCode2022;
 
-public class Day02 : IDay<IEnumerable<string>, int>
+public sealed class Day02 : IAocDay<int>
 {
-    public int Part1(IEnumerable<string> input)
+    public static int Part1(AocInput input)
     {
-        return input.Select(code => Decrypt(code, ParseShape))
+        return input.Lines
+            .Select(code => Decrypt(code, ParseShape))
             .Sum(Score);
     }
 
-    public int Part2(IEnumerable<string> input)
+    public static int Part2(AocInput input)
     {
-        return input.Select(code => Decrypt(code, ParseShape, ParseOutcome, DesiredOutcome))
+        return input.Lines
+            .Select(code => Decrypt(code, ParseShape, ParseOutcome, DesiredOutcome))
             .Sum(Score);
     }
 

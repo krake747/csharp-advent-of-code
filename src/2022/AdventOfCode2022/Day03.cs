@@ -1,17 +1,19 @@
 ﻿using System.Collections.Immutable;
-using AdventOfCodeLib.Interfaces;
+using AdventOfCodeLib;
 
 namespace AdventOfCode2022;
 
-public class Day03 : IDay<IEnumerable<string>, int>
+public sealed class Day03 : IAocDay<int>
 {
-    public int Part1(IEnumerable<string> input) =>
-        input.ChunkBackpackBy(2)
+    public static int Part1(AocInput input) =>
+        input.Lines
+            .ChunkBackpackBy(2)
             .Select(DistinctItemFromGroupOfBackpacks)
             .Sum(ParseItemPriorityValue);
 
-    public int Part2(IEnumerable<string> input) =>
-        input.Chunk(3)
+    public static int Part2(AocInput input) =>
+        input.Lines
+            .Chunk(3)
             .Select(DistinctItemFromGroupOfBackpacks)
             .Sum(ParseItemPriorityValue);
 

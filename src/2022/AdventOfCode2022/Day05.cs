@@ -1,21 +1,20 @@
 ﻿using System.Text.RegularExpressions;
 using AdventOfCodeLib;
-using AdventOfCodeLib.Interfaces;
 
 namespace AdventOfCode2022;
 
-public class Day05 : IDay<IEnumerable<string>, string>
+public sealed class Day05 : IAocDay<string>
 {
-    public string Part1(IEnumerable<string> input)
+    public static string Part1(AocInput input)
     {
-        var rearrangementPlan = CreateRearrangementPlan(input);
+        var rearrangementPlan = CreateRearrangementPlan(input.Lines);
         var finalStacks = CargoCraneOperator(CrateMover9000, rearrangementPlan);
         return string.Concat(finalStacks.Select(stack => stack.Peek()));
     }
 
-    public string Part2(IEnumerable<string> input)
+    public static string Part2(AocInput input)
     {
-        var rearrangementPlan = CreateRearrangementPlan(input);
+        var rearrangementPlan = CreateRearrangementPlan(input.Lines);
         var finalStacks = CargoCraneOperator(CrateMover9001, rearrangementPlan);
         return string.Concat(finalStacks.Select(stack => stack.Peek()));
     }

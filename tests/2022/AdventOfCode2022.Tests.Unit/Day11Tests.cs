@@ -1,42 +1,41 @@
 ﻿using System.ComponentModel;
 using AdventOfCodeLib;
-using static AdventOfCodeLib.TextFileReaderService;
+using static AdventOfCodeLib.AocFileReaderService;
 
 namespace AdventOfCode2022.Tests.Unit;
 
 [AocPuzzle(2022, 11, "Monkey in the Middle")]
-public class Day11Tests
+public sealed class Day11Tests
 {
     private readonly Day11 _sut;
+    private const string Day = nameof(Day11);
+    private const string TestData = @$"..\..\..\Data\{Day}_Test.txt";
+    private const string RealData = @$"..\..\..\Data\{Day}.txt";
 
+    public static TheoryData<AocInput, long> Part1Data => new()
+    {
+        { ReadInput(TestData), 10605L },
+        { ReadInput(RealData), 56120L }
+    };
+
+    public static TheoryData<AocInput, long> Part2Data => new()
+    {
+        { ReadInput(TestData), 2713310158L },
+        { ReadInput(RealData), 24389045529L }
+    };
+    
     public Day11Tests()
     {
-        // Arrange
         _sut = new Day11();
     }
-
-    private static IEnumerable<string> TestData => FetchFile(@"..\..\..\Data\Day11_Test.txt", ReadAsEnumerable);
-    private static IEnumerable<string> RealData => FetchFile(@"..\..\..\Data\Day11.txt", ReadAsEnumerable);
-
-    public static TheoryData<IEnumerable<string>, long> Part1Data => new()
-    {
-        { TestData, 10605L },
-        { RealData, 56120L }
-    };
-
-    public static TheoryData<IEnumerable<string>, long> Part2Data => new()
-    {
-        { TestData, 2713310158L },
-        { RealData, 24389045529L }
-    };
 
     [Theory]
     [MemberData(nameof(Part1Data))]
     [Description("What is the level of monkey business after 20 rounds of stuff-slinging simian shenanigans?")]
-    public void Part1_ShouldReturnInteger(IEnumerable<string> values, long expected)
+    public void Part1_ShouldReturnInteger(AocInput input, long expected)
     {
         // Act
-        var result = _sut.Part1(values);
+        var result = Day11.Part1(input);
 
         // Assert
         result.Should().Be(expected);
@@ -45,10 +44,10 @@ public class Day11Tests
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("What is the level of monkey business after 20 rounds of stuff-slinging simian shenanigans?")]
-    public void Part2_ShouldReturnInteger(IEnumerable<string> values, long expected)
+    public void Part2_ShouldReturnInteger(AocInput input, long expected)
     {
         // Act
-        var result = _sut.Part2(values);
+        var result = Day11.Part2(input);
 
         // Assert
         result.Should().Be(expected);

@@ -1,41 +1,41 @@
 ﻿using System.ComponentModel;
-using static AdventOfCodeLib.TextFileReaderService;
+using AdventOfCodeLib;
+using static AdventOfCodeLib.AocFileReaderService;
 
 namespace AdventOfCode2022.Tests.Unit;
 
 [Description("Day 04 - Camp Cleanup")]
-public class Day04Tests
+public sealed class Day04Tests
 {
     private readonly Day04 _sut;
+    private const string Day = nameof(Day04);
+    private const string TestData = @$"..\..\..\Data\{Day}_Test.txt";
+    private const string RealData = @$"..\..\..\Data\{Day}.txt";
 
+    public static TheoryData<AocInput, int> Part1Data => new()
+    {
+        { ReadInput(TestData), 2 },
+        { ReadInput(RealData), 605 }
+    };
+
+    public static TheoryData<AocInput, int> Part2Data => new()
+    {
+        { ReadInput(TestData), 4 },
+        { ReadInput(RealData), 914 }
+    };
+    
     public Day04Tests()
     {
-        // Arrange
         _sut = new Day04();
     }
-
-    private static IEnumerable<string> TestData => FetchFile(@"..\..\..\Data\Day04_Test.txt", ReadAsEnumerable);
-    private static IEnumerable<string> RealData => FetchFile(@"..\..\..\Data\Day04.txt", ReadAsEnumerable);
-
-    public static TheoryData<IEnumerable<string>, int> Part1Data => new()
-    {
-        { TestData, 2 },
-        { RealData, 605 }
-    };
-
-    public static TheoryData<IEnumerable<string>, int> Part2Data => new()
-    {
-        { TestData, 4 },
-        { RealData, 914 }
-    };
 
     [Theory]
     [MemberData(nameof(Part1Data))]
     [Description("In how many assignment pairs does one range fully contain the other?")]
-    public void Part1_ShouldReturnInteger(IEnumerable<string> values, int expected)
+    public void Part1_ShouldReturnInteger(AocInput input, int expected)
     {
         // Act
-        var result = _sut.Part1(values);
+        var result = Day04.Part1(input);
 
         // Assert
         result.Should().Be(expected);
@@ -44,10 +44,10 @@ public class Day04Tests
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("In how many assignment pairs do the ranges overlap?")]
-    public void Part2_ShouldReturnInteger(IEnumerable<string> values, int expected)
+    public void Part2_ShouldReturnInteger(AocInput input, int expected)
     {
         // Act
-        var result = _sut.Part2(values);
+        var result = Day04.Part2(input);
 
         // Assert
         result.Should().Be(expected);

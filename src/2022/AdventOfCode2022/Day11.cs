@@ -1,16 +1,15 @@
 ﻿using System.Diagnostics;
 using System.Text.RegularExpressions;
 using AdventOfCodeLib;
-using AdventOfCodeLib.Interfaces;
 
 namespace AdventOfCode2022;
 
 [AocPuzzle(2022, 11, "Monkey in the Middle")]
-public partial class Day11 : IDay<IEnumerable<string>, long>
+public sealed partial class Day11 : IAocDay<long>
 {
-    public long Part1(IEnumerable<string> input)
+    public static long Part1(AocInput input)
     {
-        var monkeys = CreateMonkeys(input).ToList();
+        var monkeys = CreateMonkeys(input.Lines).ToList();
         var rounds = Enumerable.Range(1, 20)
             .Select(_ => StuffSlingingSimianShenanigans(monkeys, w => w / 3L))
             .ToArray();
@@ -18,9 +17,9 @@ public partial class Day11 : IDay<IEnumerable<string>, long>
         return EvaluateMonkeyBusiness(rounds.Last());
     }
 
-    public long Part2(IEnumerable<string> input)
+    public static long Part2(AocInput input)
     {
-        var monkeys = CreateMonkeys(input).ToList();
+        var monkeys = CreateMonkeys(input.Lines).ToList();
 
         // The modulo trick (Modular arithmetic)
         // One needs to guarantee that the divisibility check produces the same result because that check determines
@@ -110,7 +109,7 @@ public partial class Day11 : IDay<IEnumerable<string>, long>
     [GeneratedRegex(@"(\d+)")]
     private static partial Regex RegexNumber();
 
-    private class Monkey
+    private sealed class Monkey
     {
         public required int Id { get; init; }
         public required Queue<long> Items { get; init; }
