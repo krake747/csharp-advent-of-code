@@ -4,19 +4,15 @@ namespace AdventOfCode2020;
 
 public class Day02 : IDay<IEnumerable<string>, int>
 {
-    public int Part1(IEnumerable<string> input)
-    {
-        return input.Select(ParseLine)
+    public int Part1(IEnumerable<string> input) =>
+        input.Select(ParseLine)
             .Select(CreatePasswordPolicy)
             .Count(IsPasswordPolicyValid);
-    }
 
-    public int Part2(IEnumerable<string> input)
-    {
-        return input.Select(ParseLine)
+    public int Part2(IEnumerable<string> input) =>
+        input.Select(ParseLine)
             .Select(CreatePasswordPolicy)
             .Count(IsNewPasswordPolicyValid);
-    }
 
     private static IEnumerable<string> ParseLine(string line)
     {

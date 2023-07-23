@@ -52,10 +52,7 @@ public class Day8Part1TestData : IEnumerable<object[]>
         };
     }
 
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
-    }
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }
 
 public class Day8Part2TestData : IEnumerable<object[]>
@@ -81,8 +78,5 @@ public class Day8Part2TestData : IEnumerable<object[]>
         };
     }
 
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
-    }
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }

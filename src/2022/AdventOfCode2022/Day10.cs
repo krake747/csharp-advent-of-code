@@ -39,6 +39,7 @@ public class Day10
     {
         var (cycle, x) = (1, 1);
         foreach (var line in input)
+        {
             switch (line.Split(' '))
             {
                 case ["noop"]:
@@ -52,10 +53,14 @@ public class Day10
                 default:
                     throw new UnreachableException($"Instruction is not defined: {line}");
             }
+        }
     }
 
     private static IEnumerable<int> ArithmeticSequence(int n1, int f, int n)
     {
-        for (var i = 0; i < n; i++) yield return n1 + f * i;
+        for (var i = 0; i < n; i++)
+        {
+            yield return n1 + f * i;
+        }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using AdventOfCodeLib;
+﻿using AdventOfCodeLib;
 using AdventOfCodeLib.Interfaces;
 
 namespace AdventOfCode2022;
@@ -14,15 +13,12 @@ public sealed class Day18 : IDay<IEnumerable<string>, int>
             .Count(lavaLocation => !lavaLocations.Contains(lavaLocation));
     }
 
-    public int Part2(IEnumerable<string> input)
-    {
-        return 1;
-    }
+    public int Part2(IEnumerable<string> input) => 1;
 
     private static IEnumerable<Point> LavaLocations(IEnumerable<string> input)
     {
         return input.Select(line => line.Split(',').Select(int.Parse).ToArray())
-            .Select(line =>new Point(line[0], line[1], line[2]));
+            .Select(line => new Point(line[0], line[1], line[2]));
     }
 
     private static IEnumerable<Point> Neighbors(Point lavaLocation)
@@ -34,9 +30,9 @@ public sealed class Day18 : IDay<IEnumerable<string>, int>
             lavaLocation with { Y = lavaLocation.Y - 1 },
             lavaLocation with { Y = lavaLocation.Y + 1 },
             lavaLocation with { Z = lavaLocation.Z - 1 },
-            lavaLocation with { Z = lavaLocation.Z + 1 },
+            lavaLocation with { Z = lavaLocation.Z + 1 }
         };
     }
-    
+
     private readonly record struct Point(int X, int Y, int Z);
 }

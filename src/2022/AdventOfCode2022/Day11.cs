@@ -55,6 +55,7 @@ public partial class Day11 : IDay<IEnumerable<string>, long>
     private static IEnumerable<long> StuffSlingingSimianShenanigans(IList<Monkey> monkeys, Func<long, long> adjustWorry)
     {
         foreach (var monkey in monkeys)
+        {
             while (monkey.Items.Any())
             {
                 var worry = monkey.Items.Dequeue();
@@ -66,6 +67,7 @@ public partial class Day11 : IDay<IEnumerable<string>, long>
                     : monkey.IfFalse;
                 monkeys[throwToMonkey].Items.Enqueue(boredWorry);
             }
+        }
 
         return monkeys.Select(m => m.Inspections)
             .ToArray();
@@ -146,6 +148,3 @@ public partial class Day11 : IDay<IEnumerable<string>, long>
         }
     }
 }
-
-
-

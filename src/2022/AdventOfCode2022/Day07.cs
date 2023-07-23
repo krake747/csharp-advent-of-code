@@ -16,17 +16,16 @@ public class Day07 : IDay<IEnumerable<string>, int>
         {
             var parameters = line.Split(' ');
             if (Regex.IsMatch(line, @"^\$ cd (\w+|/)"))
-            {
                 paths.Push(string.Concat(paths) + parameters[^1]);
-            }
             else if (Regex.IsMatch(line, @"^\$ cd (..)"))
-            {
                 paths.Pop();
-            }
             else if (Regex.IsMatch(line, @"^(\d+)"))
             {
                 var size = int.Parse(parameters[0]);
-                foreach (var parent in paths) directories[parent] = directories.GetValueOrDefault(parent) + size;
+                foreach (var parent in paths)
+                {
+                    directories[parent] = directories.GetValueOrDefault(parent) + size;
+                }
             }
         }
 
@@ -45,17 +44,16 @@ public class Day07 : IDay<IEnumerable<string>, int>
         {
             var parameters = line.Split(' ');
             if (Regex.IsMatch(line, @"^\$ cd (\w+|/)"))
-            {
                 paths.Push(string.Concat(paths) + parameters[^1]);
-            }
             else if (Regex.IsMatch(line, @"^\$ cd (..)"))
-            {
                 paths.Pop();
-            }
             else if (Regex.IsMatch(line, @"^(\d+)"))
             {
                 var size = int.Parse(parameters[0]);
-                foreach (var parent in paths) directories[parent] = directories.GetValueOrDefault(parent) + size;
+                foreach (var parent in paths)
+                {
+                    directories[parent] = directories.GetValueOrDefault(parent) + size;
+                }
             }
         }
 

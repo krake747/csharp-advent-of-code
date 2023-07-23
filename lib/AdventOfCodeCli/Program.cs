@@ -1,91 +1,79 @@
 ﻿using Microsoft.Extensions.Configuration;
 using TextCopy;
 
-namespace AdventOfCodeCli;
+var config = new ConfigurationBuilder()
+    .AddUserSecrets<Program>()
+    .Build();
 
-internal class Program
+var session = config["Session"];
+var (year, day) = ReadArgs(args);
+
+using var httpClient = new HttpClient();
+var url = $"https://adventofcode.com/{year}/day/{day}/input";
+httpClient.DefaultRequestHeaders.Add("Cookie", $"session={session}");
+
+var input = await GetInput(httpClient, url);
+
+if (input == "Error")
 {
-    private static async Task Main(string[] args)
+    Console.WriteLine("Error while fetching input data");
+    return;
+}
+
+var directoryTo = $@"..\..\..\..\..\tests\{year}\AdventOfCode{year}.Tests.Unit\Data\";
+var fullPath = Path.GetFullPath(directoryTo);
+var dayStr = int.Parse(day) < 10 ? $"0{day}" : $"{day}";
+var fileName = @$"Day{dayStr}.txt";
+var fileNameTest = @$"Day{dayStr}_Test.txt";
+
+if (!Directory.Exists(directoryTo))
+{
+    Console.WriteLine("Directory does not exist");
+    Directory.CreateDirectory(directoryTo);
+}
+
+if (!File.Exists(fullPath + fileName))
+{
+    Console.WriteLine($"File {fileName} does not exist");
+    await File.WriteAllTextAsync(fullPath + fileName, input);
+    Console.WriteLine($"File {fileName} was written to {fullPath}");
+}
+else
+    Console.WriteLine($"File {fileName} exists in {fullPath}");
+
+if (!File.Exists(fullPath + fileNameTest))
+{
+    Console.WriteLine($"File {fileNameTest} does not exist");
+    Console.WriteLine("Awaiting copy from clipboard...");
+    await ClipboardService.SetTextAsync("");
+    string? clipboard;
+    do
     {
-        var config = new ConfigurationBuilder()
-            .AddUserSecrets<Program>()
-            .Build();
+        clipboard = await ClipboardService.GetTextAsync();
+    } while (clipboard is null or "");
 
-        var session = config["Session"];
-        var (year, day) = ReadArgs(args);
+    await File.WriteAllTextAsync(fullPath + fileNameTest, clipboard);
+    Console.WriteLine($"File {fileNameTest} was written to {fullPath}");
+}
+else
+    Console.WriteLine($"File {fileNameTest} exists in {fullPath}");
 
-        using var httpClient = new HttpClient();
-        var url = $"https://adventofcode.com/{year}/day/{day}/input";
-        httpClient.DefaultRequestHeaders.Add("Cookie", $"session={session}");
+static async Task<string> GetInput(HttpClient httpClient, string url)
+{
+    var response = await httpClient.GetAsync(url);
+    if (response.IsSuccessStatusCode) return await response.Content.ReadAsStringAsync();
 
-        var input = await GetInput(httpClient, url);
+    return "Error";
+}
 
-        if (input == "Error")
-        {
-            Console.WriteLine("Error while fetching input data");
-            return;
-        }
+static (string, string) ReadArgs(IReadOnlyList<string> args)
+{
+    if (args.Count != 0)
+        return (args[0], args[1]);
 
-        var directoryTo = $@"..\..\..\..\..\tests\{year}\AdventOfCode{year}.Tests.Unit\Data\";
-        var fullPath = Path.GetFullPath(directoryTo);
-        var dayStr = int.Parse(day) < 10 ? $"0{day}" : $"{day}";
-        var fileName = @$"Day{dayStr}.txt";
-        var fileNameTest = @$"Day{dayStr}_Test.txt";
-
-        if (!Directory.Exists(directoryTo))
-        {
-            Console.WriteLine("Directory does not exist");
-            Directory.CreateDirectory(directoryTo);
-        }
-
-        if (!File.Exists(fullPath + fileName))
-        {
-            Console.WriteLine($"File {fileName} does not exist");
-            await File.WriteAllTextAsync(fullPath + fileName, input);
-            Console.WriteLine($"File {fileName} was written to {fullPath}");
-        }
-        else
-        {
-            Console.WriteLine($"File {fileName} exists in {fullPath}");
-        }
-
-        if (!File.Exists(fullPath + fileNameTest))
-        {
-            Console.WriteLine($"File {fileNameTest} does not exist");
-            Console.WriteLine("Awaiting copy from clipboard...");
-            await ClipboardService.SetTextAsync("");
-            string? clipboard;
-            do
-            {
-                clipboard = await ClipboardService.GetTextAsync();
-            } while (clipboard is null or "");
-
-            await File.WriteAllTextAsync(fullPath + fileNameTest, clipboard);
-            Console.WriteLine($"File {fileNameTest} was written to {fullPath}");
-        }
-        else
-        {
-            Console.WriteLine($"File {fileNameTest} exists in {fullPath}");
-        }
-    }
-
-    private static async Task<string> GetInput(HttpClient httpClient, string url)
-    {
-        var response = await httpClient.GetAsync(url);
-        if (response.IsSuccessStatusCode) return await response.Content.ReadAsStringAsync();
-
-        return "Error";
-    }
-
-    private static (string, string) ReadArgs(IReadOnlyList<string> args)
-    {
-        if (args.Count != 0)
-            return (args[0], args[1]);
-
-        Console.Write("Year: ");
-        var year = Console.ReadLine()!;
-        Console.Write(" Day: ");
-        var day = Console.ReadLine()!;
-        return (year, day);
-    }
+    Console.Write("Year: ");
+    var year = Console.ReadLine()!;
+    Console.Write(" Day: ");
+    var day = Console.ReadLine()!;
+    return (year, day);
 }

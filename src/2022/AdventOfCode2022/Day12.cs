@@ -22,10 +22,7 @@ public sealed class Day12 : IDay<IEnumerable<string>, int>
         return 1;
     }
 
-    public int Part2(IEnumerable<string> input)
-    {
-        return 1;
-    }
+    public int Part2(IEnumerable<string> input) => 1;
 
     private static (Coordinates Start, Coordinates End, Location[,] Map) CreateMap(IEnumerable<string> input)
     {
@@ -57,10 +54,7 @@ public sealed class Day12 : IDay<IEnumerable<string>, int>
 
     private record Location(char Symbol, int Elevation)
     {
-        internal static Location Create(char c)
-        {
-            return new Location(c, ParseElevation(c));
-        }
+        internal static Location Create(char c) => new(c, ParseElevation(c));
 
         private static int ParseElevation(char c)
         {
@@ -93,10 +87,8 @@ public sealed class Day12 : IDay<IEnumerable<string>, int>
             ).ToDictionary(k => k.Key, v => v.Value);
         }
 
-        private static bool IsOnGrid(Location[,] grid, Coordinates c)
-        {
-            return c.Row >= 0 && c.Row < grid.GetLength(0) && c.Column >= 0 && c.Column < grid.GetLength(1);
-        }
+        private static bool IsOnGrid(Location[,] grid, Coordinates c) => c.Row >= 0 && c.Row < grid.GetLength(0) &&
+                                                                         c.Column >= 0 && c.Column < grid.GetLength(1);
     }
 
     private enum Direction
@@ -107,6 +99,3 @@ public sealed class Day12 : IDay<IEnumerable<string>, int>
         Left
     }
 }
-
-
-

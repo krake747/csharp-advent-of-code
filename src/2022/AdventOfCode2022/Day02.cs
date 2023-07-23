@@ -16,10 +16,7 @@ public class Day02 : IDay<IEnumerable<string>, int>
             .Sum(Score);
     }
 
-    private static (T, T) Decrypt<T>(string code, Func<char, T> decrypter)
-    {
-        return (decrypter(code[0]), decrypter(code[^1]));
-    }
+    private static (T, T) Decrypt<T>(string code, Func<char, T> decrypter) => (decrypter(code[0]), decrypter(code[^1]));
 
     private static (TL, TR) Decrypt<TL, TO, TR>(string code, Func<char, TL> leftParser, Func<char, TO> rightParser,
         Func<TL, TO, TR> rightDecrypter)

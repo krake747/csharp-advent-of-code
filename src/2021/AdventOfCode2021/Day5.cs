@@ -70,29 +70,37 @@ public static class Day5
             // Place Vertical vents
             var coords = new List<Coordinate>();
             if (line.X1 == line.X2)
+            {
                 coords = Integer(line.Y1, line.Y2, 1)
                     .Select(i => new Coordinate(line.X1, i))
                     .ToList();
+            }
 
             // Place Horizontal vents
             if (line.Y1 == line.Y2)
+            {
                 coords = Integer(line.X1, line.X2, 1)
                     .Select(i => new Coordinate(i, line.Y1))
                     .ToList();
+            }
 
             // Place Diagonal vents
             if (line.X2 - line.X1 == line.Y2 - line.Y1 && diagonals)
+            {
                 coords = Integer(line.X1, line.X2, 1)
                     .Zip(Integer(line.Y1, line.Y2, 1))
                     .Select(i => new Coordinate(i.First, i.Second))
                     .ToList();
+            }
 
             // Place Anti-diagonal vents
             if (line.X2 - line.X1 == line.Y1 - line.Y2 && diagonals)
+            {
                 coords = Integer(line.X1, line.X2, 1)
                     .Zip(Integer(line.Y1, line.Y2, 1))
                     .Select(i => new Coordinate(i.First, i.Second))
                     .ToList();
+            }
 
             vents.Add(coords);
         }
@@ -111,33 +119,41 @@ public static class Day5
         {
             // Place Vertical vents
             if (line.X1 == line.X2)
+            {
                 Integer(line.Y1, line.Y2, 1)
                     .Select(i => new Coordinate(line.X1, i))
                     .ToList()
                     .ForEach(v => grid[v.Y, v.X] += 1);
+            }
 
             // Place Horizontal vents
             if (line.Y1 == line.Y2)
+            {
                 Integer(line.X1, line.X2, 1)
                     .Select(i => new Coordinate(i, line.Y1))
                     .ToList()
                     .ForEach(v => grid[v.Y, v.X] += 1);
+            }
 
             // Place Diagonal vents
             if (line.X2 - line.X1 == line.Y2 - line.Y1 && diagonals)
+            {
                 Integer(line.X1, line.X2, 1)
                     .Zip(Integer(line.Y1, line.Y2, 1))
                     .Select(i => new Coordinate(i.First, i.Second))
                     .ToList()
                     .ForEach(v => grid[v.Y, v.X] += 1);
+            }
 
             // Place Anti-diagonal vents
             if (line.X2 - line.X1 == line.Y1 - line.Y2 && diagonals)
+            {
                 Integer(line.X1, line.X2, 1)
                     .Zip(Integer(line.Y1, line.Y2, 1))
                     .Select(i => new Coordinate(i.First, i.Second))
                     .ToList()
                     .ForEach(v => grid[v.Y, v.X] += 1);
+            }
         }
 
         return grid;

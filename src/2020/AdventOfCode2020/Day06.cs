@@ -19,15 +19,9 @@ public class Day06 : IDay<string, int>
             .Sum(answers => answers.ToWhichYesWasAnsweredBy(Everyone).Count);
     }
 
-    private static ImmutableHashSet<char> Anyone(ImmutableHashSet<char> hashSet, string s)
-    {
-        return hashSet.Union(s);
-    }
+    private static ImmutableHashSet<char> Anyone(ImmutableHashSet<char> hashSet, string s) => hashSet.Union(s);
 
-    private static ImmutableHashSet<char> Everyone(ImmutableHashSet<char> hashSet, string s)
-    {
-        return hashSet.Intersect(s);
-    }
+    private static ImmutableHashSet<char> Everyone(ImmutableHashSet<char> hashSet, string s) => hashSet.Intersect(s);
 }
 
 internal static class Day04Extensions

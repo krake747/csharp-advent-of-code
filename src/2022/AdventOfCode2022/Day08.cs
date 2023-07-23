@@ -28,29 +28,28 @@ public class Day08 : IDay<IEnumerable<string>, int>
         var forest = new int[rows, cols];
         for (var row = 0; row < forest.GetLength(0); row++)
         for (var col = 0; col < forest.GetLength(1); col++)
+        {
             forest[row, col] = map[row][col];
+        }
 
         var treeGrid = new int[rows, cols];
         for (var row = 0; row < treeGrid.GetLength(0); row++)
         for (var col = 0; col < treeGrid.GetLength(1); col++)
+        {
             treeGrid[row, col] = func(forest, row, col);
+        }
 
         return treeGrid;
     }
 
-    private static int TreeCoverScore(int[,] forest, int row, int col)
-    {
-        return TreeOnBorder(forest, row, col) || TreeVisibleFromAnyDirection(forest, row, col)
+    private static int TreeCoverScore(int[,] forest, int row, int col) =>
+        TreeOnBorder(forest, row, col) || TreeVisibleFromAnyDirection(forest, row, col)
             ? 1
             : 0;
-    }
 
     private static bool TreeOnBorder(int[,] forest, int row, int col)
     {
-        bool OnBorder(int value, int limit)
-        {
-            return value == Math.Min(value, 0) || value + 1 >= Math.Max(value + 1, limit);
-        }
+        bool OnBorder(int value, int limit) => value == Math.Min(value, 0) || value + 1 >= Math.Max(value + 1, limit);
 
         var rows = forest.GetLength(0);
         var cols = forest.GetLength(1);

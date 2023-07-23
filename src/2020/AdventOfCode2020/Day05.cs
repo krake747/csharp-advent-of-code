@@ -4,10 +4,7 @@ namespace AdventOfCode2020;
 
 public class Day05 : IDay<IEnumerable<string>, int>
 {
-    public int Part1(IEnumerable<string> input)
-    {
-        return OrderedPlaneSeatIds(input).Last();
-    }
+    public int Part1(IEnumerable<string> input) => OrderedPlaneSeatIds(input).Last();
 
     public int Part2(IEnumerable<string> input)
     {

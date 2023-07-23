@@ -58,17 +58,12 @@ public sealed class Day13 : IDay<IEnumerable<string>, int>
 
     private abstract record Packet
     {
-        internal static Packet Parse(string value)
-        {
-            return Parse(JsonSerializer.Deserialize<JsonElement>(value));
-        }
+        internal static Packet Parse(string value) => Parse(JsonSerializer.Deserialize<JsonElement>(value));
 
-        private static Packet Parse(JsonElement element)
-        {
-            return element.ValueKind == JsonValueKind.Number
+        private static Packet Parse(JsonElement element) =>
+            element.ValueKind == JsonValueKind.Number
                 ? new IntPacket(element.GetInt32())
                 : new Packets(element.EnumerateArray().Select(Parse).ToArray());
-        }
     }
 
     private record IntPacket(int Value) : Packet;

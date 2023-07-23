@@ -7,15 +7,9 @@ namespace AdventOfCode2022;
 [AocPuzzle(2022, 9, "Rope Bridge")]
 public class Day09 : IDay<IEnumerable<string>, int>
 {
-    public int Part1(IEnumerable<string> input)
-    {
-        return TailPositions(input, 2).ToHashSet().Count;
-    }
+    public int Part1(IEnumerable<string> input) => TailPositions(input, 2).ToHashSet().Count;
 
-    public int Part2(IEnumerable<string> input)
-    {
-        return TailPositions(input, 10).ToHashSet().Count;
-    }
+    public int Part2(IEnumerable<string> input) => TailPositions(input, 10).ToHashSet().Count;
 
     private static IEnumerable<Knot> TailPositions(IEnumerable<string> input, int ropeLength)
     {
@@ -72,9 +66,6 @@ public class Day09 : IDay<IEnumerable<string>, int>
             return Math.Abs(deltaX) <= 1 && Math.Abs(deltaY) <= 1;
         }
 
-        internal static (int DeltaX, int DeltaY) Delta(Knot k1, Knot k2)
-        {
-            return (k2.X - k1.X, k2.Y - k1.Y);
-        }
+        internal static (int DeltaX, int DeltaY) Delta(Knot k1, Knot k2) => (k2.X - k1.X, k2.Y - k1.Y);
     }
 }

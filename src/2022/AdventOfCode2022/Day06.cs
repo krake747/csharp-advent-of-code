@@ -4,15 +4,9 @@ namespace AdventOfCode2022;
 
 public class Day06 : IDay<string, int>
 {
-    public int Part1(string input)
-    {
-        return SignalMarker(input, 4);
-    }
+    public int Part1(string input) => SignalMarker(input, 4);
 
-    public int Part2(string input)
-    {
-        return SignalMarker(input, 14);
-    }
+    public int Part2(string input) => SignalMarker(input, 14);
 
     private static int SignalMarker(string input, int window)
     {

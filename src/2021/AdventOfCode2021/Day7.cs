@@ -5,15 +5,9 @@ public static class Day7
     /// <summary>
     ///     How much fuel must they spend to align to that position? (using least possible fuel)
     /// </summary>
-    public static int Part1(IEnumerable<string> input)
-    {
-        return LeastFuelConstantRate(input);
-    }
+    public static int Part1(IEnumerable<string> input) => LeastFuelConstantRate(input);
 
-    public static int Part2(IEnumerable<string> input)
-    {
-        return LeastFuelVariableRate(input);
-    }
+    public static int Part2(IEnumerable<string> input) => LeastFuelVariableRate(input);
 
     public static int LeastFuelConstantRate(IEnumerable<string> input)
     {

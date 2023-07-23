@@ -10,10 +10,7 @@ internal readonly record struct Coordinates(int X, int Y)
         return Math.Abs(deltaX) <= 1 && Math.Abs(deltaY) <= 1;
     }
 
-    internal static bool AreOverlapping(Coordinates c1, Coordinates c2)
-    {
-        return c1 == c2;
-    }
+    internal static bool AreOverlapping(Coordinates c1, Coordinates c2) => c1 == c2;
 
     internal static bool AreAdjacent(Coordinates c1, Coordinates c2)
     {
@@ -39,10 +36,8 @@ internal readonly record struct Coordinates(int X, int Y)
         };
     }
 
-    internal static bool IsOnGrid<T>(T[,] grid, Coordinates c)
-    {
-        return c.Y >= 0 && c.Y < grid.GetLength(0) && c.X >= 0 && c.X < grid.GetLength(1);
-    }
+    internal static bool IsOnGrid<T>(T[,] grid, Coordinates c) =>
+        c.Y >= 0 && c.Y < grid.GetLength(0) && c.X >= 0 && c.X < grid.GetLength(1);
 
     private static (int DeltaX, int DeltaY) Delta(Coordinates c1, Coordinates c2)
     {

@@ -4,19 +4,15 @@ namespace AdventOfCode2022;
 
 public class Day01 : IDay<string, int>
 {
-    public int Part1(string input)
-    {
-        return TotalCaloriesPerElf(input)
+    public int Part1(string input) =>
+        TotalCaloriesPerElf(input)
             .Max();
-    }
 
-    public int Part2(string input)
-    {
-        return TotalCaloriesPerElf(input)
+    public int Part2(string input) =>
+        TotalCaloriesPerElf(input)
             .OrderDescending()
             .Take(3)
             .Sum();
-    }
 
     private static IEnumerable<int> TotalCaloriesPerElf(string calories)
     {

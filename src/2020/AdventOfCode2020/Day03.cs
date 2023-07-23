@@ -34,8 +34,10 @@ public class Day03 : IDay<IEnumerable<string>, long>
     {
         var count = 0;
         for (int x = 0, y = 0; x < treemap.Count; x += slope.DeltaX, y += slope.DeltaY)
+        {
             if (treemap[x][y % treemap[x].Length])
                 count++;
+        }
 
         return count;
     }

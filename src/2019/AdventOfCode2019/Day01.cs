@@ -2,25 +2,19 @@
 
 namespace AdventOfCode2019;
 
-public class Day01 : IDay<IEnumerable<string>, int>
+public sealed class Day01 : IDay<IEnumerable<string>, int>
 {
-    public int Part1(IEnumerable<string> input)
-    {
-        return input.Select(int.Parse)
+    public int Part1(IEnumerable<string> input) =>
+        input.Select(int.Parse)
             .Sum(Fuel);
-    }
 
-    public int Part2(IEnumerable<string> input)
-    {
-        return input.Select(int.Parse)
+    public int Part2(IEnumerable<string> input) =>
+        input.Select(int.Parse)
             .Sum(TotalFuel);
-    }
 
-    private static int Fuel(int mass)
-    {
+    private static int Fuel(int mass) =>
         // return (int)(Math.Floor(mass / 3.0) - 2);
-        return mass / 3 - 2;
-    }
+        mass / 3 - 2;
 
     private static IEnumerable<int> FuelRequirements(int mass)
     {

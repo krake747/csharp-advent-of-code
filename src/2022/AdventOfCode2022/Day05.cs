@@ -73,7 +73,10 @@ public class Day05 : IDay<IEnumerable<string>, string>
     {
         var (containerStacks, rearrangements) = rearrangementPlan;
         var finalStacks = containerStacks.Select(s => new Stack<char>(s.Reverse())).ToArray();
-        foreach (var move in rearrangements.ToArray()) crateMover(move, finalStacks[move.From], finalStacks[move.To]);
+        foreach (var move in rearrangements.ToArray())
+        {
+            crateMover(move, finalStacks[move.From], finalStacks[move.To]);
+        }
 
         return finalStacks;
     }
