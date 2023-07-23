@@ -44,8 +44,8 @@ public sealed class Day01Tests
 
     [Theory]
     [MemberData(nameof(Part2Data))]
-    [Description("How many Calories are those Elves carrying in total?")]
-    public void Part2_ShouldReturnInteger_WhenSearchingTheTopThreeElvesCarryingTheMostCalories(AocInput input,
+    [Description("What is the position of the character that causes Santa to first enter the basement?")]
+    public void Part1_ShouldReturnInteger_WhenSantaDeliversPresentsToBasement(AocInput input,
         int expected)
     {
         // Act
