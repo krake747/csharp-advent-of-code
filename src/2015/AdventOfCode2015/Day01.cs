@@ -17,6 +17,6 @@ public sealed class Day01 : IAocDay<int>
             return floors;
         })
         .IndexOf(-1) + 1;
-    
+
     private static int GoUpOrDownOneFloor(char x) => x is '(' ? 1 : -1;
 }
