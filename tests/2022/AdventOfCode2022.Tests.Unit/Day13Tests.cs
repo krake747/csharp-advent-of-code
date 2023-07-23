@@ -7,10 +7,15 @@ namespace AdventOfCode2022.Tests.Unit;
 [AocPuzzle(2022, 13, "Distress Signal")]
 public sealed class Day13Tests
 {
-    private readonly Day13 _sut;
     private const string Day = nameof(Day13);
     private const string TestData = @$"..\..\..\Data\{Day}_Test.txt";
     private const string RealData = @$"..\..\..\Data\{Day}.txt";
+    private readonly Day13 _sut;
+
+    public Day13Tests()
+    {
+        _sut = new Day13();
+    }
 
     public static TheoryData<AocInput, int> Part1Data => new()
     {
@@ -23,11 +28,6 @@ public sealed class Day13Tests
         { ReadInput(TestData), 140 },
         { ReadInput(RealData), 20952 }
     };
-    
-    public Day13Tests()
-    {
-        _sut = new Day13();
-    }
 
     [Theory]
     [MemberData(nameof(Part1Data))]

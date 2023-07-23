@@ -8,11 +8,19 @@ namespace AdventOfCode2022.Tests.Unit;
 [AocPuzzle(2022, 10, "Cathode-Ray Tube")]
 public sealed class Day10Tests
 {
-    private readonly Day10 _sut;
-    private readonly ITestOutputHelper _testOutputHelper;
     private const string Day = nameof(Day10);
     private const string TestData = @$"..\..\..\Data\{Day}_Test.txt";
     private const string RealData = @$"..\..\..\Data\{Day}.txt";
+    private readonly Day10 _sut;
+    private readonly ITestOutputHelper _testOutputHelper;
+
+    public Day10Tests(ITestOutputHelper testOutputHelper)
+    {
+        _testOutputHelper = testOutputHelper;
+
+        // Arrange
+        _sut = new Day10();
+    }
 
     public static TheoryData<AocInput, int> Part1Data => new()
     {
@@ -29,14 +37,6 @@ public sealed class Day10Tests
     {
         ReadInput(RealData)
     };
-    
-    public Day10Tests(ITestOutputHelper testOutputHelper)
-    {
-        _testOutputHelper = testOutputHelper;
-
-        // Arrange
-        _sut = new Day10();
-    }
 
     [Theory]
     [MemberData(nameof(Part1Data))]

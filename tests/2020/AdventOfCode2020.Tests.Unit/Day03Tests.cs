@@ -7,10 +7,15 @@ namespace AdventOfCode2020.Tests.Unit;
 [Description("Day 03 - Toboggan Trajectory")]
 public sealed class Day03Tests
 {
-    private readonly Day03 _sut;
     private const string Day = nameof(Day03);
     private const string TestData = @$"..\..\..\Data\{Day}_Test.txt";
     private const string RealData = @$"..\..\..\Data\{Day}.txt";
+    private readonly Day03 _sut;
+
+    public Day03Tests()
+    {
+        _sut = new Day03();
+    }
 
     public static TheoryData<AocInput, long> Part1Data => new()
     {
@@ -23,11 +28,6 @@ public sealed class Day03Tests
         { ReadInput(TestData), 336 },
         { ReadInput(RealData), 8336352024L }
     };
-    
-    public Day03Tests()
-    {
-        _sut = new Day03();
-    }
 
     [Theory]
     [MemberData(nameof(Part1Data))]

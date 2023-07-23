@@ -7,10 +7,15 @@ namespace AdventOfCode2022.Tests.Unit;
 [Description("Day 02 - Rock Paper Scissors")]
 public sealed class Day02Tests
 {
-    private readonly Day02 _sut;
     private const string Day = nameof(Day02);
     private const string TestData = @$"..\..\..\Data\{Day}_Test.txt";
     private const string RealData = @$"..\..\..\Data\{Day}.txt";
+    private readonly Day02 _sut;
+
+    public Day02Tests()
+    {
+        _sut = new Day02();
+    }
 
     public static TheoryData<AocInput, int> Part1Data => new()
     {
@@ -23,11 +28,6 @@ public sealed class Day02Tests
         { ReadInput(TestData), 12 },
         { ReadInput(RealData), 14610 }
     };
-    
-    public Day02Tests()
-    {
-        _sut = new Day02();
-    }
 
     [Theory]
     [MemberData(nameof(Part1Data))]

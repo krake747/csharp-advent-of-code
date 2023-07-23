@@ -9,10 +9,16 @@ namespace AdventOfCode2022.Tests.Unit;
 [Description("Day 05 - Supply Stacks")]
 public sealed class Day05Tests
 {
-    private readonly Day05 _sut;
     private const string Day = nameof(Day05);
     private const string TestData = @$"..\..\..\Data\{Day}_Test.txt";
     private const string RealData = @$"..\..\..\Data\{Day}.txt";
+    private readonly Day05 _sut;
+
+    public Day05Tests()
+    {
+        // Arrange
+        _sut = new Day05();
+    }
 
     public static TheoryData<AocInput, string> Part1Data => new()
     {
@@ -25,12 +31,6 @@ public sealed class Day05Tests
         { ReadInput(TestData), "MCD" },
         { ReadInput(RealData), "PRTTGRFPB" }
     };
-    
-    public Day05Tests()
-    {
-        // Arrange
-        _sut = new Day05();
-    }
 
     [Theory]
     [MemberData(nameof(Part1Data))]

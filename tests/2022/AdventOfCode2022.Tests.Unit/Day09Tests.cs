@@ -7,11 +7,17 @@ namespace AdventOfCode2022.Tests.Unit;
 [AocPuzzle(2022, 9, "Rope Bridge")]
 public sealed class Day09Tests
 {
-    private readonly Day09 _sut;
     private const string Day = nameof(Day09);
     private const string TestData = @$"..\..\..\Data\{Day}_Test.txt";
     private const string TestData2 = @$"..\..\..\Data\{Day}_Test_2.txt";
     private const string RealData = @$"..\..\..\Data\{Day}.txt";
+    private readonly Day09 _sut;
+
+    public Day09Tests()
+    {
+        // Arrange
+        _sut = new Day09();
+    }
 
     public static TheoryData<AocInput, int> Part1Data => new()
     {
@@ -25,12 +31,6 @@ public sealed class Day09Tests
         { ReadInput(TestData2), 36 },
         { ReadInput(RealData), 2545 }
     };
-    
-    public Day09Tests()
-    {
-        // Arrange
-        _sut = new Day09();
-    }
 
 
     [Theory]

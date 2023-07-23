@@ -7,10 +7,16 @@ namespace AdventOfCode2019.Tests.Unit;
 [AocPuzzle(2022, 1, "The Tyranny of the Rocket Equation")]
 public sealed class Day01Tests
 {
-    private readonly Day01 _sut;
     private const string Day = nameof(Day01);
     private const string TestData = @$"..\..\..\Data\{Day}_Test.txt";
     private const string RealData = @$"..\..\..\Data\{Day}.txt";
+    private readonly Day01 _sut;
+
+    public Day01Tests()
+    {
+        // Arrange
+        _sut = new Day01();
+    }
 
     public static TheoryData<AocInput, int> Part1Data => new()
     {
@@ -23,13 +29,7 @@ public sealed class Day01Tests
         { ReadInput(TestData), 51316 },
         { ReadInput(RealData), 4941547 }
     };
-    
-    public Day01Tests()
-    {
-        // Arrange
-        _sut = new Day01();
-    }
-    
+
     [Theory]
     [MemberData(nameof(Part1Data))]
     [Description("What is the sum of the fuel requirements for all of the modules on your spacecraft?")]

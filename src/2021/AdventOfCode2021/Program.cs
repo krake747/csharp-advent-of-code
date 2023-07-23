@@ -1,6 +1,4 @@
-﻿
-
-// var inputDay1 = FetchFile(@"..\..\..\Inputs\day01.txt", StreamReader)
+﻿// var inputDay1 = FetchFile(@"..\..\..\Inputs\day01.txt", StreamReader)
 //     .Select(int.Parse)
 //     .ToList();
 //

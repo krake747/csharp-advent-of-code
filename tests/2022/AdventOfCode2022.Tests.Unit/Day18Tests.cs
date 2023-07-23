@@ -7,10 +7,16 @@ namespace AdventOfCode2022.Tests.Unit;
 [AocPuzzle(2022, 18, "Boiling Boulders")]
 public sealed class Day18Tests
 {
-    private readonly Day18 _sut;
     private const string Day = nameof(Day18);
     private const string TestData = @$"..\..\..\Data\{Day}_Test.txt";
     private const string RealData = @$"..\..\..\Data\{Day}.txt";
+    private readonly Day18 _sut;
+
+    public Day18Tests()
+    {
+        // Arrange
+        _sut = new Day18();
+    }
 
     public static TheoryData<AocInput, int> Part1Data => new()
     {
@@ -23,12 +29,6 @@ public sealed class Day18Tests
         { ReadInput(TestData), 64 },
         { ReadInput(RealData), 64 }
     };
-    
-    public Day18Tests()
-    {
-        // Arrange
-        _sut = new Day18();
-    }
 
     [Theory]
     [MemberData(nameof(Part1Data))]

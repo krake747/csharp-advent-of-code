@@ -7,10 +7,16 @@ namespace AdventOfCode2020.Tests.Unit;
 [Description("Day 06 - Custom Customs")]
 public sealed class Day06Tests
 {
-    private readonly Day06 _sut;
     private const string Day = nameof(Day06);
     private const string TestData = @$"..\..\..\Data\{Day}_Test.txt";
     private const string RealData = @$"..\..\..\Data\{Day}.txt";
+    private readonly Day06 _sut;
+
+    public Day06Tests()
+    {
+        // Arrange
+        _sut = new Day06();
+    }
 
     public static TheoryData<AocInput, int> Part1Data => new()
     {
@@ -23,12 +29,6 @@ public sealed class Day06Tests
         { ReadInput(TestData), 6 },
         { ReadInput(RealData), 3579 }
     };
-
-    public Day06Tests()
-    {
-        // Arrange
-        _sut = new Day06();
-    }
 
     [Theory]
     [MemberData(nameof(Part1Data))]

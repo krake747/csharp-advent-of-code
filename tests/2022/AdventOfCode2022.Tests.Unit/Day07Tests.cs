@@ -7,10 +7,16 @@ namespace AdventOfCode2022.Tests.Unit;
 [Description("Day 07 - No Space Left On Device")]
 public sealed class Day07Tests
 {
-    private readonly Day07 _sut;
     private const string Day = nameof(Day07);
     private const string TestData = @$"..\..\..\Data\{Day}_Test.txt";
     private const string RealData = @$"..\..\..\Data\{Day}.txt";
+    private readonly Day07 _sut;
+
+    public Day07Tests()
+    {
+        // Arrange
+        _sut = new Day07();
+    }
 
     public static TheoryData<AocInput, int> Part1Data => new()
     {
@@ -23,12 +29,6 @@ public sealed class Day07Tests
         { ReadInput(TestData), 24933642 },
         { ReadInput(RealData), 1117448 }
     };
-    
-    public Day07Tests()
-    {
-        // Arrange
-        _sut = new Day07();
-    }
 
     [Theory]
     [MemberData(nameof(Part1Data))]
