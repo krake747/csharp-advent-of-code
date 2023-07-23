@@ -11,9 +11,9 @@ public static partial class AocFileReaderService
         Lines = ReadAsStream(from)
     };
 
-    public static string ReadAsString(string from) => FetchFile(from, TextReader);
+    private static string ReadAsString(string from) => FetchFile(from, TextReader);
 
-    public static IEnumerable<string> ReadAsStream(string from) => FetchFile(from, StreamReader);
+    private static IEnumerable<string> ReadAsStream(string from) => FetchFile(from, StreamReader);
 
     private static T FetchFile<T>(string from, Func<string, T> reader) =>
         reader(Path.Combine(Directory.GetCurrentDirectory(), from));
@@ -23,11 +23,11 @@ public static partial class AocFileReaderService
     private static string TextReader(string path)
     {
         var result = File.ReadAllText(path, Encoding.UTF8);
-        return (MyRegex().Match(result).Success
-            ? MyRegex().Replace(result, "\n")
+        return (WindowsLineEndingRegex().IsMatch(result) 
+            ? WindowsLineEndingRegex().Replace(result, "\n") 
             : result).TrimEnd();
     }
 
     [GeneratedRegex("\r\n")]
-    private static partial Regex MyRegex();
+    private static partial Regex WindowsLineEndingRegex();
 }
