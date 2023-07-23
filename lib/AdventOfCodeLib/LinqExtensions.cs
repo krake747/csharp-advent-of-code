@@ -33,11 +33,6 @@ public static class LinqExtensions
             .ToArray();
     }
 
-    public static IEnumerable<(T Item, int Index)> WithIndex<T>(this IEnumerable<T> source)
-    {
-        return source.Select((item, index) => (item, index));
-    }
-
     public static IEnumerable<T> TakeUntil<T>(this IEnumerable<T> source, Func<T, bool> predicate)
     {
         foreach (var item in source)

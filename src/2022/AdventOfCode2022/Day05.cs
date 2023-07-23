@@ -46,7 +46,7 @@ public sealed class Day05 : IAocDay<string>
             .ToArray();
 
         foreach (var crateRow in crates)
-        foreach (var (crate, index) in crateRow.WithIndex().ToArray())
+        foreach (var (crate, index) in crateRow.Select((item, index) => (item, index)).ToArray())
         {
             var item = crate.SingleOrDefault(' ');
             if (item != ' ') stacks[index].Push(item);

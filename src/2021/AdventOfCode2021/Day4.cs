@@ -63,7 +63,7 @@ public static class Day4
     private static void MarkNumber(BingoSystem bingoSystem, string number)
     {
         var boards = bingoSystem.Boards.ToList();
-        foreach (var (board, index) in boards.WithIndex())
+        foreach (var (board, index) in boards.Select((item, index) => (item, index)))
         {
             var markedBoard = Enumerable.Range(0, board.GetLength(0))
                 .Select(r => board[r].Select(x => Regex.Replace(x, @$"^{number}$", "X")).ToArray())
@@ -78,7 +78,7 @@ public static class Day4
         Dictionary<int, WinningBoard> winningBoards)
     {
         var boards = bingoSystem.Boards.ToList();
-        foreach (var (board, index) in boards.WithIndex())
+        foreach (var (board, index) in boards.Select((item, index) => (item, index)))
         {
             var checkCols = Enumerable.Range(0, board.GetLength(0))
                 .Select(c => board.GetColumn(c).All(v => v == "X"))
@@ -106,7 +106,7 @@ public static class Day4
         return unmarkedScore * int.Parse(number);
     }
 
-    private record BingoSystem(string[] Numbers, List<string[][]> Boards);
+    private sealed record BingoSystem(string[] Numbers, List<string[][]> Boards);
 
-    private record WinningBoard(string[][] Board);
+    private sealed record WinningBoard(string[][] Board);
 }
