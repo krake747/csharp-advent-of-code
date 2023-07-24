@@ -21,8 +21,8 @@ public sealed class Day03Tests
 
     public static TheoryData<AocInput, int> Part2Data => new()
     {
-        { ReadInput(TestData), 4 },
-        { ReadInput(RealData), 1 }
+        { ReadInput(TestData), 3 },
+        { ReadInput(RealData), 2360 }
     };
 
     [Theory]
@@ -39,9 +39,8 @@ public sealed class Day03Tests
 
     [Theory]
     [MemberData(nameof(Part2Data))]
-    [Description("How many total feet of ribbon should they order?")]
-    public void Part2_ShouldReturnInteger_WhenElvesOrderWrappingPaper2(AocInput input,
-        int expected)
+    [Description("This year, how many houses receive at least one present?")]
+    public void Part2_ShouldReturnInteger_WhenSantaAndRoboSantaDeliversPresents(AocInput input, int expected)
     {
         // Act
         var result = Day03.Part2(input);
