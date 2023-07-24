@@ -11,12 +11,7 @@ public sealed class Day02Tests
     private const string Day = nameof(Day02);
     private const string TestData = @$"..\..\..\Data\{Day}_Test.txt";
     private const string RealData = @$"..\..\..\Data\{Day}.txt";
-    private readonly Day02 _sut;
-
-    public Day02Tests()
-    {
-        _sut = new Day02();
-    }
+    private readonly Day02 _sut = new();
 
     public static TheoryData<AocInput, int> Part1Data => new()
     {
@@ -44,7 +39,7 @@ public sealed class Day02Tests
 
     [Theory]
     [MemberData(nameof(Part2Data))]
-    [Description("")]
+    [Description("How many total feet of ribbon should they order?")]
     public void Part2_ShouldReturnInteger_WhenElvesOrderWrappingPaper2(AocInput input,
         int expected)
     {
