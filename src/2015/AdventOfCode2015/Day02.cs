@@ -23,15 +23,15 @@ public sealed class Day02 : IAocDay<int>
 
     private static int CalculateSurface(int length, int width, int height) =>
         2 * length * width + 2 * width * height + 2 * height * length;
-
+    
     private static int CalculateAreaOfSmallestSide(int length, int width, int height) =>
-        new[] { length * width, width * height, height * length }.Min();
+        Math.Min(Math.Min(length * width, width * height), height * length);
 
     private static int CalculateBow(int length, int width, int height) =>
         length * width * height;
 
     private static int CalculatePerimeterOfSmallestSide(int length, int width, int height) =>
-        new[] { 2 * length + 2 * width, 2 * width + 2 * height, 2 * height + 2 * length }.Min();
+        Math.Min(Math.Min(2 * length + 2 * width, 2 * width + 2 * height), 2 * height + 2 * length);
 
     private readonly record struct Present(int Length, int Width, int Height);
 }
