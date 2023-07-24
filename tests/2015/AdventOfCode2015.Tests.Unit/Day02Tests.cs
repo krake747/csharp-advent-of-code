@@ -40,8 +40,7 @@ public sealed class Day02Tests
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("How many total feet of ribbon should they order?")]
-    public void Part2_ShouldReturnInteger_WhenElvesOrderWrappingPaper2(AocInput input,
-        int expected)
+    public void Part2_ShouldReturnInteger_WhenElvesOrderWrappingPaper2(AocInput input, int expected)
     {
         // Act
         var result = Day02.Part2(input);
