@@ -5,6 +5,7 @@ using TextCopy;
 var (year, day) = ReadArgs(args);
 
 var config = new ConfigurationBuilder()
+    .SetBasePath(Directory.GetCurrentDirectory())
     .AddUserSecrets<Program>()
     .Build();
 
@@ -24,7 +25,8 @@ if (input is "Error")
     return;
 }
 
-var exportDirectory = $@"..\..\..\..\..\tests\{year}\AdventOfCode{year}.Tests.Unit\Data";
+Log.Logger.Information("Path: {Path}", Directory.GetCurrentDirectory());
+var exportDirectory = $@"..\..\tests\{year}\AdventOfCode{year}.Tests.Unit\Data";
 var fullPath = Path.GetFullPath(exportDirectory);
 var dayStr = TryPrependZero(int.Parse(day));
 var (fileName, testName) = CreateFileNames(dayStr);
@@ -36,15 +38,15 @@ if (!Directory.Exists(exportDirectory))
 }
 
 var filePath = Path.Combine(fullPath, fileName);
-if (!File.Exists(filePath))
+if (File.Exists(filePath) is false)
 {
     Log.Logger.Information("File {FileName} does not exist", fileName);
     await File.WriteAllTextAsync(filePath, input);
     Log.Logger.Information("File {FileName} was written to {FilePath}", fileName, filePath);
 }
 
-var testPath = Path.Combine(fullPath, fileName);
-if (!File.Exists(testPath))
+var testPath = Path.Combine(fullPath, testName);
+if (File.Exists(testPath) is false)
 {
     Log.Logger.Information("File {TestName} does not exist", testName);
     Log.Logger.Information("Awaiting copy from clipboard...");
