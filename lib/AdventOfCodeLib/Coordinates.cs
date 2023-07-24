@@ -1,6 +1,4 @@
-﻿using AdventOfCodeLib.Enums;
-
-namespace AdventOfCodeLib.Models;
+﻿namespace AdventOfCodeLib;
 
 internal readonly record struct Coordinates(int X, int Y)
 {
@@ -44,5 +42,13 @@ internal readonly record struct Coordinates(int X, int Y)
         var deltaX = c2.X - c1.X;
         var deltaY = c2.Y - c1.Y;
         return (deltaX, deltaY);
+    }
+    
+    public enum Direction
+    {
+        Up,
+        Down,
+        Right,
+        Left
     }
 }
