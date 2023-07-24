@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Serilog;
 using TextCopy;
 
 var (year, day) = ReadArgs(args);
@@ -7,43 +8,46 @@ var config = new ConfigurationBuilder()
     .AddUserSecrets<Program>()
     .Build();
 
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .CreateLogger();    
+
 var url = $"https://adventofcode.com/{year}/day/{day}/input";
 using var httpClient = new HttpClient();
 httpClient.DefaultRequestHeaders.Add("Cookie", $"session={config["Session"]}");
 
-var input = await GetInput(httpClient, url);
+var input = await GetAocInput(httpClient, url);
 
 if (input is "Error")
 {
-    Console.WriteLine("Error while fetching input data");
+    Log.Logger.Fatal("Error while fetching input data");
     return;
 }
 
-var directoryTo = $@"..\..\..\..\..\tests\{year}\AdventOfCode{year}.Tests.Unit\Data\";
-var fullPath = Path.GetFullPath(directoryTo);
-var dayStr = int.Parse(day) < 10 ? $"0{day}" : $"{day}";
-var fileName = @$"Day{dayStr}.txt";
-var fileNameTest = @$"Day{dayStr}_Test.txt";
+var exportDirectory = $@"..\..\..\..\..\tests\{year}\AdventOfCode{year}.Tests.Unit\Data";
+var fullPath = Path.GetFullPath(exportDirectory);
+var dayStr = TryPrependZero(int.Parse(day));
+var (fileName, testName) = CreateFileNames(dayStr);
 
-if (!Directory.Exists(directoryTo))
+if (!Directory.Exists(exportDirectory))
 {
-    Console.WriteLine("Directory does not exist");
-    Directory.CreateDirectory(directoryTo);
+    Log.Logger.Information("Directory does not exist");
+    Directory.CreateDirectory(exportDirectory);
 }
 
-if (!File.Exists(fullPath + fileName))
+var filePath = Path.Combine(fullPath, fileName);
+if (!File.Exists(filePath))
 {
-    Console.WriteLine($"File {fileName} does not exist");
-    await File.WriteAllTextAsync(fullPath + fileName, input);
-    Console.WriteLine($"File {fileName} was written to {fullPath}");
+    Log.Logger.Information("File {FileName} does not exist", fileName);
+    await File.WriteAllTextAsync(filePath, input);
+    Log.Logger.Information("File {FileName} was written to {FilePath}", fileName, filePath);
 }
-else
-    Console.WriteLine($"File {fileName} exists in {fullPath}");
 
-if (!File.Exists(fullPath + fileNameTest))
+var testPath = Path.Combine(fullPath, fileName);
+if (!File.Exists(testPath))
 {
-    Console.WriteLine($"File {fileNameTest} does not exist");
-    Console.WriteLine("Awaiting copy from clipboard...");
+    Log.Logger.Information("File {TestName} does not exist", testName);
+    Log.Logger.Information("Awaiting copy from clipboard...");
     await ClipboardService.SetTextAsync("");
     string? clipboard;
     do
@@ -51,18 +55,13 @@ if (!File.Exists(fullPath + fileNameTest))
         clipboard = await ClipboardService.GetTextAsync();
     } while (clipboard is null or "");
 
-    await File.WriteAllTextAsync(fullPath + fileNameTest, clipboard);
-    Console.WriteLine($"File {fileNameTest} was written to {fullPath}");
+    await File.WriteAllTextAsync(testPath, clipboard);
+    Log.Logger.Information("File {TestName} was written to {TestPath}", testName, testPath);
 }
-else
-    Console.WriteLine($"File {fileNameTest} exists in {fullPath}");
 
-static async Task<string> GetInput(HttpClient httpClient, string url)
+static async Task<string> GetAocInput(HttpClient httpClient, string url)
 {
-    var response = await httpClient.GetAsync(url);
-    if (response.IsSuccessStatusCode) return await response.Content.ReadAsStringAsync();
-
-    return "Error";
+    return await httpClient.GetStringAsync(url);
 }
 
 static (string, string) ReadArgs(IReadOnlyList<string> args)
@@ -74,4 +73,13 @@ static (string, string) ReadArgs(IReadOnlyList<string> args)
     Console.Write(" Day: ");
     var day = Console.ReadLine()!;
     return (year, day);
+}
+
+static string TryPrependZero(int value) => value < 10 ? $"0{value}" : $"{value}";
+
+static (string, string) CreateFileNames(string value)
+{
+    var fileName = @$"Day{value}.txt";
+    var testName = @$"Day{value}_Test.txt";
+    return (fileName, testName);
 }
