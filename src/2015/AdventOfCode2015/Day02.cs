@@ -14,7 +14,7 @@ public sealed class Day02 : IAocDay<int>
     private static IEnumerable<Present> SizeUpPresents(IEnumerable<string> input) =>
         input.Select(x => x.Split('x').Select(int.Parse).ToArray())
             .Select(x => new Present(x[0], x[1], x[2]));
-    
+
     private static int OrderWrappingPaper(int length, int width, int height) =>
         CalculateSurface(length, width, height) + CalculateAreaOfSmallestSide(length, width, height);
 
@@ -23,7 +23,7 @@ public sealed class Day02 : IAocDay<int>
 
     private static int CalculateSurface(int length, int width, int height) =>
         2 * length * width + 2 * width * height + 2 * height * length;
-    
+
     private static int CalculateAreaOfSmallestSide(int length, int width, int height) =>
         Math.Min(Math.Min(length * width, width * height), height * length);
 

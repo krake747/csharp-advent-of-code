@@ -15,7 +15,7 @@ public sealed class Day03 : IAocDay<int>
         })
         .ToHashSet()
         .Count;
-    
+
     public static int Part2(AocInput input) => input.Text
         .Select((x, i) => (Direction: x, Index: i))
         .Aggregate(new List<List<Points>> { new() { new Points(0, 0) }, new() { new Points(0, 0) } }, (visited, x) =>
@@ -40,5 +40,5 @@ public sealed class Day03 : IAocDay<int>
             '<' => current with { X = current.X - 1 },
             _ => current
         };
-    };
+    }
 }
