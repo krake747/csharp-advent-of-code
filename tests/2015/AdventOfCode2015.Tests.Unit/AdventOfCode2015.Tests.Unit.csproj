@@ -23,10 +23,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Data\" />
-    </ItemGroup>
-
-    <ItemGroup>
         <ProjectReference Include="..\..\..\lib\AdventOfCodeLib\AdventOfCodeLib.csproj" />
         <ProjectReference Include="..\..\..\src\2015\AdventOfCode2015\AdventOfCode2015.csproj" />
     </ItemGroup>
