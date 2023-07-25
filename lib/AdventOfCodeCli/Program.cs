@@ -44,6 +44,10 @@ if (File.Exists(filePath) is false)
     await File.WriteAllTextAsync(filePath, input);
     Log.Logger.Information("File {FileName} was written to {FilePath}", fileName, filePath);
 }
+else
+{
+    Log.Logger.Information("File {FileName} exists", fileName);
+}
 
 var testPath = Path.Combine(fullPath, testName);
 if (File.Exists(testPath) is false)
@@ -59,6 +63,10 @@ if (File.Exists(testPath) is false)
 
     await File.WriteAllTextAsync(testPath, clipboard);
     Log.Logger.Information("File {TestName} was written to {TestPath}", testName, testPath);
+}
+else
+{
+    Log.Logger.Information("File {TestName} exists", testName);
 }
 
 static async Task<string> GetAocInput(HttpClient httpClient, string url)
