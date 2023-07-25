@@ -41,5 +41,4 @@ public sealed partial class Day05 : IAocDay<int>
     
     private static bool AllValid(string source, params Func<string, bool>[] predicates) => 
         predicates.All(func => func(source));
-
 }
