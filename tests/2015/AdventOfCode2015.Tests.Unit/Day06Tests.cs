@@ -40,8 +40,8 @@ public sealed class Day06Tests
     
     [Theory]
     [MemberData(nameof(Part2Data))]
-    [Description("How many lights are lit?")]
-    public void Part2_ShouldReturnInteger_WhenSantaIsConfiguringLights(AocInput input, int expected)
+    [Description("What is the total brightness of all lights?")]
+    public void Part2_ShouldReturnInteger_WhenSantaIsConfiguringLightBrightness(AocInput input, int expected)
     {
         // Act
         var result = Day06.Part2(input);
