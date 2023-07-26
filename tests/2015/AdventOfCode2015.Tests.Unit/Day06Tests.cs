@@ -10,6 +10,7 @@ public sealed class Day06Tests
 {
     private const string Day = nameof(Day06);
     private const string TestData = @$"..\..\..\Data\{Day}_Test.txt";
+    private const string TestData2 = @$"..\..\..\Data\{Day}_Test_2.txt";
     private const string RealData = @$"..\..\..\Data\{Day}.txt";
     private readonly Day06 _sut = new();
 
@@ -21,8 +22,8 @@ public sealed class Day06Tests
 
     public static TheoryData<AocInput, int> Part2Data => new()
     {
-        { ReadInput(TestData), 1 },
-        { ReadInput(RealData), 1 }
+        { ReadInput(TestData2), 2000001 },
+        { ReadInput(RealData), 15343601 }
     };
 
     [Theory]
