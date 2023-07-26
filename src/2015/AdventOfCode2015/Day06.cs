@@ -17,14 +17,14 @@ public sealed class Day06 : IAocDay<int>
             {
                 grid[new Point(i, j)] = command switch
                 {
-                    "turn on" => true,
-                    "turn off" => false,
-                    "toggle" => !grid[new Point(i, j)],
+                    Command.On => true,
+                    Command.Off => false,
+                    Command.Toggle => !grid[new Point(i, j)],
                     _ => throw new ArgumentOutOfRangeException(nameof(command), "Unknown pattern")
                 };
             }
         }
-        
+
         return grid.Values.Count(x => x);
     }
 
@@ -41,14 +41,14 @@ public sealed class Day06 : IAocDay<int>
                 var brightness = grid[new Point(i, j)];
                 grid[new Point(i, j)] = command switch
                 {
-                    "turn on" => brightness + 1,
-                    "turn off" => Math.Max(0, brightness - 1),
-                    "toggle" => brightness + 2,
+                    Command.On => brightness + 1,
+                    Command.Off => Math.Max(0, brightness - 1),
+                    Command.Toggle => brightness + 2,
                     _ => throw new ArgumentOutOfRangeException(nameof(command), "Unknown pattern")
                 };
             }
         }
-        
+
         return grid.Values.Sum();
     }
 
@@ -56,14 +56,23 @@ public sealed class Day06 : IAocDay<int>
     {
         return lines.Select(line => line.Split(' ') switch
         {
-            [var turn, var onOrOff, var from, _, var to] => new Instruction($"{turn} {onOrOff}", Point.Create(from), 
+            [var turn, var onOrOff, var from, _, var to] => new Instruction(ParseCommand($"{turn} {onOrOff}"),
+                Point.Create(from), Point.Create(to)),
+            [var toggle, var from, _, var to] => new Instruction(ParseCommand(toggle), Point.Create(from),
                 Point.Create(to)),
-            [var toggle, var from, _, var to] => new Instruction(toggle, Point.Create(from), Point.Create(to)),
             _ => throw new ArgumentException("Pattern not defined")
         });
+
+        Command ParseCommand(string c) => c switch
+        {
+            "turn on" => Command.On,
+            "turn off" => Command.Off,
+            "toggle" => Command.Toggle,
+            _ => throw new ArgumentOutOfRangeException(nameof(c), "Unknown pattern")
+        };
     }
 
-    private static Dictionary<Point, T> MakeGrid<T>() 
+    private static Dictionary<Point, T> MakeGrid<T>()
         where T : struct
     {
         var grid = new Dictionary<Point, T>();
@@ -76,7 +85,7 @@ public sealed class Day06 : IAocDay<int>
         return grid;
     }
 
-    private sealed record Instruction(string Command, Point FromPoint, Point ToPoint);
+    private readonly record struct Instruction(Command Command, Point FromPoint, Point ToPoint);
 
     private readonly record struct Point(int X, int Y)
     {
@@ -85,5 +94,12 @@ public sealed class Day06 : IAocDay<int>
             var point = s.Split(',').Select(int.Parse).ToArray();
             return new Point(point[0], point[1]);
         }
+    }
+
+    private enum Command
+    {
+        On,
+        Off,
+        Toggle
     }
 }
