@@ -13,22 +13,22 @@ public sealed class Day07Tests
     private const string RealData = @$"..\..\..\Data\{Day}.txt";
     private readonly Day07 _sut = new();
 
-    public static TheoryData<AocInput, int> Part1Data => new()
+    public static TheoryData<AocInput, ushort> Part1Data => new()
     {
-        { ReadInput(TestData), 0 },
-        { ReadInput(RealData), 0 }
+        // { ReadInput(TestData), 0 },
+        { ReadInput(RealData), (ushort)2 }
     };
 
-    public static TheoryData<AocInput, int> Part2Data => new()
+    public static TheoryData<AocInput, ushort> Part2Data => new()
     {
-        { ReadInput(TestData), 0 },
+        // { ReadInput(TestData), 0 },
         { ReadInput(RealData), 0 }
     };
 
     [Theory]
     [MemberData(nameof(Part1Data))]
-    [Description("")]
-    public void Part1_ShouldReturnInteger_WhenSample(AocInput input, int expected)
+    [Description("What signal is ultimately provided to wire a?")]
+    public void Part1_ShouldReturnInteger_WhenSantaUsesWires(AocInput input, ushort expected)
     {
         // Act
         var result = Day07.Part1(input);
@@ -40,7 +40,7 @@ public sealed class Day07Tests
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("")]
-    public void Part2_ShouldReturnInteger_WhenSample(AocInput input, int expected)
+    public void Part2_ShouldReturnInteger_WhenSample(AocInput input, ushort expected)
     {
         // Act
         var result = Day07.Part2(input);
