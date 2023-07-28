@@ -8,3 +8,6 @@ Instructions to the puzzle problems are found on: https://adventofcode.com/2015/
 | Day 2: I Was Told There Would Be No Math      | :star: | :star: |
 | Day 3: Perfectly Spherical Houses in a Vacuum | :star: | :star: |
 | Day 4: The Ideal Stocking Stuffer             | :star: | :star: |
+| Day 5: Doesn't He Have Intern-Elves For This? | :star: | :star: |
+| Day 6: Probably a Fire Hazard                 | :star: | :star: |
+| Day 7: Some Assembly Required                 | :star: | :star: |
