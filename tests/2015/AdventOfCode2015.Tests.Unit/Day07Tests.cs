@@ -22,7 +22,7 @@ public sealed class Day07Tests
     public static TheoryData<AocInput, ushort> Part2Data => new()
     {
         // { ReadInput(TestData), 0 },
-        { ReadInput(RealData), 0 }
+        { ReadInput(RealData), 14134 }
     };
 
     [Theory]
@@ -39,8 +39,8 @@ public sealed class Day07Tests
     
     [Theory]
     [MemberData(nameof(Part2Data))]
-    [Description("")]
-    public void Part2_ShouldReturnInteger_WhenSample(AocInput input, ushort expected)
+    [Description("What signal is ultimately provided to wire b?")]
+    public void Part2_ShouldReturnIntegerWhenSantaUsesWires(AocInput input, ushort expected)
     {
         // Act
         var result = Day07.Part2(input);
