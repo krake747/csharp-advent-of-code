@@ -15,14 +15,14 @@ public sealed class Day11Tests
 
     public static TheoryData<AocInput, string> Part1Data => new()
     {
-        // { ReadInput(TestData), 0 },
+        // { ReadInput(TestData), "" },
         { ReadInput(RealData), "hepxxyzz" }
     };
 
     public static TheoryData<AocInput, string> Part2Data => new()
     {
-        // { ReadInput(TestData), 0 },
-        { ReadInput(RealData), "" }
+        // { ReadInput(TestData), "" },
+        { ReadInput(RealData), "heqaabcc" }
     };
 
     [Theory]

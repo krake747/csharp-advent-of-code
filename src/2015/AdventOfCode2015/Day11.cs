@@ -6,14 +6,18 @@ namespace AdventOfCode2015;
 [AocPuzzle(2015, 11, "Corporate Policy")]
 public sealed partial class Day11 : IAocDay<string>
 {
-    public static string Part1(AocInput input)
+    public static string Part1(AocInput input) => CreateNewPassword(input.Text);
+
+    public static string Part2(AocInput input) => CreateNewPassword(CreateNewPassword(input.Text));
+    
+    private static string CreateNewPassword(string input)
     {
         var alphabet = string.Join("", Enumerable.Range('a', 26).Select(x => (char)x));
         var chunks = alphabet.Zip(alphabet.Skip(1), alphabet.Skip(2))
             .Select(x => $"{x.First}{x.Second}{x.Third}")
             .ToArray();
-        
-        var password = input.Text.ToCharArray();
+
+        var password = input.ToCharArray();
         var endPassword = new string('z', password.Length);
         var i = password.Length - 1;
         var newPasswordFound = false;
@@ -50,9 +54,6 @@ public sealed partial class Day11 : IAocDay<string>
         return new string(password);
     }
 
-    public static string Part2(AocInput input) => "1";
-    
-    
     private static bool NoUnreadableLetters(char[] password) => 
         UnreadableLetters().IsMatch(new string(password)) is false;
     
