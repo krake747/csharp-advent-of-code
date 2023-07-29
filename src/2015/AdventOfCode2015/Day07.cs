@@ -2,7 +2,6 @@ using AdventOfCodeLib;
 
 namespace AdventOfCode2015;
 #pragma warning disable CS8602
-
 [AocPuzzle(2015, 7, "Some Assembly Required")]
 public sealed class Day07 : IAocDay<ushort>
 {
