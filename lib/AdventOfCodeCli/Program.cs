@@ -4,16 +4,16 @@ using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using TextCopy;
 
-// if (args.Length is 0)
-// {
-//     args = new string[2];
-//     Console.Write("Year: ");
-//     args[0] = Console.ReadLine()!;
-//     Console.Write(" Day: ");
-//     args[1] = Console.ReadLine()!;
-// }
+if (args.Length is 0)
+{
+    args = new string[2];
+    Console.Write("Year: ");
+    args[0] = Console.ReadLine()!;
+    Console.Write(" Day: ");
+    args[1] = Console.ReadLine()!;
+}
 
-args = new string[2] { "2015", "7" };
+// args = new string[2] { "2015", "7" };
 
 var config = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())

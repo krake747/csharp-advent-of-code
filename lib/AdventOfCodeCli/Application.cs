@@ -50,7 +50,7 @@ public sealed class Application
             $@"{testsDirectory}\{aocYear}\AdventOfCode{aocYear}.Tests.Unit"));
         var aocTestFileName = CreateAocTestFileName(day);
         var acoTestFilePath = Path.Combine(aocTestDirectory.FullName, aocTestFileName);
-        await CreateAocTestTemplate(acoTestFilePath, aocYear, aocDay, day);
+        await CreateAocTestClassFile(acoTestFilePath, aocYear, aocDay, day);
 
         // Create Input files
         // Real input
@@ -76,6 +76,18 @@ public sealed class Application
 
         _logger.Information("File was created: {File}", acoFilePath);
         await CreateAocTemplate(acoFilePath, aocYear, aocDay, day);
+    }
+    
+    private async Task CreateAocTestClassFile(string acoTestFilePath, string aocYear, string aocDay, string day)
+    {
+        if (File.Exists(acoTestFilePath))
+        {
+            _logger.Information("File already exists: {File}", acoTestFilePath);
+            return;
+        }
+
+        _logger.Information("File was created: {File}", acoTestFilePath);
+        await CreateAocTestTemplate(acoTestFilePath, aocYear, aocDay, day);
     }
 
     private async Task CreateRealInputFile(string realInputFilePath, string input)
@@ -206,10 +218,5 @@ public sealed class Application
 
     private static string CreateAocTestFileName(string day) => @$"Day{day}Tests.cs";
 
-    private static (string, string) CreateTestFileNames(string day)
-    {
-        var fileName = @$"Day{day}.txt";
-        var testName = @$"Day{day}_Test.txt";
-        return (fileName, testName);
-    }
+    private static (string, string) CreateTestFileNames(string day) => ($"Day{day}.txt", $"Day{day}_Test.txt");
 }
