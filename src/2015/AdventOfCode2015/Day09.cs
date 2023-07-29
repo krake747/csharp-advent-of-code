@@ -16,7 +16,15 @@ public sealed partial class Day09 : IAocDay<int>
             .Min();
     }
 
-    public static int Part2(AocInput input) => 0;
+    public static int Part2(AocInput input)     
+    {
+        var flights = ParseInstructions(input.Lines).ToArray();
+        var locations = flights.SelectMany(x => new[] { x.From, x.To }).Distinct().ToArray();
+        return GetPermutations(locations, locations.Length)
+            .Select(layovers => layovers.Zip(layovers.Skip(1), (from, to) => (from, to)))
+            .Select(route => route.Sum(r => CalculateDistance(flights, r.from, r.to)))
+            .Max();
+    }
 
     private static IEnumerable<Flight> ParseInstructions(IEnumerable<string> instructions) =>
         instructions.Select(x => FlightPattern().Match(x))

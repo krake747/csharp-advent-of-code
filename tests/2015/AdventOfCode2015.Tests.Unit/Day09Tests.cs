@@ -21,8 +21,8 @@ public sealed class Day09Tests
 
     public static TheoryData<AocInput, int> Part2Data => new()
     {
-        { ReadInput(TestData), 0 },
-        { ReadInput(RealData), 0 }
+        { ReadInput(TestData), 982 },
+        { ReadInput(RealData), 804 }
     };
 
     [Theory]

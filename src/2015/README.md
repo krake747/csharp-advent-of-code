@@ -12,3 +12,4 @@ Instructions to the puzzle problems are found on: https://adventofcode.com/2015/
 | Day 6: Probably a Fire Hazard                 | :star: | :star: |
 | Day 7: Some Assembly Required                 | :star: | :star: |
 | Day 8: Matchsticks                            | :star: | :star: |
+| Day 9: All in a Single Night                  | :star: | :star: |
