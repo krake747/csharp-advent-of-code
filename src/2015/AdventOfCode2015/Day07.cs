@@ -1,6 +1,7 @@
 using AdventOfCodeLib;
 
 namespace AdventOfCode2015;
+#pragma warning disable CS8602
 
 [AocPuzzle(2015, 7, "Some Assembly Required")]
 public sealed class Day07 : IAocDay<ushort>
@@ -71,8 +72,9 @@ public sealed class Day07 : IAocDay<ushort>
         }
     }
 
-    private static Dictionary<string, string[]> ParseInstructions(IEnumerable<string> input) =>
+    private static IDictionary<string, string[]> ParseInstructions(IEnumerable<string> input) =>
         input.Select(x => x.Split(' '))
             .OrderBy(x => x[^1])
             .ToDictionary(k => k[^1]);
 }
+#pragma warning restore CS8602

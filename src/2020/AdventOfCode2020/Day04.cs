@@ -33,7 +33,7 @@ public sealed class Day04 : IAocDay<int>
     private static bool AreAllKeysPresent(IDictionary<string, string> passport) => passport.Keys.Count >= 8;
 
     private static bool OptionalCountryId(IDictionary<string, string> passport) =>
-        passport.Keys.Count >= 7 && !passport.Keys.Contains("cid");
+        passport.Keys.Count >= 7 && !passport.ContainsKey("cid");
 
     private static bool IsValidBirthYear(IDictionary<string, string> passport) =>
         passport.TryGetValue("byr", out var result) && int.Parse(result) is >= 1920 and <= 2002;
