@@ -16,13 +16,13 @@ public sealed class Day08Tests
     public static TheoryData<AocInput, int> Part1Data => new()
     {
         { ReadInput(TestData), 12 },
-        { ReadInput(RealData), 0 }
+        { ReadInput(RealData), 1342 }
     };
 
     public static TheoryData<AocInput, int> Part2Data => new()
     {
-        { ReadInput(TestData), 0 },
-        { ReadInput(RealData), 0 }
+        { ReadInput(TestData), 19 },
+        { ReadInput(RealData), 2074 }
     };
 
     [Theory]
@@ -39,8 +39,8 @@ public sealed class Day08Tests
     
     [Theory]
     [MemberData(nameof(Part2Data))]
-    [Description("")]
-    public void Part2_ShouldReturnInteger_WhenSample(AocInput input, int expected)
+    [Description("What is the number of characters of new code minus the number of characters in original?")]
+    public void Part2_ShouldReturnInteger_WhenSantaCalculatesSpaceOnSleigh(AocInput input, int expected)
     {
         // Act
         var result = Day08.Part2(input);

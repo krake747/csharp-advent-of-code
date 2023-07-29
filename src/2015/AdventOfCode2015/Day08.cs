@@ -1,4 +1,3 @@
-using System.Text;
 using System.Text.RegularExpressions;
 using AdventOfCodeLib;
 
@@ -15,5 +14,11 @@ public sealed class Day08 : IAocDay<int>
         })
         .Sum(x => x.Literal.Length - x.Memory.Length);
     
-    public static int Part2(AocInput input) => 0;
+    public static int Part2(AocInput input) => input.Lines
+        .Select(x => new 
+        {
+            Encoded = $"\"{x.Replace("\\", "\\\\").Replace("\"", "\\\"")}\"".ToString(),
+            Original = x
+            
+        }).Sum(x => x.Encoded.Length - x.Original.Length);
 }
