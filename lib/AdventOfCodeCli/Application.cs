@@ -77,7 +77,7 @@ public sealed class Application
         _logger.Information("File was created: {File}", acoFilePath);
         await CreateAocTemplate(acoFilePath, aocYear, aocDay, day);
     }
-    
+
     private async Task CreateAocTestClassFile(string acoTestFilePath, string aocYear, string aocDay, string day)
     {
         if (File.Exists(acoTestFilePath))

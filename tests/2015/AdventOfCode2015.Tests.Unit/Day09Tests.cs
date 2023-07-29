@@ -36,7 +36,7 @@ public sealed class Day09Tests
         // Assert
         result.Should().Be(expected);
     }
-    
+
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("")]
@@ -44,7 +44,7 @@ public sealed class Day09Tests
     {
         // Act
         var result = Day09.Part2(input);
-    
+
         // Assert
         result.Should().Be(expected);
     }
