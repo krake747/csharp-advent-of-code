@@ -39,7 +39,7 @@ public sealed class Day11Tests
     
     [Theory]
     [MemberData(nameof(Part2Data))]
-    [Description("")]
+    [Description("Santa's password expired again. What's the next one?")]
     public void Part2_ShouldReturnInteger_WhenSantaChoosesNewPassword(AocInput input, string expected)
     {
         // Act
