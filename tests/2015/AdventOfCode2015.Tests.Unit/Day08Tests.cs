@@ -36,7 +36,7 @@ public sealed class Day08Tests
         // Assert
         result.Should().Be(expected);
     }
-    
+
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("What is the number of characters of new code minus the number of characters in original?")]
@@ -44,7 +44,7 @@ public sealed class Day08Tests
     {
         // Act
         var result = Day08.Part2(input);
-    
+
         // Assert
         result.Should().Be(expected);
     }
