@@ -37,7 +37,7 @@ public sealed class Day05Tests
         // Assert
         result.Should().Be(expected);
     }
-    
+
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("How many strings are nice under these new rules?")]
@@ -45,7 +45,7 @@ public sealed class Day05Tests
     {
         // Act
         var result = Day05.Part2(input);
-    
+
         // Assert
         result.Should().Be(expected);
     }

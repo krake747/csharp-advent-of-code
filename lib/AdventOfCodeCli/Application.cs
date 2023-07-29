@@ -32,11 +32,11 @@ public sealed class Application
             _logger.Fatal("Error while fetching input data");
             return;
         }
-        
+
         _logger.Information("Current Directory: {Path}", Directory.GetCurrentDirectory());
-        
+
         var day = PrependLeadingZero(int.Parse(aocDay));
-        
+
         // Create Day
         var srcDirectory = _config["Directories:src"]!;
         var aocDirectory = CreateDirectory(Path.GetFullPath($@"{srcDirectory}\{aocYear}\AdventOfCode{aocYear}"));
@@ -51,7 +51,7 @@ public sealed class Application
         var aocTestFileName = CreateAocTestFileName(day);
         var acoTestFilePath = Path.Combine(aocTestDirectory.FullName, aocTestFileName);
         await CreateAocTestTemplate(acoTestFilePath, aocYear, aocDay, day);
-        
+
         // Create Input files
         // Real input
         var (realInputFileName, testInputFileName) = CreateTestFileNames(day);
@@ -73,7 +73,7 @@ public sealed class Application
             _logger.Information("File already exists: {File}", acoFilePath);
             return;
         }
-        
+
         _logger.Information("File was created: {File}", acoFilePath);
         await CreateAocTemplate(acoFilePath, aocYear, aocDay, day);
     }
@@ -85,11 +85,11 @@ public sealed class Application
             _logger.Information("File already exists: {File}", realInputFilePath);
             return;
         }
-        
+
         _logger.Information("File was created: {File}", realInputFilePath);
         await File.WriteAllTextAsync(realInputFilePath, input);
     }
-    
+
     private async Task CreateTestInputFile(string testInputFilePath)
     {
         if (File.Exists(testInputFilePath))
@@ -97,7 +97,7 @@ public sealed class Application
             _logger.Information("File already exists: {File}", testInputFilePath);
             return;
         }
-        
+
         _logger.Information("Awaiting copy from clipboard...");
         await _clipboard.SetTextAsync("");
         string? clipboard;
@@ -137,7 +137,7 @@ public sealed class Application
                 public static int Part2(AocInput input) => 0;
             }
             """;
-        
+
         await File.WriteAllTextAsync(acoFilePath, aocTemplate);
     }
 
@@ -196,14 +196,14 @@ public sealed class Application
                 }
             }
             """;
-        
+
         await File.WriteAllTextAsync(realInputFilePath, aocTestTemplate);
     }
 
     private static string PrependLeadingZero(int day) => day < 10 ? $"0{day}" : $"{day}";
 
     private static string CreateAocDayFileName(string day) => @$"Day{day}.cs";
-    
+
     private static string CreateAocTestFileName(string day) => @$"Day{day}Tests.cs";
 
     private static (string, string) CreateTestFileNames(string day)

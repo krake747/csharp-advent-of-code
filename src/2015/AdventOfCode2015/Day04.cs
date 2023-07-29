@@ -22,7 +22,11 @@ public sealed class Day04 : IAocDay<int>
             {
                 var bytes = md5.ComputeHash(Encoding.UTF8.GetBytes($"{input.Text}{i}"));
                 var hash = string.Join("", bytes.Select(x => x.ToString("x2")));
-                if (hash.StartsWith(prefix) is false) return md5;
+                if (hash.StartsWith(prefix) is false)
+                {
+                    return md5;
+                }
+
                 queue.Enqueue(i);
                 state.Stop();
                 return md5;

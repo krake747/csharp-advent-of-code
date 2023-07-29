@@ -2,6 +2,14 @@
 
 internal readonly record struct Coordinates(int X, int Y)
 {
+    public enum Direction
+    {
+        Up,
+        Down,
+        Right,
+        Left
+    }
+
     internal static bool AreTouching(Coordinates c1, Coordinates c2)
     {
         var (deltaX, deltaY) = Delta(c1, c2);
@@ -42,13 +50,5 @@ internal readonly record struct Coordinates(int X, int Y)
         var deltaX = c2.X - c1.X;
         var deltaY = c2.Y - c1.Y;
         return (deltaX, deltaY);
-    }
-    
-    public enum Direction
-    {
-        Up,
-        Down,
-        Right,
-        Left
     }
 }

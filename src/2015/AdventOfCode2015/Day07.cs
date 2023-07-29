@@ -5,11 +5,11 @@ namespace AdventOfCode2015;
 [AocPuzzle(2015, 7, "Some Assembly Required")]
 public sealed class Day07 : IAocDay<ushort>
 {
-    public static ushort Part1(AocInput input) 
+    public static ushort Part1(AocInput input)
     {
         var instructions = ParseInstructions(input.Lines);
         return EvaluateWire("a");
-        
+
         ushort EvaluateWire(string wire)
         {
             var instruction = instructions[wire];
@@ -23,10 +23,10 @@ public sealed class Day07 : IAocDay<ushort>
                 ["NOT", ..] => Not(instruction),
                 _ => throw new ArgumentException("Undefined Operation")
             };
-            
+
             instructions[wire] = new[] { signal.ToString(), "->", wire };
             return signal;
-            
+
             ushort Evaluate(string x) => char.IsLetter(x[0]) ? EvaluateWire(x) : ushort.Parse(x);
             ushort Assign(IReadOnlyList<string> x) => Evaluate(x[0]);
             ushort And(IReadOnlyList<string> x) => (ushort)(Evaluate(x[0]) & Evaluate(x[2]));
@@ -36,14 +36,14 @@ public sealed class Day07 : IAocDay<ushort>
             ushort Not(IReadOnlyList<string> x) => (ushort)~Evaluate(x[1]);
         }
     }
-    
+
     public static ushort Part2(AocInput input)
     {
         var a = Part1(input);
         var instructions = ParseInstructions(input.Lines);
         instructions["b"] = new[] { $"{a}", "->", "b" };
         return EvaluateWire("a");
-        
+
         ushort EvaluateWire(string wire)
         {
             var instruction = instructions[wire];
@@ -57,17 +57,17 @@ public sealed class Day07 : IAocDay<ushort>
                 ["NOT", ..] => Not(instruction),
                 _ => throw new ArgumentException("Undefined Operation")
             };
-            
+
             instructions[wire] = new[] { signal.ToString(), "->", wire };
             return signal;
-            
+
             ushort Evaluate(string x) => char.IsLetter(x[0]) ? EvaluateWire(x) : ushort.Parse(x);
             ushort Assign(IReadOnlyList<string> x) => Evaluate(x[0]);
             ushort And(IReadOnlyList<string> x) => (ushort)(Evaluate(x[0]) & Evaluate(x[2]));
             ushort Or(IReadOnlyList<string> x) => (ushort)(Evaluate(x[0]) | Evaluate(x[2]));
             ushort LShift(IReadOnlyList<string> x) => (ushort)(Evaluate(x[0]) << Evaluate(x[2]));
             ushort RShift(IReadOnlyList<string> x) => (ushort)(Evaluate(x[0]) >> Evaluate(x[2]));
-            ushort Not(IReadOnlyList<string> x) => (ushort)(~Evaluate(x[1]));
+            ushort Not(IReadOnlyList<string> x) => (ushort)~Evaluate(x[1]);
         }
     }
 

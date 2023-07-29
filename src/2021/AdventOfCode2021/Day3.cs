@@ -38,9 +38,13 @@ public static class Day3
         {
             var ones = oxy.Count(s => s[i] == '1');
             if (ones >= oxy.Count / 2.0)
+            {
                 oxy.RemoveAll(s => s[i] == '0');
+            }
             else
+            {
                 oxy.RemoveAll(s => s[i] == '1');
+            }
         }
 
         var oxygen = Convert.ToInt32(oxy[0], 2);
@@ -51,9 +55,13 @@ public static class Day3
         {
             var zeroes = co2.Count(s => s[i] == '0');
             if (zeroes > co2.Count / 2.0)
+            {
                 co2.RemoveAll(s => s[i] == '0');
+            }
             else
+            {
                 co2.RemoveAll(s => s[i] == '1');
+            }
         }
 
         var carbonDioxide = Convert.ToInt32(co2[0], 2);

@@ -36,7 +36,7 @@ public sealed class Day07Tests
         // Assert
         result.Should().Be(expected);
     }
-    
+
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("What signal is ultimately provided to wire b?")]
@@ -44,7 +44,7 @@ public sealed class Day07Tests
     {
         // Act
         var result = Day07.Part2(input);
-    
+
         // Assert
         result.Should().Be(expected);
     }

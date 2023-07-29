@@ -37,7 +37,7 @@ public sealed class Day06Tests
         // Assert
         result.Should().Be(expected);
     }
-    
+
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("What is the total brightness of all lights?")]
@@ -45,7 +45,7 @@ public sealed class Day06Tests
     {
         // Act
         var result = Day06.Part2(input);
-    
+
         // Assert
         result.Should().Be(expected);
     }

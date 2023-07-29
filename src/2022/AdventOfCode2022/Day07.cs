@@ -15,9 +15,13 @@ public sealed class Day07 : IAocDay<int>
         {
             var parameters = line.Split(' ');
             if (Regex.IsMatch(line, @"^\$ cd (\w+|/)"))
+            {
                 paths.Push(string.Concat(paths) + parameters[^1]);
+            }
             else if (Regex.IsMatch(line, @"^\$ cd (..)"))
+            {
                 paths.Pop();
+            }
             else if (Regex.IsMatch(line, @"^(\d+)"))
             {
                 var size = int.Parse(parameters[0]);
@@ -43,9 +47,13 @@ public sealed class Day07 : IAocDay<int>
         {
             var parameters = line.Split(' ');
             if (Regex.IsMatch(line, @"^\$ cd (\w+|/)"))
+            {
                 paths.Push(string.Concat(paths) + parameters[^1]);
+            }
             else if (Regex.IsMatch(line, @"^\$ cd (..)"))
+            {
                 paths.Pop();
+            }
             else if (Regex.IsMatch(line, @"^(\d+)"))
             {
                 var size = int.Parse(parameters[0]);

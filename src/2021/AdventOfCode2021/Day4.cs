@@ -51,10 +51,14 @@ public static class Day4
             winningBoards = HasBingo(bingoSystem, winningBoards);
 
             if (winningBoards.Count == 1 && !finalBoard)
+            {
                 return CalculateBingoScore(winningBoards.Select(w => w.Value).First(), number);
+            }
 
             if (winningBoards.Count == bingoSystem.Boards.Count && finalBoard)
+            {
                 return CalculateBingoScore(winningBoards.Select(w => w.Value).Last(), number);
+            }
         }
 
         return -1;
@@ -89,9 +93,14 @@ public static class Day4
                 .Any(r => r);
 
             if ((checkCols || checkRows) && !winningBoards.Select(k => k.Key).Contains(index))
+            {
                 winningBoards.Add(index, new WinningBoard(board));
+            }
 
-            if (winningBoards.Count == bingoSystem.Boards.Count) return winningBoards;
+            if (winningBoards.Count == bingoSystem.Boards.Count)
+            {
+                return winningBoards;
+            }
         }
 
         return winningBoards;

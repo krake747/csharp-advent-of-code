@@ -22,7 +22,9 @@ public sealed class Day01 : IAocDay<int>
         while (true)
         {
             if (fuel < 0)
+            {
                 yield break;
+            }
 
             yield return fuel;
             fuel = Fuel(fuel);

@@ -36,7 +36,9 @@ public sealed class Day03 : IAocDay<long>
         for (int x = 0, y = 0; x < treemap.Count; x += slope.DeltaX, y += slope.DeltaY)
         {
             if (treemap[x][y % treemap[x].Length])
+            {
                 count++;
+            }
         }
 
         return count;

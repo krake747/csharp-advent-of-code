@@ -61,7 +61,10 @@ public sealed class Day08 : IAocDay<int>
         var treesOnColum = forest.GetColumn(col).ToArray();
         var treesOnRow = forest.GetRow(row).ToArray();
 
-        if (treesOnColum.All(height => height < tree) && treesOnRow.All(height => height < tree)) return true;
+        if (treesOnColum.All(height => height < tree) && treesOnRow.All(height => height < tree))
+        {
+            return true;
+        }
 
         var treesToNorth = treesOnColum.Where((_, idx) => idx < row)
             .All(height => height < tree);

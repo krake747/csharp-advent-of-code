@@ -23,8 +23,8 @@ public static partial class AocFileReaderService
     private static string TextReader(string path)
     {
         var result = File.ReadAllText(path, Encoding.UTF8);
-        return (WindowsLineEndingRegex().IsMatch(result) 
-            ? WindowsLineEndingRegex().Replace(result, "\n") 
+        return (WindowsLineEndingRegex().IsMatch(result)
+            ? WindowsLineEndingRegex().Replace(result, "\n")
             : result).TrimEnd();
     }
 

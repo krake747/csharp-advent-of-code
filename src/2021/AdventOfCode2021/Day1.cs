@@ -1,6 +1,4 @@
-﻿using AdventOfCodeLib;
-
-namespace AdventOfCode2021;
+﻿namespace AdventOfCode2021;
 
 public static class Day1
 {
@@ -23,13 +21,16 @@ public static class Day1
         var rollingSums = RollingSum(input, 3);
         return Part1(rollingSums);
     }
-    
+
     private static IEnumerable<int> RollingSum(IEnumerable<int> source, int window)
     {
         var numbers = source.ToList();
         var rollingSums = new List<int>();
 
-        if (numbers.Count < window) return new List<int>();
+        if (numbers.Count < window)
+        {
+            return new List<int>();
+        }
 
         Enumerable.Range(0, numbers.Count - window + 1)
             .ToList()
@@ -37,5 +38,4 @@ public static class Day1
 
         return rollingSums;
     }
-
 }
