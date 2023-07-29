@@ -20,7 +20,7 @@ public sealed partial class Day05 : IAocDay<int>
     private static bool ContainsAtLeastThreeVowels(string s) => Vowels().Matches(s).Count > 2;
 
 
-    [GeneratedRegex("(.)\\1")]
+    [GeneratedRegex(@"(.)\1")]
     private static partial Regex AnySubsequentLetter();
 
     private static bool AppearsTwiceSubsequently(string s) => AnySubsequentLetter().IsMatch(s);
@@ -32,13 +32,13 @@ public sealed partial class Day05 : IAocDay<int>
     private static bool NotContainForbiddenPairs(string s) => ForbiddenPairs().IsMatch(s) is false;
 
 
-    [GeneratedRegex("([a-z][a-z]).*\\1")]
+    [GeneratedRegex(@"([a-z][a-z]).*\1")]
     private static partial Regex PairOfAnySubsequentLetters();
 
     private static bool PairOfAnyTwoSubsequentLetters(string s) => PairOfAnySubsequentLetters().IsMatch(s);
 
 
-    [GeneratedRegex("([a-z])[a-z]\\1")]
+    [GeneratedRegex(@"([a-z])[a-z]\1")]
     private static partial Regex LetterBetweenPairAnyTwoSubsequentLetters();
 
     private static bool OneLetterBetweenPairSameTwoLetters(string s) =>
