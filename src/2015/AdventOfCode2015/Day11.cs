@@ -9,7 +9,7 @@ public sealed partial class Day11 : IAocDay<string>
     public static string Part1(AocInput input) => CreateNewPassword(input.Text);
 
     public static string Part2(AocInput input) => CreateNewPassword(CreateNewPassword(input.Text));
-    
+
     private static string CreateNewPassword(string input)
     {
         var alphabet = string.Join("", Enumerable.Range('a', 26).Select(x => (char)x));
@@ -54,21 +54,21 @@ public sealed partial class Day11 : IAocDay<string>
         return new string(password);
     }
 
-    private static bool NoUnreadableLetters(char[] password) => 
+    private static bool NoUnreadableLetters(char[] password) =>
         UnreadableLetters().IsMatch(new string(password)) is false;
-    
+
     private static Func<char[], bool> IncreasingCondition(IEnumerable<string> chunks) =>
         password => chunks.Any(new string(password).Contains);
-    
-    private static bool TwoLetterPairs(char[] password) => 
+
+    private static bool TwoLetterPairs(char[] password) =>
         AppearsTwice().Matches(new string(password)).Count > 1;
-    
+
     private static bool AllValid(char[] source, params Func<char[], bool>[] predicates) =>
         predicates.All(f => f(source));
-    
+
     [GeneratedRegex(@"[iol]")]
     private static partial Regex UnreadableLetters();
-    
-    [GeneratedRegex(@"(.)\1")] 
+
+    [GeneratedRegex(@"(.)\1")]
     private static partial Regex AppearsTwice();
 }

@@ -33,7 +33,7 @@ public sealed partial class Application
             _logger.Fatal("Error while fetching input data");
             return;
         }
-        
+
         // Get AoC title
         var instructions = await client.GetStringAsync($"{aocYear}/day/{aocDay}");
         var title = AocDayTitleRegex().Match(instructions).Groups[2].Value;
@@ -71,7 +71,8 @@ public sealed partial class Application
         await CreateTestInputFile(testInputFilePath);
     }
 
-    private async Task CreateAocDayClassFile(string acoFilePath, string title, string aocYear, string aocDay, string day)
+    private async Task CreateAocDayClassFile(string acoFilePath, string title, string aocYear, string aocDay,
+        string day)
     {
         if (File.Exists(acoFilePath))
         {
@@ -83,7 +84,7 @@ public sealed partial class Application
         await CreateAocTemplate(acoFilePath, title, aocYear, aocDay, day);
     }
 
-    private async Task CreateAocTestClassFile(string acoTestFilePath, string title, string aocYear, string aocDay, 
+    private async Task CreateAocTestClassFile(string acoTestFilePath, string title, string aocYear, string aocDay,
         string day)
     {
         if (File.Exists(acoTestFilePath))
@@ -140,7 +141,7 @@ public sealed partial class Application
         return Directory.CreateDirectory(directoryPath);
     }
 
-    private static async Task CreateAocTemplate(string acoFilePath, string title, string aocYear, string aocDay, 
+    private static async Task CreateAocTemplate(string acoFilePath, string title, string aocYear, string aocDay,
         string day)
     {
         var aocTemplate = $$"""
@@ -160,7 +161,7 @@ public sealed partial class Application
         await File.WriteAllTextAsync(acoFilePath, aocTemplate);
     }
 
-    private static async Task CreateAocTestTemplate(string realInputFilePath, string title, string aocYear, 
+    private static async Task CreateAocTestTemplate(string realInputFilePath, string title, string aocYear,
         string aocDay, string day)
     {
         var aocTestTemplate = $$"""
@@ -227,7 +228,7 @@ public sealed partial class Application
     private static string CreateAocTestFileName(string day) => @$"Day{day}Tests.cs";
 
     private static (string, string) CreateTestFileNames(string day) => ($"Day{day}.txt", $"Day{day}_Test.txt");
-    
+
     [GeneratedRegex(@"<h2>--- Day (\d*): (.*) ---</h2>")]
     private static partial Regex AocDayTitleRegex();
 }

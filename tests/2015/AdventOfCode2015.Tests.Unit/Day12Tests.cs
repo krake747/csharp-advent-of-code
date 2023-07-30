@@ -36,7 +36,7 @@ public sealed class Day12Tests
         // Assert
         result.Should().Be(expected);
     }
-    
+
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("Accounting-Elves have realized that they double-counted everything red?")]
@@ -44,7 +44,7 @@ public sealed class Day12Tests
     {
         // Act
         var result = Day12.Part2(input);
-    
+
         // Assert
         result.Should().Be(expected);
     }

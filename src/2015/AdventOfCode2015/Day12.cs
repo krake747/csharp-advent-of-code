@@ -1,4 +1,3 @@
-using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
 using AdventOfCodeLib;
@@ -8,7 +7,7 @@ namespace AdventOfCode2015;
 [AocPuzzle(2015, 12, "JSAbacusFramework.io")]
 public sealed partial class Day12 : IAocDay<int>
 {
-    public static int Part1(AocInput input) => 
+    public static int Part1(AocInput input) =>
         SignedIntegersRegex()
             .Matches(input.Text)
             .Aggregate(0, (seed, match) => seed + int.Parse(match.Value));
@@ -30,7 +29,7 @@ public sealed partial class Day12 : IAocDay<int>
         node.Select(x => x.Value)
             .OfType<JsonValue>()
             .Any(x => x.ToString() is "red");
-    
+
     [GeneratedRegex("([-0-9]+)")]
     private static partial Regex SignedIntegersRegex();
 }

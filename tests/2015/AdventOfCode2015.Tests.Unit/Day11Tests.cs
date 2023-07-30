@@ -36,7 +36,7 @@ public sealed class Day11Tests
         // Assert
         result.Should().Be(expected);
     }
-    
+
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("Santa's password expired again. What's the next one?")]
@@ -44,7 +44,7 @@ public sealed class Day11Tests
     {
         // Act
         var result = Day11.Part2(input);
-    
+
         // Assert
         result.Should().Be(expected);
     }
