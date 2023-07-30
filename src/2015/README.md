@@ -14,3 +14,5 @@ Instructions to the puzzle problems are found on: https://adventofcode.com/2015/
 | Day  8: Matchsticks                            | :star: | :star: |
 | Day  9: All in a Single Night                  | :star: | :star: |
 | Day 10: Elves Look, Elves Say                  | :star: | :star: |
+| Day 11: Corporate Policy                       | :star: | :star: |
+| Day 12: JSAbacusFramework.io                   | :star: | :star: |
