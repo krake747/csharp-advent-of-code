@@ -1,10 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Text.RegularExpressions;
+using Microsoft.Extensions.Configuration;
 using Serilog;
 using TextCopy;
 
 namespace AdventOfCodeCli;
 
-public sealed class Application
+public sealed partial class Application
 {
     private readonly IClipboard _clipboard;
     private readonly IConfiguration _config;
@@ -25,13 +26,17 @@ public sealed class Application
         var aocYear = args[0];
         var aocDay = args[1];
         var client = _httpClientFactory.CreateClient("AoC");
-        var input = await client.GetStringAsync($"{aocYear}/day/{aocDay}/input");
 
+        var input = await client.GetStringAsync($"{aocYear}/day/{aocDay}/input");
         if (input is "Error")
         {
             _logger.Fatal("Error while fetching input data");
             return;
         }
+        
+        // Get AoC title
+        var instructions = await client.GetStringAsync($"{aocYear}/day/{aocDay}");
+        var title = AocDayTitleRegex().Match(instructions).Groups[2].Value;
 
         _logger.Information("Current Directory: {Path}", Directory.GetCurrentDirectory());
 
@@ -42,7 +47,7 @@ public sealed class Application
         var aocDirectory = CreateDirectory(Path.GetFullPath($@"{srcDirectory}\{aocYear}\AdventOfCode{aocYear}"));
         var aocDayFileName = CreateAocDayFileName(day);
         var acoFilePath = Path.Combine(aocDirectory.FullName, aocDayFileName);
-        await CreateAocDayClassFile(acoFilePath, aocYear, aocDay, day);
+        await CreateAocDayClassFile(acoFilePath, title, aocYear, aocDay, day);
 
         // Create Day Tests
         var testsDirectory = _config["Directories:tests"]!;
@@ -50,7 +55,7 @@ public sealed class Application
             $@"{testsDirectory}\{aocYear}\AdventOfCode{aocYear}.Tests.Unit"));
         var aocTestFileName = CreateAocTestFileName(day);
         var acoTestFilePath = Path.Combine(aocTestDirectory.FullName, aocTestFileName);
-        await CreateAocTestClassFile(acoTestFilePath, aocYear, aocDay, day);
+        await CreateAocTestClassFile(acoTestFilePath, title, aocYear, aocDay, day);
 
         // Create Input files
         // Real input
@@ -66,7 +71,7 @@ public sealed class Application
         await CreateTestInputFile(testInputFilePath);
     }
 
-    private async Task CreateAocDayClassFile(string acoFilePath, string aocYear, string aocDay, string day)
+    private async Task CreateAocDayClassFile(string acoFilePath, string title, string aocYear, string aocDay, string day)
     {
         if (File.Exists(acoFilePath))
         {
@@ -75,10 +80,11 @@ public sealed class Application
         }
 
         _logger.Information("File was created: {File}", acoFilePath);
-        await CreateAocTemplate(acoFilePath, aocYear, aocDay, day);
+        await CreateAocTemplate(acoFilePath, title, aocYear, aocDay, day);
     }
 
-    private async Task CreateAocTestClassFile(string acoTestFilePath, string aocYear, string aocDay, string day)
+    private async Task CreateAocTestClassFile(string acoTestFilePath, string title, string aocYear, string aocDay, 
+        string day)
     {
         if (File.Exists(acoTestFilePath))
         {
@@ -87,7 +93,7 @@ public sealed class Application
         }
 
         _logger.Information("File was created: {File}", acoTestFilePath);
-        await CreateAocTestTemplate(acoTestFilePath, aocYear, aocDay, day);
+        await CreateAocTestTemplate(acoTestFilePath, title, aocYear, aocDay, day);
     }
 
     private async Task CreateRealInputFile(string realInputFilePath, string input)
@@ -134,14 +140,15 @@ public sealed class Application
         return Directory.CreateDirectory(directoryPath);
     }
 
-    private static async Task CreateAocTemplate(string acoFilePath, string aocYear, string aocDay, string day)
+    private static async Task CreateAocTemplate(string acoFilePath, string title, string aocYear, string aocDay, 
+        string day)
     {
         var aocTemplate = $$"""
             using AdventOfCodeLib;
 
             namespace AdventOfCode{{aocYear}};
 
-            [AocPuzzle({{aocYear}}, {{aocDay}}, "")]
+            [AocPuzzle({{aocYear}}, {{aocDay}}, "{{title}}")]
             public sealed class Day{{day}} : IAocDay<int>
             {
                 public static int Part1(AocInput input) => 0;
@@ -153,7 +160,8 @@ public sealed class Application
         await File.WriteAllTextAsync(acoFilePath, aocTemplate);
     }
 
-    private static async Task CreateAocTestTemplate(string realInputFilePath, string aocYear, string aocDay, string day)
+    private static async Task CreateAocTestTemplate(string realInputFilePath, string title, string aocYear, 
+        string aocDay, string day)
     {
         var aocTestTemplate = $$"""
             using System.ComponentModel;
@@ -163,7 +171,7 @@ public sealed class Application
 
             namespace AdventOfCode{{aocYear}}.Tests.Unit;
 
-            [AocPuzzle({{aocYear}}, {{aocDay}}, "")]
+            [AocPuzzle({{aocYear}}, {{aocDay}}, "{{title}}")]
             public sealed class Day{{day}}Tests
             {
                 private const string Day = nameof(Day{{day}});
@@ -219,4 +227,7 @@ public sealed class Application
     private static string CreateAocTestFileName(string day) => @$"Day{day}Tests.cs";
 
     private static (string, string) CreateTestFileNames(string day) => ($"Day{day}.txt", $"Day{day}_Test.txt");
+    
+    [GeneratedRegex(@"<h2>--- Day (\d*): (.*) ---</h2>")]
+    private static partial Regex AocDayTitleRegex();
 }
