@@ -21,7 +21,7 @@ public sealed class Day13 : IAocDay<int>
         var d = paired.SelectMany(x => new[] { (x.Person, x.NextTo) }).Distinct().ToArray();
 
 
-        return 2;
+        return 0;
     }
 
     public static int Part2(AocInput input) => 0;

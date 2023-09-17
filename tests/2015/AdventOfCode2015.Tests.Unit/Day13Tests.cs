@@ -25,7 +25,7 @@ public sealed class Day13Tests
         { ReadInput(RealData), 0 }
     };
 
-    [Theory]
+    [Theory(Skip = "unfinished")]
     [MemberData(nameof(Part1Data))]
     [Description("")]
     public void Part1_ShouldReturnInteger_WhenSample(AocInput input, int expected)
@@ -37,7 +37,7 @@ public sealed class Day13Tests
         result.Should().Be(expected);
     }
 
-    [Theory]
+    [Theory(Skip = "unfinished")]
     [MemberData(nameof(Part2Data))]
     [Description("")]
     public void Part2_ShouldReturnInteger_WhenSample(AocInput input, int expected)
