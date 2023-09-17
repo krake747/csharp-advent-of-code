@@ -9,18 +9,17 @@ public sealed class Day13 : IAocDay<int>
     {
         var instructions = ParseInstructions(input.Lines).ToArray();
         var people = instructions.Select(x => x.Person).Distinct().ToArray();
-        
-        
-        
+
+
         var paired = instructions.Select(x =>
-        {
-            var nextTo = instructions.First(y => x.Person == y.NextTo && x.NextTo == y.Person);
-            return new SeatingArrangement(x.Person, nextTo.Person, x.Happiness + nextTo.Happiness);
-        })
+            {
+                var nextTo = instructions.First(y => x.Person == y.NextTo && x.NextTo == y.Person);
+                return new SeatingArrangement(x.Person, nextTo.Person, x.Happiness + nextTo.Happiness);
+            })
             .ToArray();
-        
+
         var d = paired.SelectMany(x => new[] { (x.Person, x.NextTo) }).Distinct().ToArray();
-        
+
 
         return 2;
     }

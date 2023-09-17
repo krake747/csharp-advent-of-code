@@ -145,18 +145,18 @@ public sealed partial class Application
         string day)
     {
         var aocTemplate = $$"""
-            using AdventOfCodeLib;
+                            using AdventOfCodeLib;
 
-            namespace AdventOfCode{{aocYear}};
+                            namespace AdventOfCode{{aocYear}};
 
-            [AocPuzzle({{aocYear}}, {{aocDay}}, "{{title}}")]
-            public sealed class Day{{day}} : IAocDay<int>
-            {
-                public static int Part1(AocInput input) => 0;
-
-                public static int Part2(AocInput input) => 0;
-            }
-            """;
+                            [AocPuzzle({{aocYear}}, {{aocDay}}, "{{title}}")]
+                            public sealed class Day{{day}} : IAocDay<int>
+                            {
+                                public static int Part1(AocInput input) => 0;
+                            
+                                public static int Part2(AocInput input) => 0;
+                            }
+                            """;
 
         await File.WriteAllTextAsync(acoFilePath, aocTemplate);
     }
@@ -165,58 +165,58 @@ public sealed partial class Application
         string aocDay, string day)
     {
         var aocTestTemplate = $$"""
-            using System.ComponentModel;
-            using AdventOfCodeLib;
-            using FluentAssertions;
-            using static AdventOfCodeLib.AocFileReaderService;
+                                using System.ComponentModel;
+                                using AdventOfCodeLib;
+                                using FluentAssertions;
+                                using static AdventOfCodeLib.AocFileReaderService;
 
-            namespace AdventOfCode{{aocYear}}.Tests.Unit;
+                                namespace AdventOfCode{{aocYear}}.Tests.Unit;
 
-            [AocPuzzle({{aocYear}}, {{aocDay}}, "{{title}}")]
-            public sealed class Day{{day}}Tests
-            {
-                private const string Day = nameof(Day{{day}});
-                private const string TestData = @$"..\..\..\Data\{Day}_Test.txt";
-                private const string RealData = @$"..\..\..\Data\{Day}.txt";
-                private readonly Day{{day}} _sut = new();
-
-                public static TheoryData<AocInput, int> Part1Data => new()
-                {
-                    { ReadInput(TestData), 0 },
-                    { ReadInput(RealData), 0 }
-                };
-
-                public static TheoryData<AocInput, int> Part2Data => new()
-                {
-                    { ReadInput(TestData), 0 },
-                    { ReadInput(RealData), 0 }
-                };
-
-                [Theory]
-                [MemberData(nameof(Part1Data))]
-                [Description("")]
-                public void Part1_ShouldReturnInteger_WhenSample(AocInput input, int expected)
-                {
-                    // Act
-                    var result = Day{{day}}.Part1(input);
-
-                    // Assert
-                    result.Should().Be(expected);
-                }
-                
-                [Theory]
-                [MemberData(nameof(Part2Data))]
-                [Description("")]
-                public void Part2_ShouldReturnInteger_WhenSample(AocInput input, int expected)
-                {
-                    // Act
-                    var result = Day{{day}}.Part2(input);
-                
-                    // Assert
-                    result.Should().Be(expected);
-                }
-            }
-            """;
+                                [AocPuzzle({{aocYear}}, {{aocDay}}, "{{title}}")]
+                                public sealed class Day{{day}}Tests
+                                {
+                                    private const string Day = nameof(Day{{day}});
+                                    private const string TestData = @$"..\..\..\Data\{Day}_Test.txt";
+                                    private const string RealData = @$"..\..\..\Data\{Day}.txt";
+                                    private readonly Day{{day}} _sut = new();
+                                
+                                    public static TheoryData<AocInput, int> Part1Data => new()
+                                    {
+                                        { ReadInput(TestData), 0 },
+                                        { ReadInput(RealData), 0 }
+                                    };
+                                
+                                    public static TheoryData<AocInput, int> Part2Data => new()
+                                    {
+                                        { ReadInput(TestData), 0 },
+                                        { ReadInput(RealData), 0 }
+                                    };
+                                
+                                    [Theory]
+                                    [MemberData(nameof(Part1Data))]
+                                    [Description("")]
+                                    public void Part1_ShouldReturnInteger_WhenSample(AocInput input, int expected)
+                                    {
+                                        // Act
+                                        var result = Day{{day}}.Part1(input);
+                                
+                                        // Assert
+                                        result.Should().Be(expected);
+                                    }
+                                    
+                                    [Theory]
+                                    [MemberData(nameof(Part2Data))]
+                                    [Description("")]
+                                    public void Part2_ShouldReturnInteger_WhenSample(AocInput input, int expected)
+                                    {
+                                        // Act
+                                        var result = Day{{day}}.Part2(input);
+                                    
+                                        // Assert
+                                        result.Should().Be(expected);
+                                    }
+                                }
+                                """;
 
         await File.WriteAllTextAsync(realInputFilePath, aocTestTemplate);
     }
