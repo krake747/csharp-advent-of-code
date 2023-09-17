@@ -15,8 +15,8 @@ public sealed class Day01Tests
 
     public static TheoryData<AocInput, int> Part1Data => new()
     {
-        { ReadInput(TestData), 0 },
-        { ReadInput(RealData), 0 }
+        { ReadInput(TestData), 11 }, // Typo in instructions. says 12, but it is 11.
+        { ReadInput(RealData), 299 }
     };
 
     public static TheoryData<AocInput, int> Part2Data => new()
