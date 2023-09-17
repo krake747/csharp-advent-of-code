@@ -10,22 +10,17 @@ public sealed partial class Day01 : IAocDay<int>
         .Split(",", StringSplitOptions.TrimEntries)
         .Select(ParseInstructions)
         .ToArray()
-        .Aggregate(new Coordinate(0, 0, Direction.North), (coordinate, move) =>
+        .Aggregate(new Coordinate(0, 0, Direction.North), (coordinate, move) => (move, coordinate) switch
         {
-            var newCoordinate = (move, coordinate) switch
-            {
-                ({ Turn: 'R', Blocks: var blocks }, { Face: Direction.North } ) => coordinate with { Face = Direction.East, X = coordinate.X + blocks },
-                ({ Turn: 'R', Blocks: var blocks }, { Face: Direction.East } ) => coordinate with { Face = Direction.South, Y = coordinate.Y - blocks },
-                ({ Turn: 'R', Blocks: var blocks }, { Face: Direction.South } ) => coordinate with { Face = Direction.West, X = coordinate.X - blocks },
-                ({ Turn: 'R', Blocks: var blocks }, { Face: Direction.West } ) => coordinate with { Face = Direction.North, Y = coordinate.Y + blocks },
-                ({ Turn: 'L', Blocks: var blocks }, { Face: Direction.North } ) => coordinate with { Face = Direction.West, X = coordinate.X - blocks },
-                ({ Turn: 'L', Blocks: var blocks }, { Face: Direction.West } ) => coordinate with { Face = Direction.South, Y = coordinate.Y - blocks },
-                ({ Turn: 'L', Blocks: var blocks }, { Face: Direction.South } ) => coordinate with { Face = Direction.East, X = coordinate.X + blocks },
-                ({ Turn: 'L', Blocks: var blocks }, { Face: Direction.East } ) => coordinate with { Face = Direction.North, Y = coordinate.Y + blocks },
-                _ => throw new InvalidOperationException()
-            };
-                    
-            return newCoordinate;
+            ({ Turn: 'R', Blocks: var blocks }, { Face: Direction.North } ) => coordinate with { Face = Direction.East, X = coordinate.X + blocks },
+            ({ Turn: 'R', Blocks: var blocks }, { Face: Direction.East } ) => coordinate with { Face = Direction.South, Y = coordinate.Y - blocks },
+            ({ Turn: 'R', Blocks: var blocks }, { Face: Direction.South } ) => coordinate with { Face = Direction.West, X = coordinate.X - blocks },
+            ({ Turn: 'R', Blocks: var blocks }, { Face: Direction.West } ) => coordinate with { Face = Direction.North, Y = coordinate.Y + blocks },
+            ({ Turn: 'L', Blocks: var blocks }, { Face: Direction.North } ) => coordinate with { Face = Direction.West, X = coordinate.X - blocks },
+            ({ Turn: 'L', Blocks: var blocks }, { Face: Direction.West } ) => coordinate with { Face = Direction.South, Y = coordinate.Y - blocks },
+            ({ Turn: 'L', Blocks: var blocks }, { Face: Direction.South } ) => coordinate with { Face = Direction.East, X = coordinate.X + blocks },
+            ({ Turn: 'L', Blocks: var blocks }, { Face: Direction.East } ) => coordinate with { Face = Direction.North, Y = coordinate.Y + blocks },
+            _ => throw new InvalidOperationException()
         })
         .Pipe(coordinate => Math.Abs(coordinate.X) + Math.Abs(coordinate.Y));
 

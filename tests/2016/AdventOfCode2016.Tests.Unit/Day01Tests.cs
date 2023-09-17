@@ -27,7 +27,7 @@ public sealed class Day01Tests
 
     [Theory]
     [MemberData(nameof(Part1Data))]
-    [Description("")]
+    [Description("How many blocks away is Easter Bunny HQ?")]
     public void Part1_ShouldReturnInteger_WhenSample(AocInput input, int expected)
     {
         // Act
