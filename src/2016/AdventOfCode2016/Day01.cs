@@ -1,41 +1,59 @@
-using System.Text.RegularExpressions;
 using AdventOfCodeLib;
 
 namespace AdventOfCode2016;
 
 [AocPuzzle(2016, 1, "No Time for a Taxicab")]
-public sealed partial class Day01 : IAocDay<int>
+public sealed class Day01 : IAocDay<int>
 {
     public static int Part1(AocInput input) => input.Text
-        .Split(",", StringSplitOptions.TrimEntries)
+        .Split(',', StringSplitOptions.TrimEntries)
         .Select(ParseInstructions)
         .ToArray()
-        .Aggregate(new Coordinate(0, 0, Direction.North), (coordinate, move) => (move, coordinate) switch
+        .Aggregate((new Coordinate(0, 0), Direction.North), (seed, move) =>
         {
-            ({ Turn: 'R', Blocks: var blocks }, { Face: Direction.North } ) => coordinate with { Face = Direction.East, X = coordinate.X + blocks },
-            ({ Turn: 'R', Blocks: var blocks }, { Face: Direction.East } ) => coordinate with { Face = Direction.South, Y = coordinate.Y - blocks },
-            ({ Turn: 'R', Blocks: var blocks }, { Face: Direction.South } ) => coordinate with { Face = Direction.West, X = coordinate.X - blocks },
-            ({ Turn: 'R', Blocks: var blocks }, { Face: Direction.West } ) => coordinate with { Face = Direction.North, Y = coordinate.Y + blocks },
-            ({ Turn: 'L', Blocks: var blocks }, { Face: Direction.North } ) => coordinate with { Face = Direction.West, X = coordinate.X - blocks },
-            ({ Turn: 'L', Blocks: var blocks }, { Face: Direction.West } ) => coordinate with { Face = Direction.South, Y = coordinate.Y - blocks },
-            ({ Turn: 'L', Blocks: var blocks }, { Face: Direction.South } ) => coordinate with { Face = Direction.East, X = coordinate.X + blocks },
-            ({ Turn: 'L', Blocks: var blocks }, { Face: Direction.East } ) => coordinate with { Face = Direction.North, Y = coordinate.Y + blocks },
-            _ => throw new InvalidOperationException()
+            var (coordinate, direction) = seed;
+            var intDirection = ((move.Turn == 'R' ? 1 : -1) + (int)direction + 4) % 4;
+            var newDirection = (Direction)intDirection;
+            return newDirection switch
+            {
+                Direction.North => (coordinate with { X = coordinate.X + move.Blocks }, newDirection),
+                Direction.East => (coordinate with { Y = coordinate.Y - move.Blocks }, newDirection),
+                Direction.South => (coordinate with { X = coordinate.X - move.Blocks }, newDirection),
+                Direction.West => (coordinate with { Y = coordinate.Y + move.Blocks }, newDirection),
+                _ => throw new InvalidOperationException()
+            };
         })
+        .Pipe(final => final.Item1)
         .Pipe(coordinate => Math.Abs(coordinate.X) + Math.Abs(coordinate.Y));
 
-    public static int Part2(AocInput input) => 0;
+    public static int Part2(AocInput input) => input.Text
+        .Split(',', StringSplitOptions.TrimEntries)
+        .Select(ParseInstructions)
+        .ToArray()
+        .Aggregate((new Coordinate(0, 0), Direction.North), (seed, move) =>
+        {
+            var (coordinate, direction) = seed;
+            var intDirection = ((move.Turn == 'R' ? 1 : -1) + (int)direction + 4) % 4;
+            var newDirection = (Direction)intDirection;
+            return newDirection switch
+            {
+                Direction.North => (coordinate with { X = coordinate.X + move.Blocks }, newDirection),
+                Direction.East => (coordinate with { Y = coordinate.Y - move.Blocks }, newDirection),
+                Direction.South => (coordinate with { X = coordinate.X - move.Blocks }, newDirection),
+                Direction.West => (coordinate with { Y = coordinate.Y + move.Blocks }, newDirection),
+                _ => throw new InvalidOperationException()
+            };
+        })
+        .Pipe(final => final.Item1)
+        .Pipe(coordinate => Math.Abs(coordinate.X) + Math.Abs(coordinate.Y));
 
-    private static Move ParseInstructions(string instruction)
-    {
-        var span = instruction.AsSpan();
-        return new Move(char.Parse(span[..1].ToString()), int.Parse(span[1..].ToString()));
-    }
+    private static Move ParseInstructions(string instruction) =>
+        new(instruction[0], int.Parse(instruction[1..]));
 
     private readonly record struct Move(char Turn, int Blocks);
-    
-    private readonly record struct Coordinate(int X, int Y, Direction Face);
-    
+
+    private readonly record struct Coordinate(int X, int Y);
+
     private enum Direction
     {
         North,
@@ -44,4 +62,3 @@ public sealed partial class Day01 : IAocDay<int>
         West
     }
 }
-
