@@ -21,8 +21,7 @@ public sealed class Day01Tests
 
     public static TheoryData<AocInput, int> Part2Data => new()
     {
-        { ReadInput(TestData), 0 },
-        { ReadInput(RealData), 0 }
+        { ReadInput(RealData), 181 }
     };
 
     [Theory]
@@ -39,7 +38,7 @@ public sealed class Day01Tests
     
     [Theory]
     [MemberData(nameof(Part2Data))]
-    [Description("")]
+    [Description("How many blocks away is the first location you visit twice?")]
     public void Part2_ShouldReturnInteger_WhenSample(AocInput input, int expected)
     {
         // Act
