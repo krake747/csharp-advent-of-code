@@ -25,6 +25,7 @@ public sealed class Day04Tests
     };
 
     [Theory]
+    // [Theory(Skip = ".NET 8 breaks this part 1 original results somehow. Works correctly in .NET 7")]
     [MemberData(nameof(Part1Data))]
     [Description("To mine AdventCoins, you must find Santa the lowest positive number that produces such a hash")]
     public void Part1_ShouldReturnInteger_WhenSantaMinesAdventCoins(AocInput input, int expected)
