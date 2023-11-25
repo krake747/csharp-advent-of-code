@@ -19,13 +19,13 @@ public sealed class Day04Tests
         _sut = new Day04();
     }
 
-    public static TheoryData<AocInput, long> Part1Data => new()
+    public static TheoryData<AocInput, int> Part1Data => new()
     {
         { ReadInput(TestData), 2 },
         { ReadInput(RealData), 170 }
     };
 
-    public static TheoryData<AocInput, long> Part2Data => new()
+    public static TheoryData<AocInput, int> Part2Data => new()
     {
         { ReadInput(TestInvalidData), 0 },
         { ReadInput(TestValidData), 4 },
