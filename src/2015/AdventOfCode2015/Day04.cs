@@ -27,17 +27,17 @@ public sealed class Day04 : IAocDay<int>
             {
                 continue;
             }
-    
+
             queue.Enqueue(i);
             if (queue.Count is 1)
             {
                 break;
             }
         }
-    
+
         return queue.Min();
     }
-    
+
     private static int FindLowestPositiveNumberParallel(AocInput input, string prefix)
     {
         var queue = new ConcurrentQueue<int>();
@@ -49,13 +49,13 @@ public sealed class Day04 : IAocDay<int>
                 {
                     return md5;
                 }
-    
+
                 queue.Enqueue(i);
                 state.Stop();
                 return md5;
             },
             _ => { });
-    
+
         return queue.Min();
     }
 }

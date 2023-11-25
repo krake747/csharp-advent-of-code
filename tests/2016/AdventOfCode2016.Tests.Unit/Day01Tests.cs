@@ -35,7 +35,7 @@ public sealed class Day01Tests
         // Assert
         result.Should().Be(expected);
     }
-    
+
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("How many blocks away is the first location you visit twice?")]
@@ -43,7 +43,7 @@ public sealed class Day01Tests
     {
         // Act
         var result = Day01.Part2(input);
-    
+
         // Assert
         result.Should().Be(expected);
     }
