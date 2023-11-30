@@ -52,11 +52,11 @@ public sealed class Day01 : IAocDay<int>
                     })
                     .ToArray();
 
-                foreach (var coord in path)
+                foreach (var coords in path)
                 {
-                    if (visited.Add(coord) is false)
+                    if (visited.Add(coords) is false)
                     {
-                        return coord;
+                        return coords;
                     }
                 }
 
