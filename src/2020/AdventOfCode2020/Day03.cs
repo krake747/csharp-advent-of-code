@@ -4,16 +4,14 @@ namespace AdventOfCode2020;
 
 public sealed class Day03 : IAocDay<long>
 {
-    public static long Part1(AocInput input)
-    {
-        var treeMap = CreateTreeMap(input.Lines);
-        return CountTreesOnSlope(treeMap, new Slope(1, 3));
-    }
+    public static long Part1(AocInput input) => input.Lines
+        .Pipe(CreateTreeMap)
+        .Pipe(treeMap => CountTreesOnSlope(treeMap, new Slope(1, 3)));
 
-    public static long Part2(AocInput input)
-    {
-        var treeMap = CreateTreeMap(input.Lines);
-        return new[]
+
+    public static long Part2(AocInput input) => input.Lines
+        .Pipe(CreateTreeMap)
+        .Pipe(treeMap => new[]
             {
                 new Slope(1, 1),
                 new Slope(1, 3),
@@ -21,14 +19,12 @@ public sealed class Day03 : IAocDay<long>
                 new Slope(1, 7),
                 new Slope(2, 1)
             }
-            .Aggregate(1L, (prod, slope) => prod * CountTreesOnSlope(treeMap, slope));
-    }
+            .Aggregate(1L, (prod, slope) => prod * CountTreesOnSlope(treeMap, slope)));
 
-    private static bool[][] CreateTreeMap(IEnumerable<string> input)
-    {
-        return input.Select(s => s.Select(c => c == '#').ToArray())
+
+    private static bool[][] CreateTreeMap(IEnumerable<string> input) =>
+        input.Select(s => s.Select(c => c == '#').ToArray())
             .ToArray();
-    }
 
     private static long CountTreesOnSlope(IReadOnlyList<bool[]> treemap, Slope slope)
     {

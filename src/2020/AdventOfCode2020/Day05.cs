@@ -6,20 +6,15 @@ public sealed class Day05 : IAocDay<int>
 {
     public static int Part1(AocInput input) => OrderedPlaneSeatIds(input.Lines).Last();
 
-    public static int Part2(AocInput input)
-    {
-        return OrderedPlaneSeatIds(input.Lines).Chunk(2)
+    public static int Part2(AocInput input) =>
+        OrderedPlaneSeatIds(input.Lines).Chunk(2)
             .Single(seat => seat[1] - seat[0] == 2)
             .First() + 1;
-    }
 
-    private static IEnumerable<int> OrderedPlaneSeatIds(IEnumerable<string> input)
-    {
-        return input.Select(boardingPass => string.Concat(boardingPass.Select(ReplaceLetterToBinary)))
+    private static IEnumerable<int> OrderedPlaneSeatIds(IEnumerable<string> input) =>
+        input.Select(boardingPass => string.Concat(boardingPass.Select(ReplaceLetterToBinary)))
             .Select(DecodePlaneSeatId)
-            .Order()
-            .ToArray();
-    }
+            .Order();
 
     private static int DecodePlaneSeatId(string binaryBoardingPass)
     {
@@ -28,12 +23,6 @@ public sealed class Day05 : IAocDay<int>
         return row * 8 + col;
     }
 
-    private static char ReplaceLetterToBinary(char c)
-    {
-        return c switch
-        {
-            'F' or 'L' => '0',
-            _ => '1'
-        };
-    }
+    private static char ReplaceLetterToBinary(char c) =>
+        c is 'F' or 'L' ? '0' : '1';
 }
