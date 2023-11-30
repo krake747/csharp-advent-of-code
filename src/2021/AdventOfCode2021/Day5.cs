@@ -3,7 +3,7 @@ using static AdventOfCodeLib.EnumerableRange;
 
 namespace AdventOfCode2021;
 
-public static class Day5
+public static partial class Day5
 {
     public static int Part1(IEnumerable<string> input)
     {
@@ -51,7 +51,7 @@ public static class Day5
 
     private static IEnumerable<Line> ParseLines(IEnumerable<string> input)
     {
-        return input.Select(r => Regex.Matches(r, @"(\d+)"))
+        return input.Select(r => DigitsRegex().Matches(r))
             .Select(v => new Line
             {
                 X1 = int.Parse(v[0].Value),
@@ -198,4 +198,7 @@ public static class Day5
     private record struct Line(int X1, int Y1, int X2, int Y2);
 
     private record struct Coordinate(int X, int Y);
+
+    [GeneratedRegex(@"(\d+)")]
+    private static partial Regex DigitsRegex();
 }

@@ -50,7 +50,7 @@ public static class Day4
 
             winningBoards = HasBingo(bingoSystem, winningBoards);
 
-            if (winningBoards.Count == 1 && !finalBoard)
+            if (winningBoards.Count == 1 && finalBoard is false)
             {
                 return CalculateBingoScore(winningBoards.Select(w => w.Value).First(), number);
             }
@@ -70,7 +70,7 @@ public static class Day4
         foreach (var (board, index) in boards.Select((item, index) => (item, index)))
         {
             var markedBoard = Enumerable.Range(0, board.GetLength(0))
-                .Select(r => board[r].Select(x => Regex.Replace(x, @$"^{number}$", "X")).ToArray())
+                .Select(r => board[r].Select(x => Regex.Replace(x, $"^{number}$", "X")).ToArray())
                 .ToArray();
 
             bingoSystem.Boards.Remove(board);

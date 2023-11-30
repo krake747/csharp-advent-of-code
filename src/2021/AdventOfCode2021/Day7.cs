@@ -9,10 +9,11 @@ public static class Day7
 
     public static int Part2(IEnumerable<string> input) => LeastFuelVariableRate(input);
 
-    public static int LeastFuelConstantRate(IEnumerable<string> input)
+    private static int LeastFuelConstantRate(IEnumerable<string> input)
     {
         var positions = input.SelectMany(i => i.Split(','))
-            .Select(int.Parse);
+            .Select(int.Parse)
+            .ToArray();
 
         var leastFuelConsumption = Enumerable.Range(0, positions.Max())
             .Min(pos => positions.Sum(p => Math.Abs(p - pos)));
@@ -20,10 +21,11 @@ public static class Day7
         return leastFuelConsumption;
     }
 
-    public static int LeastFuelVariableRate(IEnumerable<string> input)
+    private static int LeastFuelVariableRate(IEnumerable<string> input)
     {
         var positions = input.SelectMany(i => i.Split(','))
-            .Select(int.Parse);
+            .Select(int.Parse)
+            .ToArray();
 
         var leastFuelConsumption = Enumerable.Range(0, positions.Max())
             .Min(pos => positions.Select(p => Math.Abs(p - pos)).Sum(n => n * (n + 1) / 2));

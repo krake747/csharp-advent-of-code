@@ -22,14 +22,14 @@ public static class Day1
         return Part1(rollingSums);
     }
 
-    private static IEnumerable<int> RollingSum(IEnumerable<int> source, int window)
+    private static List<int> RollingSum(IEnumerable<int> source, int window)
     {
         var numbers = source.ToList();
         var rollingSums = new List<int>();
 
         if (numbers.Count < window)
         {
-            return new List<int>();
+            return [];
         }
 
         Enumerable.Range(0, numbers.Count - window + 1)

@@ -24,7 +24,7 @@ public static class Day8
         return entries.Sum(e => CalculateOutput(ParseCodes(e.Input), e.Output));
     }
 
-    private static Dictionary<string, string> ParseCodes(IEnumerable<string> codes)
+    private static Dictionary<string, string> ParseCodes(IEnumerable<string> codesStream)
     {
         // acedgfb -> 8
         // cdfbe   -> 2, 3, 5? 
@@ -37,6 +37,8 @@ public static class Day8
         // cagedb  -> 0? 0 (remaing of length 6)
         // ab      -> 1
 
+        var codes = codesStream.ToArray();
+        
         // 4 unique codes 1, 4, 7, 8 are determined by their length.
         var one = codes.Single(c => c.Length == 2);
         var four = codes.Single(c => c.Length == 4);
@@ -113,5 +115,5 @@ public static class Day8
         return int.Parse(string.Concat(codes.Select(c => mappings[string.Concat(c.OrderBy(c => c))])));
     }
 
-    internal record Entry(List<string> Input, List<string> Output);
+    private sealed record Entry(List<string> Input, List<string> Output);
 }
