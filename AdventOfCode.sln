@@ -83,7 +83,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode2016.Tests.Unit
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2023", "2023", "{C7E364B3-3BB0-4A9C-82EF-746A14094A5E}"
 	ProjectSection(SolutionItems) = preProject
-		src\2022\README.md = src\2022\README.md
+		src\2023\README.md = src\2023\README.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode2023", "src\2023\AdventOfCode2023\AdventOfCode2023.csproj", "{F7DDF70D-66E7-4450-BAC1-A63E79FD0F54}"
