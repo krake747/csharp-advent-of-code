@@ -1,36 +1,27 @@
 ﻿using System.Text.RegularExpressions;
+using AdventOfCodeLib;
 using Microsoft.Extensions.Configuration;
 using Serilog;
 using TextCopy;
 
 namespace AdventOfCodeCli;
 
-public sealed partial class Application
+public sealed partial class Application(
+    IConfiguration config,
+    ILogger logger,
+    IHttpClientFactory httpClientFactory,
+    IClipboard clipboard)
 {
-    private readonly IClipboard _clipboard;
-    private readonly IConfiguration _config;
-    private readonly IHttpClientFactory _httpClientFactory;
-    private readonly ILogger _logger;
-
-    public Application(IConfiguration config, ILogger logger, IHttpClientFactory httpClientFactory,
-        IClipboard clipboard)
-    {
-        _config = config;
-        _logger = logger;
-        _httpClientFactory = httpClientFactory;
-        _clipboard = clipboard;
-    }
-
     public async Task RunAsync(string[] args)
     {
         var aocYear = args[0];
         var aocDay = args[1];
-        var client = _httpClientFactory.CreateClient("AoC");
+        var client = httpClientFactory.CreateClient("AoC");
 
         var input = await client.GetStringAsync($"{aocYear}/day/{aocDay}/input");
         if (input is "Error")
         {
-            _logger.Fatal("Error while fetching input data");
+            logger.Fatal("Error while fetching input data");
             return;
         }
 
@@ -38,110 +29,115 @@ public sealed partial class Application
         var instructions = await client.GetStringAsync($"{aocYear}/day/{aocDay}");
         var title = AocDayTitleRegex().Match(instructions).Groups[2].Value;
 
-        _logger.Information("Current Directory: {Path}", Directory.GetCurrentDirectory());
+        logger.Information("Current Directory: {Path}", Directory.GetCurrentDirectory());
 
-        var day = PrependLeadingZero(int.Parse(aocDay));
+        var day = aocDay
+            .Pipe(int.Parse)
+            .Pipe(PrependLeadingZero);
 
-        // Create Day
-        var srcDirectory = _config["Directories:src"]!;
-        var aocDirectory = CreateDirectory(Path.GetFullPath($@"{srcDirectory}\{aocYear}\AdventOfCode{aocYear}"));
-        var aocDayFileName = CreateAocDayFileName(day);
-        var acoFilePath = Path.Combine(aocDirectory.FullName, aocDayFileName);
-        await CreateAocDayClassFile(acoFilePath, title, aocYear, aocDay, day);
+        // Create Aoc Day X file
+        var srcDirectory = config["Directories:src"]!;
+        var aocFilePath = $@"{srcDirectory}\{aocYear}\AdventOfCode{aocYear}"
+            .Pipe(Path.GetFullPath)
+            .Pipe(CreateDirectory)
+            .Pipe(aocDir => Path.Combine(aocDir.FullName, CreateAocDayFileName(day))); 
 
-        // Create Day Tests
-        var testsDirectory = _config["Directories:tests"]!;
-        var aocTestDirectory = CreateDirectory(Path.GetFullPath(
-            $@"{testsDirectory}\{aocYear}\AdventOfCode{aocYear}.Tests.Unit"));
-        var aocTestFileName = CreateAocTestFileName(day);
-        var acoTestFilePath = Path.Combine(aocTestDirectory.FullName, aocTestFileName);
-        await CreateAocTestClassFile(acoTestFilePath, title, aocYear, aocDay, day);
+        await CreateAocDayClassFileAsync(aocFilePath, title, aocYear, aocDay, day);
 
-        // Create Input files
-        // Real input
+        // Create Aoc Day X test file
+        var testsDirectory = config["Directories:tests"]!;
+        var acoTestFilePath = $@"{testsDirectory}\{aocYear}\AdventOfCode{aocYear}.Tests.Unit"
+            .Pipe(Path.GetFullPath)
+            .Pipe(CreateDirectory)
+            .Pipe(aocTestDir => Path.Combine(aocTestDir.FullName, CreateAocTestFileName(day)));
+        
+        await CreateAocTestClassFileAsync(acoTestFilePath, title, aocYear, aocDay, day);
+        
+        // Create Real input file
         var (realInputFileName, testInputFileName) = CreateTestFileNames(day);
-        var aocDataDirectory = CreateDirectory(Path.GetFullPath(
-            $@"{testsDirectory}\{aocYear}\AdventOfCode{aocYear}.Tests.Unit\Data"));
+        var aocDataDirectory = $@"{testsDirectory}\{aocYear}\AdventOfCode{aocYear}.Tests.Unit\Data"
+            .Pipe(Path.GetFullPath)
+            .Pipe(CreateDirectory);
 
         var realInputFilePath = Path.Combine(aocDataDirectory.FullName, realInputFileName);
-        await CreateRealInputFile(realInputFilePath, input);
+        await CreateRealInputFileAsync(realInputFilePath, input);
 
-        // Test input
+        // Create Test input file
         var testInputFilePath = Path.Combine(aocDataDirectory.FullName, testInputFileName);
-        await CreateTestInputFile(testInputFilePath);
+        await CreateTestInputFileAsync(testInputFilePath);
     }
 
-    private async Task CreateAocDayClassFile(string acoFilePath, string title, string aocYear, string aocDay,
+    private async Task CreateAocDayClassFileAsync(string acoFilePath, string title, string aocYear, string aocDay,
         string day)
     {
         if (File.Exists(acoFilePath))
         {
-            _logger.Information("File already exists: {File}", acoFilePath);
+            logger.Information("File already exists: {File}", acoFilePath);
             return;
         }
 
-        _logger.Information("File was created: {File}", acoFilePath);
-        await CreateAocTemplate(acoFilePath, title, aocYear, aocDay, day);
+        logger.Information("File was created: {File}", acoFilePath);
+        await CreateAocTemplateAsync(acoFilePath, title, aocYear, aocDay, day);
     }
 
-    private async Task CreateAocTestClassFile(string acoTestFilePath, string title, string aocYear, string aocDay,
+    private async Task CreateAocTestClassFileAsync(string acoTestFilePath, string title, string aocYear, string aocDay,
         string day)
     {
         if (File.Exists(acoTestFilePath))
         {
-            _logger.Information("File already exists: {File}", acoTestFilePath);
+            logger.Information("File already exists: {File}", acoTestFilePath);
             return;
         }
 
-        _logger.Information("File was created: {File}", acoTestFilePath);
-        await CreateAocTestTemplate(acoTestFilePath, title, aocYear, aocDay, day);
+        logger.Information("File was created: {File}", acoTestFilePath);
+        await CreateAocTestTemplateAsync(acoTestFilePath, title, aocYear, aocDay, day);
     }
 
-    private async Task CreateRealInputFile(string realInputFilePath, string input)
+    private async Task CreateRealInputFileAsync(string realInputFilePath, string input)
     {
         if (File.Exists(realInputFilePath))
         {
-            _logger.Information("File already exists: {File}", realInputFilePath);
+            logger.Information("File already exists: {File}", realInputFilePath);
             return;
         }
 
-        _logger.Information("File was created: {File}", realInputFilePath);
+        logger.Information("File was created: {File}", realInputFilePath);
         await File.WriteAllTextAsync(realInputFilePath, input);
     }
 
-    private async Task CreateTestInputFile(string testInputFilePath)
+    private async Task CreateTestInputFileAsync(string testInputFilePath)
     {
         if (File.Exists(testInputFilePath))
         {
-            _logger.Information("File already exists: {File}", testInputFilePath);
+            logger.Information("File already exists: {File}", testInputFilePath);
             return;
         }
 
-        _logger.Information("Awaiting copy from clipboard...");
-        await _clipboard.SetTextAsync("");
-        string? clipboard;
+        logger.Information("Awaiting copy from clipboard...");
+        await clipboard.SetTextAsync("");
+        string? text;
         do
         {
-            clipboard = await _clipboard.GetTextAsync();
-        } while (clipboard is null or "");
+            text = await clipboard.GetTextAsync();
+        } while (string.IsNullOrEmpty(text));
 
-        _logger.Information("File was created: {File}", testInputFilePath);
-        await File.WriteAllTextAsync(testInputFilePath, clipboard);
+        logger.Information("File was created: {File}", testInputFilePath);
+        await File.WriteAllTextAsync(testInputFilePath, text);
     }
 
     private DirectoryInfo CreateDirectory(string directoryPath)
     {
         if (Directory.Exists(directoryPath))
         {
-            _logger.Information("Directory already exists: {Directory}", directoryPath);
+            logger.Information("Directory already exists: {Directory}", directoryPath);
             return new DirectoryInfo(directoryPath);
         }
 
-        _logger.Information("Directory does not exist: {Directory}", directoryPath);
+        logger.Information("Directory does not exist: {Directory}", directoryPath);
         return Directory.CreateDirectory(directoryPath);
     }
 
-    private static async Task CreateAocTemplate(string acoFilePath, string title, string aocYear, string aocDay,
+    private static async Task CreateAocTemplateAsync(string acoFilePath, string title, string aocYear, string aocDay,
         string day)
     {
         var aocTemplate =
@@ -162,7 +158,7 @@ public sealed partial class Application
         await File.WriteAllTextAsync(acoFilePath, aocTemplate);
     }
 
-    private static async Task CreateAocTestTemplate(string realInputFilePath, string title, string aocYear,
+    private static async Task CreateAocTestTemplateAsync(string realInputFilePath, string title, string aocYear,
         string aocDay, string day)
     {
         var aocTestTemplate =
@@ -225,9 +221,9 @@ public sealed partial class Application
 
     private static string PrependLeadingZero(int day) => day < 10 ? $"0{day}" : $"{day}";
 
-    private static string CreateAocDayFileName(string day) => @$"Day{day}.cs";
+    private static string CreateAocDayFileName(string day) => $"Day{day}.cs";
 
-    private static string CreateAocTestFileName(string day) => @$"Day{day}Tests.cs";
+    private static string CreateAocTestFileName(string day) => $"Day{day}Tests.cs";
 
     private static (string, string) CreateTestFileNames(string day) => ($"Day{day}.txt", $"Day{day}_Test.txt");
 
