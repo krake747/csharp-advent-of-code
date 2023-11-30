@@ -34,10 +34,6 @@ public sealed class Day01 : IAocDay<int>
     private static int TotalFuel(int mass)
     {
         var fuel = Fuel(mass);
-        return fuel switch
-        {
-            < 0 => 0,
-            _ => fuel + TotalFuel(fuel)
-        };
+        return fuel < 0 ? 0 : fuel + TotalFuel(fuel);
     }
 }
