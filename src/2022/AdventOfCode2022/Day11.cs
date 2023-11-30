@@ -55,7 +55,7 @@ public sealed partial class Day11 : IAocDay<long>
     {
         foreach (var monkey in monkeys)
         {
-            while (monkey.Items.Any())
+            while (monkey.Items.Count is not 0)
             {
                 var worry = monkey.Items.Dequeue();
                 monkey.Inspections += 1;
@@ -133,17 +133,14 @@ public sealed partial class Day11 : IAocDay<long>
                 IfFalse = int.Parse(data[5])
             };
 
-            Func<long, long> ArithmeticOperation(string operation)
+            static Func<long, long> ArithmeticOperation(string operation) => operation.Split(' ') switch
             {
-                return operation.Split(' ') switch
-                {
-                    [.., "*", "old"] => old => old * old,
-                    [.., "*", var value] => old => old * long.Parse(value),
-                    [.., "+", "old"] => old => old + old,
-                    [.., "+", var value] => old => old + long.Parse(value),
-                    _ => throw new UnreachableException($"Can't match {operation}")
-                };
-            }
+                [.., "*", "old"] => old => old * old,
+                [.., "*", var value] => old => old * long.Parse(value),
+                [.., "+", "old"] => old => old + old,
+                [.., "+", var value] => old => old + long.Parse(value),
+                _ => throw new UnreachableException($"Can't match {operation}")
+            };
         }
     }
 }

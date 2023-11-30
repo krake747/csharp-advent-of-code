@@ -3,7 +3,7 @@ using AdventOfCodeLib;
 
 namespace AdventOfCode2022;
 
-public sealed class Day05 : IAocDay<string>
+public sealed partial class Day05 : IAocDay<string>
 {
     public static string Part1(AocInput input)
     {
@@ -30,13 +30,15 @@ public sealed class Day05 : IAocDay<string>
         return new RearrangementPlan(containerStacks, rearrangements);
     }
 
-    private static IEnumerable<Stack<char>> CreateContainerStacks(IEnumerable<string> cargoShip)
+    private static readonly char[] Edges = [' ', '[', ']'];
+
+    private static Stack<char>[] CreateContainerStacks(IEnumerable<string> cargoShip)
     {
         var chunks = cargoShip.Select(stack => stack.Chunk(4))
             .ToArray();
 
         var crates = chunks.Take(..^1)
-            .Select(container => container.Select(cont => cont.Where(c => !new[] { ' ', '[', ']' }.Contains(c))))
+            .Select(container => container.Select(cont => cont.Where(c => Edges.Contains(c) is false)))
             .Reverse()
             .ToArray();
 
@@ -46,29 +48,29 @@ public sealed class Day05 : IAocDay<string>
             .ToArray();
 
         foreach (var crateRow in crates)
-        foreach (var (crate, index) in crateRow.Select((item, index) => (item, index)).ToArray())
         {
-            var item = crate.SingleOrDefault(' ');
-            if (item != ' ')
+            foreach (var (crate, index) in crateRow.Select((item, index) => (item, index)).ToArray())
             {
-                stacks[index].Push(item);
-            }
+                var item = crate.SingleOrDefault(' ');
+                if (item != ' ')
+                {
+                    stacks[index].Push(item);
+                }
+            }  
         }
-
+        
         return stacks;
     }
 
-    private static IEnumerable<Move> CreateRearrangements(IEnumerable<string> instructions)
-    {
-        const string regex = @"move (\d*) from (\d*) to (\d*)";
-        return instructions.Select(instruction => Regex.Match(instruction, regex))
+    private static IEnumerable<Move> CreateRearrangements(IEnumerable<string> instructions) =>
+        instructions
+            .Select(instruction => InstructionRegex().Match(instruction))
             .Select(m => new Move
             {
                 Amount = int.Parse(m.Groups[1].Value),
                 From = int.Parse(m.Groups[2].Value) - 1,
                 To = int.Parse(m.Groups[3].Value) - 1
             });
-    }
 
     private static IEnumerable<Stack<char>> CargoCraneOperator(Action<Move, Stack<char>, Stack<char>> crateMover,
         RearrangementPlan rearrangementPlan)
@@ -85,7 +87,8 @@ public sealed class Day05 : IAocDay<string>
 
     private static void CrateMover9000(Move move, Stack<char> from, Stack<char> to)
     {
-        Enumerable.Range(1, move.Amount).ToList()
+        Enumerable.Range(1, move.Amount)
+            .ToList()
             .ForEach(_ => to.Push(from.Pop()));
     }
 
@@ -96,7 +99,10 @@ public sealed class Day05 : IAocDay<string>
         CrateMover9000(move, temp, to);
     }
 
-    private record RearrangementPlan(IEnumerable<Stack<char>> InitialStacks, IEnumerable<Move> Instructions);
+    private sealed record RearrangementPlan(IEnumerable<Stack<char>> InitialStacks, IEnumerable<Move> Instructions);
 
     private readonly record struct Move(int Amount, int From, int To);
+
+    [GeneratedRegex(@"move (\d*) from (\d*) to (\d*)")]
+    private static partial Regex InstructionRegex();
 }

@@ -9,7 +9,8 @@ public sealed class Day10 : IAocDay<int, string>
     public static int Part1(AocInput input)
     {
         var cycles = ArithmeticSequence(20, 40, 6).ToArray();
-        return ProcessSignals(input.Lines).Where(signal => cycles.Contains(signal.Cycle))
+        return ProcessSignals(input.Lines)
+            .Where(signal => cycles.Contains(signal.Cycle))
             .Sum(s => s.Cycle * s.X);
     }
 
