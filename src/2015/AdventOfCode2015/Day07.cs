@@ -24,7 +24,7 @@ public sealed class Day07 : IAocDay<ushort>
                 _ => throw new ArgumentException("Undefined Operation")
             };
 
-            instructions[wire] = new[] { signal.ToString(), "->", wire };
+            instructions[wire] = [signal.ToString(), "->", wire];
             return signal;
 
             ushort Evaluate(string x) => char.IsLetter(x[0]) ? EvaluateWire(x) : ushort.Parse(x);
@@ -41,7 +41,7 @@ public sealed class Day07 : IAocDay<ushort>
     {
         var a = Part1(input);
         var instructions = ParseInstructions(input.Lines);
-        instructions["b"] = new[] { $"{a}", "->", "b" };
+        instructions["b"] = [$"{a}", "->", "b"];
         return EvaluateWire("a");
 
         ushort EvaluateWire(string wire)
@@ -58,7 +58,7 @@ public sealed class Day07 : IAocDay<ushort>
                 _ => throw new ArgumentException("Undefined Operation")
             };
 
-            instructions[wire] = new[] { signal.ToString(), "->", wire };
+            instructions[wire] = [signal.ToString(), "->", wire];
             return signal;
 
             ushort Evaluate(string x) => char.IsLetter(x[0]) ? EvaluateWire(x) : ushort.Parse(x);
@@ -71,7 +71,7 @@ public sealed class Day07 : IAocDay<ushort>
         }
     }
 
-    private static IDictionary<string, string[]> ParseInstructions(IEnumerable<string> input) =>
+    private static Dictionary<string, string[]> ParseInstructions(IEnumerable<string> input) =>
         input.Select(x => x.Split(' '))
             .OrderBy(x => x[^1])
             .ToDictionary(k => k[^1]);

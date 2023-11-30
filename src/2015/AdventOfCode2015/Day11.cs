@@ -66,7 +66,7 @@ public sealed partial class Day11 : IAocDay<string>
     private static bool AllValid(char[] source, params Func<char[], bool>[] predicates) =>
         predicates.All(f => f(source));
 
-    [GeneratedRegex(@"[iol]")]
+    [GeneratedRegex("[iol]")]
     private static partial Regex UnreadableLetters();
 
     [GeneratedRegex(@"(.)\1")]

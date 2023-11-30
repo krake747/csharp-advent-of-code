@@ -7,11 +7,11 @@ namespace AdventOfCode2015;
 public sealed partial class Day05 : IAocDay<int>
 {
     public static int Part1(AocInput input) =>
-        input.Lines.Count(_ => AllValid(_, ContainsAtLeastThreeVowels, AppearsTwiceSubsequently,
+        input.Lines.Count(s => AllValid(s, ContainsAtLeastThreeVowels, AppearsTwiceSubsequently,
             NotContainForbiddenPairs));
 
     public static int Part2(AocInput input) =>
-        input.Lines.Count(_ => AllValid(_, PairOfAnyTwoSubsequentLetters,
+        input.Lines.Count(s => AllValid(s, PairOfAnyTwoSubsequentLetters,
             OneLetterBetweenPairSameTwoLetters));
 
     [GeneratedRegex("[aeiou]")]

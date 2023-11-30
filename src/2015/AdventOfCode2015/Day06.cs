@@ -1,4 +1,5 @@
-﻿using AdventOfCodeLib;
+﻿using System.Diagnostics;
+using AdventOfCodeLib;
 
 namespace AdventOfCode2015;
 
@@ -20,7 +21,7 @@ public sealed class Day06 : IAocDay<int>
                     Command.On => true,
                     Command.Off => false,
                     Command.Toggle => !grid[new Point(i, j)],
-                    _ => throw new ArgumentOutOfRangeException(nameof(command), "Unknown pattern")
+                    _ => throw new UnreachableException()
                 };
             }
         }
@@ -44,7 +45,7 @@ public sealed class Day06 : IAocDay<int>
                     Command.On => brightness + 1,
                     Command.Off => Math.Max(0, brightness - 1),
                     Command.Toggle => brightness + 2,
-                    _ => throw new ArgumentOutOfRangeException(nameof(command), "Unknown pattern")
+                    _ => throw new UnreachableException()
                 };
             }
         }
@@ -63,7 +64,7 @@ public sealed class Day06 : IAocDay<int>
             _ => throw new ArgumentException("Pattern not defined")
         });
 
-        Command ParseCommand(string c) => c switch
+        static Command ParseCommand(string c) => c switch
         {
             "turn on" => Command.On,
             "turn off" => Command.Off,

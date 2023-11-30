@@ -38,7 +38,7 @@ public sealed partial class Day09 : IAocDay<int>
             ? list.Select(x => new[] { x })
             : GetPermutations(list, length - 1)
                 .SelectMany(x => list.Where(o => x.Contains(o) is false),
-                    (x1, x2) => x1.Concat(new[] { x2 }).ToArray());
+                    (x1, x2) => x1.Concat([x2]).ToArray());
 
     [GeneratedRegex("(.*) to (.*) = (.*)")]
     private static partial Regex FlightPattern();
