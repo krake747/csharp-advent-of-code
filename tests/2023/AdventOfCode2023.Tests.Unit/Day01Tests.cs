@@ -23,12 +23,12 @@ public sealed class Day01Tests
     public static TheoryData<AocInput, int> Part2Data => new()
     {
         { ReadInput(TestData2), 281 },
-        { ReadInput(RealData), 0 }
+        { ReadInput(RealData), 54985 }
     };
 
     [Theory]
     [MemberData(nameof(Part1Data))]
-    [Description("")]
+    [Description("What is the sum of all of the calibration values?")]
     public void Part1_ShouldReturnInteger_WhenSample(AocInput input, int expected)
     {
         // Act
@@ -40,7 +40,7 @@ public sealed class Day01Tests
     
     [Theory]
     [MemberData(nameof(Part2Data))]
-    [Description("")]
+    [Description("What is the sum of all of the calibration values?")]
     public void Part2_ShouldReturnInteger_WhenSample(AocInput input, int expected)
     {
         // Act
