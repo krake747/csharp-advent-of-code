@@ -16,14 +16,14 @@ public sealed partial class Day02 : IAocDay<int>
             var cubes = game[1..];
             var shown = cubes.Aggregate(new List<bool>(), (rounds, reveal) =>
             {
-                var bag = new Dictionary<string, int> { { "red", 0 }, { "blue", 0 }, { "green", 0 } };
-                var mc = CubeSetRegex().Matches(reveal).ToArray();
-                foreach (var m in mc)
-                {
-                    var count = m.Groups[1].Value;
-                    var color = m.Groups[2].Value;
-                    bag[color] += int.Parse(count);
-                }
+                var bag = CubeSetRegex().Matches(reveal)
+                    .Select(m => (Count: m.Groups[1].Value, Color: m.Groups[2].Value))
+                    .Aggregate(new Dictionary<string, int> { { "red", 0 }, { "blue", 0 }, { "green", 0 } }, 
+                        (b, x) =>
+                        {
+                            b[x.Color] += int.Parse(x.Count);
+                            return b;
+                        });
 
                 var possible = bag["red"] <= 12 && bag["green"] <= 13 && bag["blue"] <= 14;
                 rounds.Add(possible);
@@ -39,23 +39,18 @@ public sealed partial class Day02 : IAocDay<int>
         {
             var cubes = game[1..];
             var shown = cubes.Aggregate(new Dictionary<string, int> { { "red", 0 }, { "blue", 0 }, { "green", 0 } },
-                (bag, reveal) =>
-                {
-                    var mc = CubeSetRegex().Matches(reveal).ToArray();
-                    foreach (var m in mc)
+                (bag, reveal) => CubeSetRegex().Matches(reveal)
+                    .Select(m => (Count: m.Groups[1].Value, Color: m.Groups[2].Value))
+                    .Aggregate(bag, (b, x) =>
                     {
-                        var count = m.Groups[1].Value;
-                        var color = m.Groups[2].Value;
-                        bag[color] = Math.Max(int.Parse(count), bag[color]);
-                    }
-
-                    return bag;
-                });
+                        b[x.Color] = Math.Max(int.Parse(x.Count), b[x.Color]);
+                        return b;
+                    }));
 
             return shown["red"] * shown["green"] * shown["blue"];
         });
 
 
-    [GeneratedRegex(@"(\d+)\s(red|blue|green)", RegexOptions.Compiled | RegexOptions.NonBacktracking)]
+    [GeneratedRegex(@"(\d+) (\w+)", RegexOptions.Compiled | RegexOptions.NonBacktracking)]
     private static partial Regex CubeSetRegex();
 }
