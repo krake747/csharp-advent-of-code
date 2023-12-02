@@ -35,3 +35,4 @@ module Fay1 =
         |> List.map (fun x -> Regex.Matches(x, @"\d"))
         |> List.map (calibration >> Convert.ToInt32)
         |> List.sum
+

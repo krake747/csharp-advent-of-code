@@ -12,7 +12,7 @@ public sealed partial class Day02 : IAocDay<int>
         .Select(l => l.Split(Separators, StringSplitOptions.TrimEntries))
         .Sum(game =>
         {
-            var id = int.Parse(game[0].Split(' ')[^1]);
+            var id = int.Parse(IdRegex().Match(game[0]).Groups[1].Value);
             var cubes = game[1..];
             var shown = cubes.Aggregate(new List<bool>(), (rounds, reveal) =>
             {
@@ -50,6 +50,8 @@ public sealed partial class Day02 : IAocDay<int>
             return shown["red"] * shown["green"] * shown["blue"];
         });
 
+    [GeneratedRegex(@"Game (\d+)", RegexOptions.Compiled | RegexOptions.NonBacktracking)]
+    private static partial Regex IdRegex();
 
     [GeneratedRegex(@"(\d+) (\w+)", RegexOptions.Compiled | RegexOptions.NonBacktracking)]
     private static partial Regex CubeSetRegex();
