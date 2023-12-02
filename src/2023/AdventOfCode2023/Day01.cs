@@ -26,14 +26,14 @@ public sealed partial class Day01 : IAocDay<int>
         .Select(x => DigitRegex().Matches(x))
         .Select(Calibration)
         .Sum(int.Parse);
-    
+
     private static string Calibration(MatchCollection m) => m switch
     {
         [var first, .., var last] => $"{first}{last}",
         [var single] => $"{single}{single}",
         _ => throw new UnreachableException()
     };
-    
+
     [GeneratedRegex(@"\d", RegexOptions.Compiled | RegexOptions.NonBacktracking)]
     private static partial Regex DigitRegex();
 }
