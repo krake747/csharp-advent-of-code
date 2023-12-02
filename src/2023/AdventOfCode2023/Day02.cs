@@ -19,10 +19,10 @@ public sealed partial class Day02 : IAocDay<int>
                 var bag = CubeSetRegex().Matches(reveal)
                     .Select(m => (Count: m.Groups[1].Value, Color: m.Groups[2].Value))
                     .Aggregate(new Dictionary<string, int> { { "red", 0 }, { "blue", 0 }, { "green", 0 } }, 
-                        (b, x) =>
+                        (bag, x) =>
                         {
-                            b[x.Color] += int.Parse(x.Count);
-                            return b;
+                            bag[x.Color] += int.Parse(x.Count);
+                            return bag;
                         });
 
                 var possible = bag["red"] <= 12 && bag["green"] <= 13 && bag["blue"] <= 14;
