@@ -1,5 +1,6 @@
 ﻿namespace AdventOfCode2023.FSharp
 
+open System
 open System.Text.RegularExpressions
 open AdventOfCodeLib
 
@@ -14,7 +15,7 @@ module Fay1 =
         input.Lines
         |> Seq.toList
         |> List.map (fun x -> Regex.Matches(x, @"\d"))
-        |> List.map (calibration >> int)
+        |> List.map (calibration >> Convert.ToInt32)
         |> List.sum
 
     let part2 (input: AocInput) =
@@ -32,5 +33,5 @@ module Fay1 =
                 .Replace("nine", "nine9nine")
         )
         |> List.map (fun x -> Regex.Matches(x, @"\d"))
-        |> List.map (calibration >> int)
+        |> List.map (calibration >> Convert.ToInt32)
         |> List.sum
