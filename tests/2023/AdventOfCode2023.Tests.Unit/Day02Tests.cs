@@ -22,7 +22,7 @@ public sealed class Day02Tests
     public static TheoryData<AocInput, int> Part2Data => new()
     {
         { ReadInput(TestData), 2286 },
-        { ReadInput(RealData), 0 }
+        { ReadInput(RealData), 77021 }
     };
 
     [Theory]
@@ -39,7 +39,7 @@ public sealed class Day02Tests
     
     [Theory]
     [MemberData(nameof(Part2Data))]
-    [Description("")]
+    [Description("What is the sum of the power of these sets?")]
     public void Part2_ShouldReturnInteger_WhenSample(AocInput input, int expected)
     {
         // Act
