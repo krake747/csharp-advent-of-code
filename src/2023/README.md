@@ -6,5 +6,5 @@ Instructions to the puzzle problems are found on: https://adventofcode.com/2023/
 |:------------------------|:------:|:------:|
 | Day  1 - Trebuchet?!    | :star: | :star: |
 | Day  2 - Cube Conundrum | :star: | :star: |
-| Day  3 - Gear Ratios    | :star: |        |
+| Day  3 - Gear Ratios    | :star: | :star: |
 
