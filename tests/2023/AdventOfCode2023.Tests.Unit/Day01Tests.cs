@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using AdventOfCodeLib;
 using FluentAssertions;
+using FluentAssertions.Execution;
 using static AdventOfCodeLib.AocFileReaderService;
 
 namespace AdventOfCode2023.Tests.Unit;
@@ -45,8 +46,11 @@ public sealed class Day01Tests
     {
         // Act
         var result = Day01.Part2(input);
-    
+        var resultA = Day01.Part2A(input);
+        
         // Assert
+        using var _ = new AssertionScope();
         result.Should().Be(expected);
+        resultA.Should().Be(expected);
     }
 }
