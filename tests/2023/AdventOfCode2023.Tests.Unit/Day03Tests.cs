@@ -21,13 +21,13 @@ public sealed class Day03Tests
 
     public static TheoryData<AocInput, int> Part2Data => new()
     {
-        { ReadInput(TestData), 0 },
-        { ReadInput(RealData), 0 }
+        { ReadInput(TestData), 467835 },
+        { ReadInput(RealData), 72553319 }
     };
 
     [Theory]
     [MemberData(nameof(Part1Data))]
-    [Description("")]
+    [Description("What is the sum of all of the part numbers in the engine schematic?")]
     public void Part1_ShouldReturnInteger_WhenSample(AocInput input, int expected)
     {
         // Act
@@ -39,7 +39,7 @@ public sealed class Day03Tests
     
     [Theory]
     [MemberData(nameof(Part2Data))]
-    [Description("")]
+    [Description("What is the sum of all of the gear ratios in your engine schematic?")]
     public void Part2_ShouldReturnInteger_WhenSample(AocInput input, int expected)
     {
         // Act
