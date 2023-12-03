@@ -26,7 +26,7 @@ public sealed partial class Day01 : IAocDay<int>
         .Select(x => DigitRegex().Matches(x))
         .Select(Calibration)
         .Sum(int.Parse);
-    
+
     public static int Part2A(AocInput input) => input.Lines
         .Select(x =>
         {
@@ -35,15 +35,15 @@ public sealed partial class Day01 : IAocDay<int>
             return $"{start}{end}";
         })
         .Sum(int.Parse);
-    
+
     private static string Calibration(MatchCollection m) => m switch
     {
         [var first, .., var last] => $"{first}{last}",
         [var single] => $"{single}{single}",
         _ => throw new UnreachableException()
     };
-    
-    private static string ParseWrittenDigit(Capture m) => m.Value switch 
+
+    private static string ParseWrittenDigit(Capture m) => m.Value switch
     {
         "one" => "1",
         "two" => "2",
@@ -59,10 +59,12 @@ public sealed partial class Day01 : IAocDay<int>
 
     [GeneratedRegex(@"\d", RegexOptions.Compiled | RegexOptions.NonBacktracking)]
     private static partial Regex DigitRegex();
-    
-    [GeneratedRegex(@"\d|one|two|three|four|five|six|seven|eight|nine", RegexOptions.Compiled | RegexOptions.NonBacktracking)]
+
+    [GeneratedRegex(@"\d|one|two|three|four|five|six|seven|eight|nine",
+        RegexOptions.Compiled | RegexOptions.NonBacktracking)]
     private static partial Regex LeftToRightDigitRegex();
-    
-    [GeneratedRegex(@"\d|one|two|three|four|five|six|seven|eight|nine", RegexOptions.Compiled | RegexOptions.RightToLeft)]
+
+    [GeneratedRegex(@"\d|one|two|three|four|five|six|seven|eight|nine",
+        RegexOptions.Compiled | RegexOptions.RightToLeft)]
     private static partial Regex RightToLeftDigitRegex();
 }

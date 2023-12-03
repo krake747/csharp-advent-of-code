@@ -1,6 +1,5 @@
 using System.Text.RegularExpressions;
 using AdventOfCodeLib;
-
 using Coordinates = (int Row, int Col);
 
 namespace AdventOfCode2023;
@@ -36,24 +35,35 @@ public sealed partial class Day03 : IAocDay<int>
         Enumerable.Range(0, lines.Count)
             .SelectMany(row => SymbolsRegex().Matches(lines[row]), FindPotentialEnginePart)
             .ToArray();
-    
+
     private static Part[] Gears(IReadOnlyList<string> lines) =>
         Enumerable.Range(0, lines.Count)
             .SelectMany(row => GearsRegex().Matches(lines[row]), FindPotentialEnginePart)
             .ToArray();
 
-    private static Part FindPotentialEnginePart(int rowIndex, Match m) => 
+    private static Part FindPotentialEnginePart(int rowIndex, Match m) =>
         new((rowIndex, m.Index), m.Value, m.Value.Length);
 
-    private static bool Adjacent(Part p1, Part p2) => 
+    private static bool Adjacent(Part p1, Part p2) =>
         VerticalAdjacent(p1, p2) && HorizontalAdjacent(p1, p2) && HorizontalAdjacent(p2, p1);
 
-    private static bool HorizontalAdjacent(Part p1, Part p2) => 
+    private static bool HorizontalAdjacent(Part p1, Part p2) =>
         p2.Coordinates.Col + p2.Offset >= p1.Coordinates.Col;
 
-    private static bool VerticalAdjacent(Part p1, Part p2) => 
+    private static bool VerticalAdjacent(Part p1, Part p2) =>
         Math.Abs(p2.Coordinates.Row - p1.Coordinates.Row) <= 1;
-    
+
+    [GeneratedRegex(@"\d+", RegexOptions.Compiled | RegexOptions.NonBacktracking)]
+    private static partial Regex NumbersRegex();
+
+    [GeneratedRegex(@"[^.\d]", RegexOptions.Compiled | RegexOptions.NonBacktracking)]
+    private static partial Regex SymbolsRegex();
+
+    [GeneratedRegex(@"\*", RegexOptions.Compiled | RegexOptions.NonBacktracking)]
+    private static partial Regex GearsRegex();
+
+    private sealed record Part(Coordinates Coordinates, string Text, int Offset);
+
     // Row / Col Numbers or Gear (Offset is characters length -> string length for numbers else 1 for symbols)
     // (0, 0) 4 | (0, 1) 6 | (0, 2) 7 | (0, 3) . | (0, 4) . | (0, 5) 1 | (0, 6) 2 | (0, 7) 1 | (0, 8) 4 | (0, 9) . |
     // (1, 0) . | (1, 1) . | (1, 2) . | (1, 3) * | (0, 4) . | (0, 5) . | (0, 6) . | (0, 7) . | (0, 8) . | (0, 9) . |
@@ -63,15 +73,4 @@ public sealed partial class Day03 : IAocDay<int>
     // Horizontal Adjacent -> Number cannot be more than 1 col apart from a symbol
     // The offset gives us the length of a symbol or numbers.
     // E.g. 467 length is 3 which is same column as the * which inside the box around a number
-    
-    private sealed record Part(Coordinates Coordinates, string Text, int Offset);
-    
-    [GeneratedRegex(@"\d+", RegexOptions.Compiled | RegexOptions.NonBacktracking)]
-    private static partial Regex NumbersRegex();
-    
-    [GeneratedRegex(@"[^.\d]", RegexOptions.Compiled | RegexOptions.NonBacktracking)]
-    private static partial Regex SymbolsRegex();
-
-    [GeneratedRegex(@"\*", RegexOptions.Compiled | RegexOptions.NonBacktracking)]
-    private static partial Regex GearsRegex();
 }
