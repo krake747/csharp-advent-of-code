@@ -28,6 +28,7 @@ public sealed partial class Application(
         // Get AoC title
         var instructions = await client.GetStringAsync($"{aocYear}/day/{aocDay}");
         var title = AocDayTitleRegex().Match(instructions).Groups[2].Value;
+        var question = AocPart1QuestionRegex().Match(instructions).Groups[1].Value;
 
         logger.Information("Current Directory: {Path}", Directory.GetCurrentDirectory());
 
@@ -51,7 +52,7 @@ public sealed partial class Application(
             .Pipe(CreateDirectory)
             .Pipe(aocTestDir => Path.Combine(aocTestDir.FullName, CreateAocTestFileName(day)));
         
-        await CreateAocTestClassFileAsync(acoTestFilePath, title, aocYear, aocDay, day);
+        await CreateAocTestClassFileAsync(acoTestFilePath, title, question, aocYear, aocDay, day);
         
         // Create Real input file
         var (realInputFileName, testInputFileName) = CreateTestFileNames(day);
@@ -67,8 +68,8 @@ public sealed partial class Application(
         await CreateTestInputFileAsync(testInputFilePath);
     }
 
-    private async Task CreateAocDayClassFileAsync(string acoFilePath, string title, string aocYear, string aocDay,
-        string day)
+    private async Task CreateAocDayClassFileAsync(string acoFilePath, string title, string aocYear, 
+        string aocDay, string day)
     {
         if (File.Exists(acoFilePath))
         {
@@ -80,8 +81,8 @@ public sealed partial class Application(
         await CreateAocTemplateAsync(acoFilePath, title, aocYear, aocDay, day);
     }
 
-    private async Task CreateAocTestClassFileAsync(string acoTestFilePath, string title, string aocYear, string aocDay,
-        string day)
+    private async Task CreateAocTestClassFileAsync(string acoTestFilePath, string title, string question, 
+        string aocYear, string aocDay, string day)
     {
         if (File.Exists(acoTestFilePath))
         {
@@ -90,7 +91,7 @@ public sealed partial class Application(
         }
 
         logger.Information("File was created: {File}", acoTestFilePath);
-        await CreateAocTestTemplateAsync(acoTestFilePath, title, aocYear, aocDay, day);
+        await CreateAocTestTemplateAsync(acoTestFilePath, title, question, aocYear, aocDay, day);
     }
 
     private async Task CreateRealInputFileAsync(string realInputFilePath, string input)
@@ -158,8 +159,8 @@ public sealed partial class Application(
         await File.WriteAllTextAsync(acoFilePath, aocTemplate);
     }
 
-    private static async Task CreateAocTestTemplateAsync(string realInputFilePath, string title, string aocYear,
-        string aocDay, string day)
+    private static async Task CreateAocTestTemplateAsync(string realInputFilePath, string title, string question,
+        string aocYear, string aocDay, string day)
     {
         var aocTestTemplate =
             $$"""
@@ -192,7 +193,7 @@ public sealed partial class Application(
               
                   [Theory]
                   [MemberData(nameof(Part1Data))]
-                  [Description("")]
+                  [Description("{{question}}")]
                   public void Part1_ShouldReturnInteger_WhenSample(AocInput input, int expected)
                   {
                       // Act
@@ -204,7 +205,7 @@ public sealed partial class Application(
                   
                   [Theory]
                   [MemberData(nameof(Part2Data))]
-                  [Description("")]
+                  [Description("<insert here>")]
                   public void Part2_ShouldReturnInteger_WhenSample(AocInput input, int expected)
                   {
                       // Act
@@ -229,4 +230,7 @@ public sealed partial class Application(
 
     [GeneratedRegex(@"<h2>--- Day (\d*): (.*) ---</h2>")]
     private static partial Regex AocDayTitleRegex();
+    
+    [GeneratedRegex(@"<em>(.*\?)</em>")]
+    private static partial Regex AocPart1QuestionRegex();
 }

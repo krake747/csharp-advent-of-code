@@ -22,8 +22,8 @@ module Fays =
         |> List.map (
             _.Replace("one", "o1e")
                 .Replace("two", "t2o")
-                .Replace("three", "te3te")
-                .Replace("four", "f4fr")
+                .Replace("three", "t3e")
+                .Replace("four", "f4r")
                 .Replace("five", "f5e")
                 .Replace("six", "s6x")
                 .Replace("seven", "s7n")
