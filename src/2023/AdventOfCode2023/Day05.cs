@@ -23,28 +23,26 @@ public sealed partial class Day05 : IAocDay<int>
         map.Split('\n')
             .Pipe(lines =>
             {
-                var name = NameRegex().Match(lines[0]);
-                var from = name.Groups[1].Value;
-                var to = name.Groups[2].Value;
-                var destination = ParseRange(lines[1]);
-                var source = ParseRange(lines[2]);
-                return new Map(from, to, destination, source);
+                var name = MapNameRegex().Match(lines[0]).Pipe(x => new MapName(x.Groups[1].Value, x.Groups[2].Value));
+                var destination = RangeParts(lines[1]).Pipe(x => new Range(x[0], x[0] + x[2] - 1));
+                var source = RangeParts(lines[2]).Pipe(x => new Range(x[1], x[1] + x[2] - 1));
+                return new Map(name, source, destination);
             });
 
-    private static Range ParseRange(string line) => 
+    private static int[] RangeParts(string line) => 
         NumbersRegex()
             .Matches(line)
             .Select(m => int.Parse(m.Value))
-            .ToArray()
-            .Pipe(x => new Range(x[0], x[1], x[2]));
+            .ToArray();
 
+    private sealed record MapName(string From, string To);
     
-    private sealed record Map(string From, string To, Range Destination, Range Source);
-
-    private readonly record struct Range(int DestinationStart, int SourceStart, int Length);
+    private sealed record Map(MapName Name, Range Source, Range Destination);
+    
+    private readonly record struct Range(int From, int To);
     
     [GeneratedRegex(@"(\w+)-to-(\w+)")]
-    private static partial Regex NameRegex();
+    private static partial Regex MapNameRegex();
     
     [GeneratedRegex(@"\d+")]
     private static partial Regex NumbersRegex();
