@@ -36,7 +36,7 @@ public sealed class Day02Tests
         // Assert
         result.Should().Be(expected);
     }
-    
+
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("What is the sum of the power of these sets?")]
@@ -44,7 +44,7 @@ public sealed class Day02Tests
     {
         // Act
         var result = Day02.Part2(input);
-    
+
         // Assert
         result.Should().Be(expected);
     }

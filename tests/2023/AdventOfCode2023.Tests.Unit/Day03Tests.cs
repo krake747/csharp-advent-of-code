@@ -36,7 +36,7 @@ public sealed class Day03Tests
         // Assert
         result.Should().Be(expected);
     }
-    
+
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("What is the sum of all of the gear ratios in your engine schematic?")]
@@ -44,7 +44,7 @@ public sealed class Day03Tests
     {
         // Act
         var result = Day03.Part2(input);
-    
+
         // Assert
         result.Should().Be(expected);
     }

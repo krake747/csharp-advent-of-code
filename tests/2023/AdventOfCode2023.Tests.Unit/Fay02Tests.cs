@@ -1,7 +1,7 @@
 using System.ComponentModel;
+using AdventOfCode2023.FSharp;
 using AdventOfCodeLib;
 using FluentAssertions;
-using AdventOfCode2023.FSharp;
 using static AdventOfCodeLib.AocFileReaderService;
 
 namespace AdventOfCode2023.Tests.Unit;
@@ -37,7 +37,7 @@ public sealed class Fay02Tests
         // Assert
         result.Should().Be(expected);
     }
-    
+
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("What is the sum of the power of these sets?")]
@@ -45,7 +45,7 @@ public sealed class Fay02Tests
     {
         // Act
         var result = Fay02.part2(input);
-    
+
         // Assert
         result.Should().Be(expected);
     }

@@ -7,6 +7,7 @@ namespace AdventOfCode2023;
 public sealed partial class Day04 : IAocDay<int>
 {
     private static readonly char[] Separators = [':', '|'];
+
     public static int Part1(AocInput input) =>
         Scratchcards(input.Lines)
             .Select(card => card.WinningNumbers.Intersect(card.Numbers).Count())
@@ -20,8 +21,7 @@ public sealed partial class Day04 : IAocDay<int>
                 var store = scratchcards.ToDictionary(kvp => kvp.Id, kvp => (Card: kvp, Original: 1, Copies: 0));
                 var counted = store.Aggregate(store, (pile, scratchcard) =>
                 {
-                    var (card, original, copies) = scratchcard.Value;
-                    var (id, winningNumbers, numbers) = card;
+                    var ((id, winningNumbers, numbers), original, copies) = scratchcard.Value;
                     var total = original + copies;
                     for (var i = 0; i < total; i++)
                     {
@@ -31,9 +31,9 @@ public sealed partial class Day04 : IAocDay<int>
                             var current = pile[nextId];
                             current.Copies += 1;
                             pile[nextId] = current;
-                        } 
+                        }
                     }
-                    
+
                     return pile;
                 });
 
@@ -45,16 +45,16 @@ public sealed partial class Day04 : IAocDay<int>
         .Select(ParseScratchcard);
 
     private static Scratchcard ParseScratchcard(string[] pile)
-    { 
+    {
         var id = GetNumbers(pile[0]).Single();
         var winningNumbers = GetNumbers(pile[1]);
         var numbers = GetNumbers(pile[2]);
         return new Scratchcard(id, winningNumbers, numbers);
     }
-    
-    private static int[] GetNumbers(string cards) => 
+
+    private static int[] GetNumbers(string cards) =>
         DigitRegex().Matches(cards).Select(mc => int.Parse(mc.Value)).ToArray();
-    
+
     [GeneratedRegex(@"\d+")]
     private static partial Regex DigitRegex();
 

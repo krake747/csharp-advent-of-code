@@ -38,7 +38,7 @@ public sealed class Day01Tests
         // Assert
         result.Should().Be(expected);
     }
-    
+
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("What is the sum of all of the calibration values?")]
@@ -47,7 +47,7 @@ public sealed class Day01Tests
         // Act
         var result = Day01.Part2(input);
         var resultA = Day01.Part2A(input);
-        
+
         // Assert
         using var _ = new AssertionScope();
         result.Should().Be(expected);

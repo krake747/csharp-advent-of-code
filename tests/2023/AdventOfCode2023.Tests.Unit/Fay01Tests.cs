@@ -1,7 +1,7 @@
 using System.ComponentModel;
+using AdventOfCode2023.FSharp;
 using AdventOfCodeLib;
 using FluentAssertions;
-using AdventOfCode2023.FSharp;
 using static AdventOfCodeLib.AocFileReaderService;
 
 namespace AdventOfCode2023.Tests.Unit;
@@ -38,7 +38,7 @@ public sealed class Fay01Tests
         // Assert
         result.Should().Be(expected);
     }
-    
+
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("What is the sum of all of the calibration values?")]
@@ -46,7 +46,7 @@ public sealed class Fay01Tests
     {
         // Act
         var result = Fays.part2(input);
-    
+
         // Assert
         result.Should().Be(expected);
     }

@@ -36,7 +36,7 @@ public sealed class Day04Tests
         // Assert
         result.Should().Be(expected);
     }
-    
+
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("How many total scratchcards do you end up with?")]
@@ -44,7 +44,7 @@ public sealed class Day04Tests
     {
         // Act
         var result = Day04.Part2(input);
-    
+
         // Assert
         result.Should().Be(expected);
     }
