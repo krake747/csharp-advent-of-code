@@ -13,41 +13,42 @@ public sealed partial class Day05 : IAocDay<int>
         var maps = almanac[1..].Select(ParseMap).ToArray();
         return 35;
     }
-    
+
     public static int Part2(AocInput input) => 0;
 
-    private static IEnumerable<int> ParseSeeds(string almanac) => 
+    private static IEnumerable<int> ParseSeeds(string almanac) =>
         NumbersRegex().Matches(almanac).Select(m => int.Parse(m.Value));
 
     private static Map[] ParseMap(string map) =>
         map.Split('\n')
             .Pipe(lines =>
-            {
-                var name = MapNameRegex().Match(lines[0]).Pipe(x => new MapName(x.Groups[1].Value, x.Groups[2].Value));
-                return (
-                    from range in lines[1..]
-                    let rangeParts = RangeParts(range)
-                    let destination = new Range(rangeParts[0], rangeParts[0] + rangeParts[2] - 1)
-                    let source = new Range(rangeParts[1], rangeParts[1] + rangeParts[2] - 1)
-                    select new Map(name, source, destination)
-                ).ToArray();
-            });
+                from range in lines[1..]
+                let rangeParts = RangeParts(range)
+                let destination = new Range(rangeParts[0], rangeParts[0] + rangeParts[2] - 1)
+                let source = new Range(rangeParts[1], rangeParts[1] + rangeParts[2] - 1)
+                select new Map(GetMapName(lines[0]), source, destination)
+            ).ToArray();
 
-    private static int[] RangeParts(string line) => 
+    private static MapName GetMapName(string line) =>
+        MapNameRegex()
+            .Match(line)
+            .Pipe(x => new MapName(x.Groups[1].Value, x.Groups[2].Value));
+
+    private static int[] RangeParts(string line) =>
         NumbersRegex()
             .Matches(line)
             .Select(m => int.Parse(m.Value))
             .ToArray();
 
-    private sealed record MapName(string From, string To);
-    
-    private sealed record Map(MapName Name, Range Source, Range Destination);
-    
-    private readonly record struct Range(int From, int To);
-    
     [GeneratedRegex(@"(\w+)-to-(\w+)")]
     private static partial Regex MapNameRegex();
-    
+
     [GeneratedRegex(@"\d+")]
     private static partial Regex NumbersRegex();
+
+    private sealed record MapName(string From, string To);
+
+    private sealed record Map(MapName Name, Range Source, Range Destination);
+
+    private readonly record struct Range(int From, int To);
 }
