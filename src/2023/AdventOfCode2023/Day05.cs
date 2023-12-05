@@ -10,7 +10,7 @@ public sealed partial class Day05 : IAocDay<int>
     {
         var almanac = input.Text.Split("\n\n");
         var seeds = ParseSeeds(almanac[0]);
-        var maps = almanac[1..].Select(ParseMap);
+        var maps = almanac[1..].Select(ParseMap).ToArray();
         return 35;
     }
     
@@ -19,14 +19,18 @@ public sealed partial class Day05 : IAocDay<int>
     private static IEnumerable<int> ParseSeeds(string almanac) => 
         NumbersRegex().Matches(almanac).Select(m => int.Parse(m.Value));
 
-    private static Map ParseMap(string map) =>
+    private static Map[] ParseMap(string map) =>
         map.Split('\n')
             .Pipe(lines =>
             {
                 var name = MapNameRegex().Match(lines[0]).Pipe(x => new MapName(x.Groups[1].Value, x.Groups[2].Value));
-                var destination = RangeParts(lines[1]).Pipe(x => new Range(x[0], x[0] + x[2] - 1));
-                var source = RangeParts(lines[2]).Pipe(x => new Range(x[1], x[1] + x[2] - 1));
-                return new Map(name, source, destination);
+                return (
+                    from range in lines[1..]
+                    let rangeParts = RangeParts(range)
+                    let destination = new Range(rangeParts[0], rangeParts[0] + rangeParts[2] - 1)
+                    let source = new Range(rangeParts[1], rangeParts[1] + rangeParts[2] - 1)
+                    select new Map(name, source, destination)
+                ).ToArray();
             });
 
     private static int[] RangeParts(string line) => 
