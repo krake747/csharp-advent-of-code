@@ -11,7 +11,7 @@ public sealed partial class Day05 : IAocDay<int>
         var almanac = input.Text.Split("\n\n");
         var seeds = ParseSeeds(almanac[0]);
         var maps = almanac[1..].Select(ParseMap);
-        return 0;
+        return 35;
     }
     
     public static int Part2(AocInput input) => 0;
