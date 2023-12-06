@@ -125,20 +125,14 @@ module Fay06 =
         lines
         |> List.map (fun l -> Regex.Matches(l, "\d+") |> Seq.map (_.Value) |> Seq.toList)
 
-    let readBadWriting (document: string list list) =
+    let readDocument (document: string list list) =
         let times = document[0] |> List.map int64
         let distances = document[1] |> List.map int64
 
         List.zip times distances
         |> List.map (fun x -> { Time = fst x; RecordDistance = snd x })
 
-    let readGoodWriting (document: string list list) =
-        let time = String.Join("", List.head document) |> int64
-        let distance = String.Join("", List.last document) |> int64
-        [ { Time = time; RecordDistance = distance } ]
-
-
-    let breakRecord race =
+    let waysToWinRace race =
         let zero = int64 0
         let one = int64 1
         let mutable count = zero
@@ -151,12 +145,12 @@ module Fay06 =
 
     let part1 (input: AocInput) =
         parseDocument (input.Lines |> Seq.toList)
-        |> readBadWriting
-        |> List.map breakRecord
+        |> readDocument
+        |> List.map waysToWinRace
         |> List.reduce (fun wins ways -> wins * ways)
 
     let part2 (input: AocInput) =
-        parseDocument (input.Lines |> Seq.toList)
-        |> readGoodWriting
-        |> List.map breakRecord
+        parseDocument (input.Lines |> Seq.map (_.Replace(" ", "")) |> Seq.toList)
+        |> readDocument
+        |> List.map waysToWinRace
         |> List.reduce (fun wins ways -> wins * ways)
