@@ -17,8 +17,7 @@ public sealed partial class Day06 : IAocDay<long>
             .Pipe(ReadGoodWriting)
             .Select(BreakRecord)
             .Aggregate(1L, (wins, ways) => wins * ways);
-
-
+    
     private static long BreakRecord(Race race)
     {
         var count = 0L;
@@ -29,8 +28,7 @@ public sealed partial class Day06 : IAocDay<long>
 
         return count;
     }
-
-
+    
     private static IEnumerable<string>[] ParseRaceDocument(IEnumerable<string> lines) => 
         lines.Select(line => NumbersRegex().Matches(line).Select(m => m.Value)).ToArray();
 
