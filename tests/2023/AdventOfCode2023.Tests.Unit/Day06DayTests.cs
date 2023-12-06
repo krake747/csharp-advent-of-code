@@ -6,12 +6,12 @@ using static AdventOfCodeLib.AocFileReaderService;
 namespace AdventOfCode2023.Tests.Unit;
 
 [AocPuzzle(2023, 6, "Wait For It")]
-public sealed class Day06Tests : IAocTestDay<long>
+public sealed class Day06DayTests : IAocDayTest<long>
 {
-    private const string Day = nameof(Day06);
+    private const string Day = nameof(Day06Day);
     private const string TestData = @$"..\..\..\Data\{Day}_Test.txt";
     private const string RealData = @$"..\..\..\Data\{Day}.txt";
-    private readonly Day06 _sut = new();
+    private readonly Day06Day _sut = new();
 
     public static TheoryData<AocInput, long> Part1Data => new()
     {
@@ -31,7 +31,7 @@ public sealed class Day06Tests : IAocTestDay<long>
     public void Part1(AocInput input, long expected)
     {
         // Act
-        var result = Day06.Part1(input);
+        var result = Day06Day.Part1(input);
 
         // Assert
         result.Should().Be(expected);
@@ -43,7 +43,7 @@ public sealed class Day06Tests : IAocTestDay<long>
     public void Part2(AocInput input, long expected)
     {
         // Act
-        var result = Day06.Part2(input);
+        var result = Day06Day.Part2(input);
     
         // Assert
         result.Should().Be(expected);

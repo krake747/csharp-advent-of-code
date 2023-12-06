@@ -4,7 +4,7 @@ using AdventOfCodeLib;
 namespace AdventOfCode2023;
 
 [AocPuzzle(2023, 6, "Wait For It")]
-public sealed partial class Day06 : IAocDay<long>
+public sealed partial class Day06Day : IAocDay<long>
 {
     public static long Part1(AocInput input) =>
         ParseRaceDocument(input.Lines, ParseBadWriting)

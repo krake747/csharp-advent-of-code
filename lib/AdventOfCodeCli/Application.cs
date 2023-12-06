@@ -172,7 +172,7 @@ public sealed partial class Application(
               namespace AdventOfCode{{aocYear}}.Tests.Unit;
 
               [AocPuzzle({{aocYear}}, {{aocDay}}, "{{title}}")]
-              public sealed class Day{{day}}Tests
+              public sealed class Day{{day}}Tests : IAocTestDay<int>
               {
                   private const string Day = nameof(Day{{day}});
                   private const string TestData = @$"..\..\..\Data\{Day}_Test.txt";
@@ -194,7 +194,7 @@ public sealed partial class Application(
                   [Theory]
                   [MemberData(nameof(Part1Data))]
                   [Description("{{question}}")]
-                  public void Part1_ShouldReturnInteger_WhenSample(AocInput input, int expected)
+                  public void Part1(AocInput input, int expected)
                   {
                       // Act
                       var result = Day{{day}}.Part1(input);
@@ -205,8 +205,8 @@ public sealed partial class Application(
                   
                   [Theory]
                   [MemberData(nameof(Part2Data))]
-                  [Description("<insert here>")]
-                  public void Part2_ShouldReturnInteger_WhenSample(AocInput input, int expected)
+                  [Description("<insert question 2 here>")]
+                  public void Part2(AocInput input, int expected)
                   {
                       // Act
                       var result = Day{{day}}.Part2(input);
