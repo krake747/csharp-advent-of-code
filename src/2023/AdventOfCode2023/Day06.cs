@@ -29,15 +29,12 @@ public sealed partial class Day06 : IAocDay<long>
         return count;
     }
     
-    private static IEnumerable<string>[] ParseRaceDocument(IEnumerable<string> lines) => 
-        lines.Select(line => NumbersRegex().Matches(line).Select(m => m.Value)).ToArray();
+    private static IEnumerable<long>[] ParseRaceDocument(IEnumerable<string> lines) => 
+        lines.Select(line => NumbersRegex().Matches(line).Select(m => long.Parse(m.Value)))
+            .ToArray();
 
-    private static IEnumerable<Race> ReadDocument(IEnumerable<string>[] document)
-    {
-        var times = document[0].Select(long.Parse);
-        var distances = document[^1].Select(long.Parse);
-        return times.Zip(distances, (t, d) => new Race(t, d));
-    }
+    private static IEnumerable<Race> ReadDocument(IEnumerable<long>[] document) => 
+        document[0].Zip(document[^1], (t, d) => new Race(t, d));
 
     [GeneratedRegex(@"\d+")]
     private static partial Regex NumbersRegex();

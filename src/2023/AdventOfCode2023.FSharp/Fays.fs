@@ -122,14 +122,16 @@ module Fay06 =
     type Race = { Time: int64; RecordDistance: int64 }
 
     let parseDocument lines =
-        lines
-        |> List.map (fun l -> Regex.Matches(l, "\d+") |> Seq.map (_.Value) |> Seq.toList)
+        let parseNumbers line =
+            Regex.Matches(line, "\d+")
+            |> Seq.cast<Match>
+            |> Seq.map (fun m -> int64 m.Value)
+            |> Seq.toList
+            
+        lines |> List.map parseNumbers
 
-    let readDocument (document: string list list) =
-        let times = document[0] |> List.map int64
-        let distances = document[1] |> List.map int64
-
-        List.zip times distances
+    let readDocument (document: int64 list list) =
+        List.zip document[0] document[1]
         |> List.map (fun x -> { Time = fst x; RecordDistance = snd x })
 
     let waysToWinRace race =
