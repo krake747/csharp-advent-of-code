@@ -1,5 +1,6 @@
 ﻿namespace AdventOfCode2023.FSharp
 
+open System
 open System.Text.RegularExpressions
 open AdventOfCodeLib
 
@@ -45,7 +46,7 @@ module Fay02 =
             |> List.max
 
         let countColour = countCubes game
-        let id = int Regex.Match(game, @"Game (\d+)").Groups[1].Value 
+        let id = int Regex.Match(game, @"Game (\d+)").Groups[1].Value
         let red = countColour (Regex @"(\d+) red")
         let green = countColour (Regex @"(\d+) green")
         let blue = countColour (Regex @"(\d+) blue")
@@ -67,38 +68,42 @@ module Fay02 =
 module Fay03 =
     [<Struct>]
     type Coordinate = { Row: int; Col: int }
+
     type Part = { Coordinate: Coordinate; Text: string; OffSet: int }
-    
+
     let parseEngineSchematics (lines: string list) (regex: Regex) =
         seq {
-            for row in 0..lines.Length - 1 do
-            for m in regex.Matches(lines[row]) do
-                yield {
-                    Coordinate = { Row = row; Col = m.Index }
-                    Text = m.Value
-                    OffSet = m.Value.Length
-                }
+            for row in 0 .. lines.Length - 1 do
+                for m in regex.Matches(lines[row]) do
+                    yield {
+                        Coordinate = { Row = row; Col = m.Index }
+                        Text = m.Value
+                        OffSet = m.Value.Length
+                    }
         }
-        |> Seq.toList 
-    
+        |> Seq.toList
+
     let horizontalAdjacent (p1: Part, p2: Part) =
         p2.Coordinate.Col + p2.OffSet >= p1.Coordinate.Col
-        
+
     let verticalAdjacent (p1: Part, p2: Part) =
-        abs(p2.Coordinate.Row - p1.Coordinate.Row) <= 1
-        
+        abs (p2.Coordinate.Row - p1.Coordinate.Row) <= 1
+
     let adjacent (p1: Part, p2: Part) =
-        verticalAdjacent (p1, p2) && horizontalAdjacent (p1, p2) && horizontalAdjacent (p2, p1)
-        
+        verticalAdjacent (p1, p2)
+        && horizontalAdjacent (p1, p2)
+        && horizontalAdjacent (p2, p1)
+
     let part1 (input: AocInput) =
         let parseParts = input.Lines |> Seq.toList |> parseEngineSchematics
         let partNumbers = fun number -> int number.Text
         let symbols = parseParts (Regex @"[^.\d]")
         let numbers = parseParts (Regex @"\d+")
+
         numbers
         |> List.where (fun number -> symbols |> List.exists (fun symbol -> adjacent (number, symbol)))
         |> List.sumBy partNumbers
-        
+
 
     let part2 (input: AocInput) =
         let parseParts = input.Lines |> Seq.toList |> parseEngineSchematics
@@ -106,7 +111,52 @@ module Fay03 =
         let gearRatio = fun (gears: Part list) -> (int gears[0].Text) * (int gears[1].Text)
         let gears = parseParts (Regex @"\*")
         let numbers = parseParts (Regex @"\d+")
+
         gears
         |> List.map (fun gear -> numbers |> List.where (fun number -> adjacent (number, gear)))
         |> List.where correctGear
         |> List.sumBy gearRatio
+
+module Fay06 =
+
+    type Race = { Time: int64; RecordDistance: int64 }
+
+    let parseDocument lines =
+        lines
+        |> List.map (fun l -> Regex.Matches(l, "\d+") |> Seq.map (_.Value) |> Seq.toList)
+
+    let readBadWriting (document: string list list) =
+        let times = document[0] |> List.map int64
+        let distances = document[1] |> List.map int64
+
+        List.zip times distances
+        |> List.map (fun x -> { Time = fst x; RecordDistance = snd x })
+
+    let readGoodWriting (document: string list list) =
+        let time = String.Join("", List.head document) |> int64
+        let distance = String.Join("", List.last document) |> int64
+        [ { Time = time; RecordDistance = distance } ]
+
+
+    let breakRecord race =
+        let zero = int64 0
+        let one = int64 1
+        let mutable count = zero
+
+        for charge in zero .. race.Time + one do
+            let i = if charge * (race.Time - charge) > race.RecordDistance then one else zero
+            count <- count + i
+
+        count
+
+    let part1 (input: AocInput) =
+        parseDocument (input.Lines |> Seq.toList)
+        |> readBadWriting
+        |> List.map breakRecord
+        |> List.reduce (fun wins ways -> wins * ways)
+
+    let part2 (input: AocInput) =
+        parseDocument (input.Lines |> Seq.toList)
+        |> readGoodWriting
+        |> List.map breakRecord
+        |> List.reduce (fun wins ways -> wins * ways)
