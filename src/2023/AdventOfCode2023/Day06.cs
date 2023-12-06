@@ -7,12 +7,14 @@ namespace AdventOfCode2023;
 public sealed partial class Day06 : IAocDay<long>
 {
     public static long Part1(AocInput input) =>
-        ParseRaceDocument(input.Lines, ParseBadWriting)
+        ParseRaceDocument(input.Lines)
+            .Pipe(ReadBadWriting)
             .Select(BreakRecord)
             .Aggregate(1L, (wins, ways) => wins * ways);
 
     public static long Part2(AocInput input) =>
-        ParseRaceDocument(input.Lines, ParseGoodWriting)
+        ParseRaceDocument(input.Lines)
+            .Pipe(ReadGoodWriting)
             .Select(BreakRecord)
             .Aggregate(1L, (wins, ways) => wins * ways);
 
@@ -29,21 +31,17 @@ public sealed partial class Day06 : IAocDay<long>
     }
 
 
-    private static IEnumerable<Race> ParseRaceDocument(IEnumerable<string> lines,
-        Func<IEnumerable<string>[], IEnumerable<Race>> parser) =>
-        lines
-            .Select(line => NumbersRegex().Matches(line).Select(m => m.Value))
-            .ToArray()
-            .Pipe(parser);
+    private static IEnumerable<string>[] ParseRaceDocument(IEnumerable<string> lines) => 
+        lines.Select(line => NumbersRegex().Matches(line).Select(m => m.Value)).ToArray();
 
-    private static IEnumerable<Race> ParseBadWriting(IEnumerable<string>[] document)
+    private static IEnumerable<Race> ReadBadWriting(IEnumerable<string>[] document)
     {
         var times = document[0].Select(long.Parse);
         var distances = document[^1].Select(long.Parse);
         return times.Zip(distances, (t, d) => new Race(t, d));
     }
 
-    private static IEnumerable<Race> ParseGoodWriting(IEnumerable<string>[] document)
+    private static IEnumerable<Race> ReadGoodWriting(IEnumerable<string>[] document)
     {
         var time = string.Join("", document[0]).Pipe(long.Parse);
         var distance = string.Join("", document[^1]).Pipe(long.Parse);
