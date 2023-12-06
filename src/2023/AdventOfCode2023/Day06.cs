@@ -15,8 +15,8 @@ public sealed partial class Day06 : IAocDay<long>
         ParseRaceDocument(input.Lines, ParseGoodWriting)
             .Select(BreakRecord)
             .Aggregate(1L, (wins, ways) => wins * ways);
-    
-    
+
+
     private static long BreakRecord(Race race)
     {
         var count = 0L;
@@ -24,13 +24,13 @@ public sealed partial class Day06 : IAocDay<long>
         {
             count += charge * (race.Time - charge) > race.RecordDistance ? 1 : 0;
         }
-        
+
         return count;
     }
 
 
-    private static IEnumerable<Race> ParseRaceDocument(IEnumerable<string> lines, 
-        Func<IEnumerable<string>[], IEnumerable<Race>> parser) => 
+    private static IEnumerable<Race> ParseRaceDocument(IEnumerable<string> lines,
+        Func<IEnumerable<string>[], IEnumerable<Race>> parser) =>
         lines
             .Select(line => NumbersRegex().Matches(line).Select(m => m.Value))
             .ToArray()
@@ -42,7 +42,7 @@ public sealed partial class Day06 : IAocDay<long>
         var distances = document[^1].Select(long.Parse);
         return times.Zip(distances, (t, d) => new Race(t, d));
     }
-    
+
     private static IEnumerable<Race> ParseGoodWriting(IEnumerable<string>[] document)
     {
         var time = string.Join("", document[0]).Pipe(long.Parse);

@@ -36,7 +36,7 @@ public sealed class Day06Tests : IAocDayTest<long>
         // Assert
         result.Should().Be(expected);
     }
-    
+
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("How many ways can you beat the record in this one much longer race?")]
@@ -44,7 +44,7 @@ public sealed class Day06Tests : IAocDayTest<long>
     {
         // Act
         var result = Day06.Part2(input);
-    
+
         // Assert
         result.Should().Be(expected);
     }

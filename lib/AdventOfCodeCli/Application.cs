@@ -41,7 +41,7 @@ public sealed partial class Application(
         var aocFilePath = $@"{srcDirectory}\{aocYear}\AdventOfCode{aocYear}"
             .Pipe(Path.GetFullPath)
             .Pipe(CreateDirectory)
-            .Pipe(aocDir => Path.Combine(aocDir.FullName, CreateAocDayFileName(day))); 
+            .Pipe(aocDir => Path.Combine(aocDir.FullName, CreateAocDayFileName(day)));
 
         await CreateAocDayClassFileAsync(aocFilePath, title, aocYear, aocDay, day);
 
@@ -51,9 +51,9 @@ public sealed partial class Application(
             .Pipe(Path.GetFullPath)
             .Pipe(CreateDirectory)
             .Pipe(aocTestDir => Path.Combine(aocTestDir.FullName, CreateAocTestFileName(day)));
-        
+
         await CreateAocTestClassFileAsync(acoTestFilePath, title, question, aocYear, aocDay, day);
-        
+
         // Create Real input file
         var (realInputFileName, testInputFileName) = CreateTestFileNames(day);
         var aocDataDirectory = $@"{testsDirectory}\{aocYear}\AdventOfCode{aocYear}.Tests.Unit\Data"
@@ -68,7 +68,7 @@ public sealed partial class Application(
         await CreateTestInputFileAsync(testInputFilePath);
     }
 
-    private async Task CreateAocDayClassFileAsync(string acoFilePath, string title, string aocYear, 
+    private async Task CreateAocDayClassFileAsync(string acoFilePath, string title, string aocYear,
         string aocDay, string day)
     {
         if (File.Exists(acoFilePath))
@@ -81,7 +81,7 @@ public sealed partial class Application(
         await CreateAocTemplateAsync(acoFilePath, title, aocYear, aocDay, day);
     }
 
-    private async Task CreateAocTestClassFileAsync(string acoTestFilePath, string title, string question, 
+    private async Task CreateAocTestClassFileAsync(string acoTestFilePath, string title, string question,
         string aocYear, string aocDay, string day)
     {
         if (File.Exists(acoTestFilePath))
@@ -230,7 +230,7 @@ public sealed partial class Application(
 
     [GeneratedRegex(@"<h2>--- Day (\d*): (.*) ---</h2>")]
     private static partial Regex AocDayTitleRegex();
-    
+
     [GeneratedRegex(@"<em>(.*\?)</em>")]
     private static partial Regex AocPart1QuestionRegex();
 }
