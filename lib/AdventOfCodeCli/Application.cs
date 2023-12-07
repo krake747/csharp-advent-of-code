@@ -172,7 +172,7 @@ public sealed partial class Application(
               namespace AdventOfCode{{aocYear}}.Tests.Unit;
 
               [AocPuzzle({{aocYear}}, {{aocDay}}, "{{title}}")]
-              public sealed class Day{{day}}Tests : IAocTestDay<int>
+              public sealed class Day{{day}}Tests : IAocDayTest<int>
               {
                   private const string Day = nameof(Day{{day}});
                   private const string TestData = @$"..\..\..\Data\{Day}_Test.txt";
