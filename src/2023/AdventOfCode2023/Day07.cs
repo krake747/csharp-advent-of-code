@@ -25,7 +25,7 @@ public sealed class Day07 : IAocDay<int>
             .Select(x => new Hand(x[0], int.Parse(x[^1])));
 
     private static string Jokerize(string cards) =>
-        cards.Contains('J') && cards is not "JJJJJ"
+        cards.Contains('J')
             ? cards.GroupBy(c => c).Select(g => cards.Replace('J', g.Key)).MaxBy(HandStrength)!
             : cards;
 
