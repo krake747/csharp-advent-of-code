@@ -9,14 +9,14 @@ public sealed class Day07 : IAocDay<int>
     public static int Part1(AocInput input) =>
         ParseHands(input.Lines)
             .OrderBy(hand => HandStrength(hand.Cards))
-            .ThenBy(hand => hand, new LabelComparer(LabelStrength))
+            .ThenBy(hand => hand, new HandComparer(LabelStrength))
             .Select((h, i) => h.Bid * (i + 1))
             .Sum();
 
     public static int Part2(AocInput input) =>
         ParseHands(input.Lines)
             .OrderBy(hand => HandStrength(Jokerize(hand.Cards)))
-            .ThenBy(hand => hand, new LabelComparer(LabelStrengthWithJoker))
+            .ThenBy(hand => hand, new HandComparer(LabelStrengthWithJoker))
             .Select((h, i) => h.Bid * (i + 1))
             .Sum();
 
@@ -61,13 +61,12 @@ public sealed class Day07 : IAocDay<int>
 
     private static int LabelStrengthWithJoker(char c) => LabelStrength(c is 'J' ? '1' : c);
 
-    private sealed class LabelComparer(Func<char, int> labelStrength) : IComparer<Hand>
+    private sealed class HandComparer(Func<char, int> strengthFunc) : IComparer<Hand>
     {
         public int Compare(Hand? h1, Hand? h2) =>
-            h1 == h2
-                ? 0
+            h1 == h2 ? 0
                 : h1!.Cards
-                    .Zip(h2!.Cards, (fst, snd) => (L: labelStrength(fst), R: labelStrength(snd)))
+                    .Zip(h2!.Cards, (fst, snd) => (L: strengthFunc(fst), R: strengthFunc(snd)))
                     .FirstOrDefault(x => x.L > x.R || x.R > x.L)
                     .Pipe(x => x.L.CompareTo(x.R));
     }
