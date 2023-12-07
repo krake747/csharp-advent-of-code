@@ -17,7 +17,7 @@ public sealed partial class Day06 : IAocDay<long>
             .Pipe(ReadDocument)
             .Select(WaysToWinRace)
             .Aggregate(1L, (wins, ways) => wins * ways);
-    
+
     private static long WaysToWinRace(Race race)
     {
         var count = 0L;
@@ -28,12 +28,12 @@ public sealed partial class Day06 : IAocDay<long>
 
         return count;
     }
-    
-    private static IEnumerable<long>[] ParseRaceDocument(IEnumerable<string> lines) => 
+
+    private static IEnumerable<long>[] ParseRaceDocument(IEnumerable<string> lines) =>
         lines.Select(line => NumbersRegex().Matches(line).Select(m => long.Parse(m.Value)))
             .ToArray();
 
-    private static IEnumerable<Race> ReadDocument(IEnumerable<long>[] document) => 
+    private static IEnumerable<Race> ReadDocument(IEnumerable<long>[] document) =>
         document[0].Zip(document[^1], (t, d) => new Race(t, d));
 
     [GeneratedRegex(@"\d+")]

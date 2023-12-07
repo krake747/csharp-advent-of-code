@@ -21,8 +21,8 @@ public sealed class Day07Tests : IAocDayTest<int>
 
     public static TheoryData<AocInput, int> Part2Data => new()
     {
-        { ReadInput(TestData), 0 },
-        { ReadInput(RealData), 0 }
+        { ReadInput(TestData), 5905 },
+        { ReadInput(RealData), 249631254 }
     };
 
     [Theory]
@@ -36,7 +36,7 @@ public sealed class Day07Tests : IAocDayTest<int>
         // Assert
         result.Should().Be(expected);
     }
-    
+
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("<insert question 2 here>")]
@@ -44,7 +44,7 @@ public sealed class Day07Tests : IAocDayTest<int>
     {
         // Act
         var result = Day07.Part2(input);
-    
+
         // Assert
         result.Should().Be(expected);
     }
