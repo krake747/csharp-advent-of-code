@@ -39,7 +39,7 @@ public sealed class Day07Tests : IAocDayTest<int>
 
     [Theory]
     [MemberData(nameof(Part2Data))]
-    [Description("<insert question 2 here>")]
+    [Description("What are the new total winnings?")]
     public void Part2(AocInput input, int expected)
     {
         // Act
