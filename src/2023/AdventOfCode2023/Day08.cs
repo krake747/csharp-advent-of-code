@@ -20,11 +20,12 @@ public sealed partial class Day08 : IAocDay<long>
 
     private static long Steps(Dictionary<string, Node> nodes, string directions, string node, string end)
     {
+        var n = node;
         var steps = 0;
         var index = 0;
         while (node.EndsWith(end) is false)
         {
-            node = directions[index] is 'L' ? nodes[node].Left : nodes[node].Right;
+            n = directions[index] is 'L' ? nodes[n].Left : nodes[n].Right;
             index = (index + 1) % directions.Length;
             steps++;
         }
@@ -32,12 +33,12 @@ public sealed partial class Day08 : IAocDay<long>
         return steps;
     }
 
-    private static (string Directions, Dictionary<string, Node> Nodes) ParseNetwork(IEnumerable<string> lines)
+    private static (Dictionary<string, Node> Nodes, string Directions) ParseNetwork(IEnumerable<string> lines)
     {
         var data = lines.ToArray();
         var directions = data[0];
         var nodes = data[2..].Select(ParseNodes).ToDictionary(k => k.Key, v => v.Value);
-        return (directions, nodes);
+        return (nodes, directions);
     }
 
     private static KeyValuePair<string, Node> ParseNodes(string x) =>

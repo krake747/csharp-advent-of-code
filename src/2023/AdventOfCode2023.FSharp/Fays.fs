@@ -1,6 +1,5 @@
 ﻿namespace AdventOfCode2023.FSharp
 
-open System
 open System.Text.RegularExpressions
 open AdventOfCodeLib
 
@@ -127,7 +126,7 @@ module Fay06 =
             |> Seq.cast<Match>
             |> Seq.map (fun m -> int64 m.Value)
             |> Seq.toList
-            
+
         lines |> List.map parseNumbers
 
     let readDocument (document: int64 list list) =
@@ -156,3 +155,51 @@ module Fay06 =
         |> readDocument
         |> List.map waysToWinRace
         |> List.reduce (fun wins ways -> wins * ways)
+
+module Fay08 =
+
+    type Node = { Left: string; Right: string }
+
+    let parseNetwork (input: string list) =
+        let parseNodes str =
+            Regex.Match(str, @"(\w+) = \((\w+), (\w+)\)")
+
+        let directions = List.head input
+
+        let nodes =
+            List.skip 2 input
+            |> List.map parseNodes
+            |> List.map (fun m -> m.Groups[1].Value, { Left = m.Groups[2].Value; Right = m.Groups[3].Value })
+            |> Map.ofList
+
+        (nodes, directions)
+
+    let steps (nodes: Map<string, Node>) (directions: string) (node: string) (final: string) =
+        let mutable n = node
+        let mutable steps = int64 0
+        let mutable index = 0
+
+        while not (n.EndsWith final) do
+            n <- if directions[index] = 'L' then nodes[n].Left else nodes[n].Right
+            index <- (index + 1) % directions.Length
+            steps <- steps + int64 1
+
+        steps
+
+    let rec gcd (x: int64) (y: int64) = if y = 0 then x else gcd y (x % y)
+    let lcm (x: int64) (y: int64) = abs (x * y) / gcd x y
+
+    let findPath network = steps (fst network) (snd network)
+
+    let part1 (input: AocInput) =
+        parseNetwork (input.Lines |> Seq.toList) |> (fun nw -> findPath nw "AAA" "ZZZ")
+
+    let part2 (input: AocInput) =
+        let endsWithA (x: string * Node) = (fst x).EndsWith 'A'
+        parseNetwork (input.Lines |> Seq.toList)
+        |> (fun nw ->
+            (fst nw)
+            |> Map.toList
+            |> List.where endsWithA
+            |> List.map (fun a -> findPath nw (fst a) "Z")
+            |> List.reduce lcm)
