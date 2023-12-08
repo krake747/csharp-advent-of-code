@@ -64,7 +64,8 @@ public sealed class Day07 : IAocDay<int>
     private sealed class HandComparer(Func<char, int> strengthFunc) : IComparer<Hand>
     {
         public int Compare(Hand? h1, Hand? h2) =>
-            h1 == h2 ? 0
+            h1 == h2
+                ? 0
                 : h1!.Cards
                     .Zip(h2!.Cards, (fst, snd) => (L: strengthFunc(fst), R: strengthFunc(snd)))
                     .FirstOrDefault(x => x.L > x.R || x.R > x.L)
