@@ -4,44 +4,55 @@ using AdventOfCodeLib;
 namespace AdventOfCode2023;
 
 [AocPuzzle(2023, 8, "Haunted Wasteland")]
-public sealed partial class Day08 : IAocDay<int>
+public sealed partial class Day08 : IAocDay<long>
 {
-    public static int Part1(AocInput input)
-    {
-        var (instructions, nodes) = ParseNetwork(input.Lines);
-        var current = nodes.First(x => x.Key == "AAA");
-        var i = 0;
-        var steps = 0;
-        while (current.Key is not "ZZZ")
-        {
-            current = nodes.First(x => x.Key == (instructions[i] is 'L' ? current.Value.Left : current.Value.Right));
-            
-            i++;
-            if (i == instructions.Length)
-            {
-                i = 0;
-            }
+    public static long Part1(AocInput input) =>
+        ParseNetwork(input.Lines)
+            .Pipe(nw => Steps(nw.Nodes, nw.Directions, "AAA", "ZZZ"));
 
+
+    public static long Part2(AocInput input) =>
+        ParseNetwork(input.Lines)
+            .Pipe(nw => nw.Nodes
+                .Where(x => x.Key.EndsWith('A'))
+                .Select(x => Steps(nw.Nodes, nw.Directions, x.Key, "Z"))
+                .Aggregate(LeastCommonMultiple));
+
+    private static long Steps(Dictionary<string, Node> nodes, string directions, string node, string end)
+    {
+        var steps = 0;
+        var index = 0;
+        while (node.EndsWith(end) is false)
+        {
+            node = directions[index] is 'L' ? nodes[node].Left : nodes[node].Right;
+            index = (index + 1) % directions.Length;
             steps++;
         }
 
         return steps;
     }
 
-    public static int Part2(AocInput input) => 0;
-
-    private static (string, Dictionary<string, Node>) ParseNetwork(IEnumerable<string> lines)
+    private static (string Directions, Dictionary<string, Node> Nodes) ParseNetwork(IEnumerable<string> lines)
     {
         var data = lines.ToArray();
-        var instructions = data[0];
-        var nodes = data[2..].Select(ParseNodes).ToDictionary();
-        return (instructions, nodes);
+        var directions = data[0];
+        var nodes = data[2..].Select(ParseNodes).ToDictionary(k => k.Key, v => v.Value);
+        return (directions, nodes);
     }
 
     private static KeyValuePair<string, Node> ParseNodes(string x) =>
         NodesRegex()
             .Match(x)
             .Pipe(m => KeyValuePair.Create(m.Groups[1].Value, new Node(m.Groups[2].Value, m.Groups[3].Value)));
+
+    private static long FindLeastCommonMultiple(IEnumerable<long> numbers) =>
+        numbers.Aggregate(LeastCommonMultiple);
+
+    private static long LeastCommonMultiple(long x, long y) =>
+        Math.Abs(x * y) / GreatestCommonDivisor(x, y);
+
+    private static long GreatestCommonDivisor(long x, long y) =>
+        y is 0 ? x : GreatestCommonDivisor(y, x % y);
 
     [GeneratedRegex(@"(\w+) = \((\w+), (\w+)\)", RegexOptions.Compiled | RegexOptions.NonBacktracking)]
     private static partial Regex NodesRegex();
