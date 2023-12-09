@@ -1,24 +1,32 @@
-using System.Text.RegularExpressions;
 using AdventOfCodeLib;
 
 namespace AdventOfCode2023;
 
 [AocPuzzle(2023, 9, "Mirage Maintenance")]
-public sealed partial class Day09 : IAocDay<int>
+public sealed class Day09 : IAocDay<int>
 {
     public static int Part1(AocInput input) =>
         ParseOasisReport(input.Lines)
-            .Select(s => Extrapolate(Forward, s, ^1))
-            .SelectMany(x => x)
-            .Sum();
+            .Sum(Extrapolate);
 
     public static int Part2(AocInput input) =>
         ParseOasisReport(input.Lines)
-            .Select(s => Extrapolate(Backward, s, 0))
-            .SelectMany(x => x)
-            .Sum();
+            .Sum(seq => Extrapolate(seq.Reverse().ToArray()));
 
-    private static List<int> Extrapolate(Func<int, int, int> func, int[] sequence, Index i)
+    public static int Part1A(AocInput input) =>
+        ParseOasisReport(input.Lines)
+            .Sum(seq => Extrapolate(Forward, seq, ^1));
+
+    public static int Part2A(AocInput input) =>
+        ParseOasisReport(input.Lines)
+            .Sum(seq => Extrapolate(Backward, seq, 0));
+
+    // Recursive approach
+    private static int Extrapolate(int[] sequence) =>
+        sequence.Length is 0 ? 0 : Extrapolate(sequence.Zip(sequence[1..], Forward).ToArray()) + sequence.Last();
+
+    // Original approach
+    private static int Extrapolate(Func<int, int, int> func, int[] sequence, Index i)
     {
         var curr = sequence;
         List<int> diffs = [curr[i]];
@@ -28,16 +36,13 @@ public sealed partial class Day09 : IAocDay<int>
             diffs.Add(curr[i]);
         }
 
-        return diffs;
+        return diffs.Sum();
     }
 
     private static IEnumerable<int[]> ParseOasisReport(IEnumerable<string> lines) =>
-        lines.Select(l => NumbersRegex().Matches(l).Select(m => int.Parse(m.Value)).ToArray());
+        lines.Select(l => l.Split(' ').Select(int.Parse).ToArray());
 
     private static int Forward(int x1, int x2) => x2 - x1;
 
     private static int Backward(int x1, int x2) => x1 - x2;
-
-    [GeneratedRegex(@"-?\d+")]
-    private static partial Regex NumbersRegex();
 }

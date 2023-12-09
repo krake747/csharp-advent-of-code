@@ -48,4 +48,28 @@ public sealed class Day09Tests : IAocDayTest<int>
         // Assert
         result.Should().Be(expected);
     }
+
+    [Theory]
+    [MemberData(nameof(Part1Data))]
+    [Description("What is the sum of these extrapolated values?")]
+    public void Part1A(AocInput input, int expected)
+    {
+        // Act
+        var result = Day09.Part1A(input);
+
+        // Assert
+        result.Should().Be(expected);
+    }
+
+    [Theory]
+    [MemberData(nameof(Part2Data))]
+    [Description("What is the sum of these extrapolated values?")]
+    public void Part2A(AocInput input, int expected)
+    {
+        // Act
+        var result = Day09.Part2A(input);
+
+        // Assert
+        result.Should().Be(expected);
+    }
 }
