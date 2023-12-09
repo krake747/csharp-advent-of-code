@@ -12,4 +12,5 @@ Instructions to the puzzle problems are found on: https://adventofcode.com/2023/
 | Day  6 - Wait For It                     | :star: | :star: |
 | Day  7 - Camel Cards                     | :star: | :star: |
 | Day  8 - Haunted Wasteland               | :star: | :star: |
+| Day  9 - Mirage Maintenance              | :star: | :star: |
 
