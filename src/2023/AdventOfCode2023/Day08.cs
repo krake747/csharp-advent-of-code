@@ -23,7 +23,7 @@ public sealed partial class Day08 : IAocDay<long>
         var n = node;
         var steps = 0;
         var index = 0;
-        while (node.EndsWith(end) is false)
+        while (n.EndsWith(end) is false)
         {
             n = directions[index] is 'L' ? nodes[n].Left : nodes[n].Right;
             index = (index + 1) % directions.Length;
