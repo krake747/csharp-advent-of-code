@@ -1,5 +1,8 @@
 ﻿namespace AdventOfCode2023.FSharp
 
+open System
+open System.Collections.Generic
+open System.Linq
 open System.Text.RegularExpressions
 open AdventOfCodeLib
 
@@ -156,6 +159,87 @@ module Fay06 =
         |> List.map waysToWinRace
         |> List.reduce (fun wins ways -> wins * ways)
 
+module Fay07 =
+
+    type Hand = { Cards: string; Bid: int }
+        
+    let groupCards (cards: string) = cards |> Seq.toList |> List.groupBy id
+
+    let countCards v = fun x -> snd x |> List.length = v
+
+    let countCards2 v1 v2 =
+        fun x -> snd x |> List.length = v1 || snd x |> List.length = v2
+
+    let fiveOfAKind (cards: string) =
+        cards |> Seq.toList |> List.distinct |> List.length = 1
+
+    let fourOfAKind (cards: string) =
+        groupCards cards |> List.exists (countCards 4)
+
+    let fullHouse (cards: string) =
+        groupCards cards |> List.forall (countCards2 3 2)
+
+    let threeOfAKind (cards: string) =
+        groupCards cards |> List.exists (countCards 3)
+
+    let twoPair (cards: string) =
+        groupCards cards |> List.countBy (countCards 2) |> List.length = 2
+
+    let onePair (cards: string) =
+        groupCards cards |> List.exists (countCards 2)
+
+    let highCard (cards: string) =
+        cards |> Seq.toList |> List.distinct |> List.length = 5
+
+    let handStrength (cards: string) =
+        match cards with
+        | _ when fiveOfAKind cards -> 6
+        | _ when fourOfAKind cards -> 5
+        | _ when fullHouse cards -> 4
+        | _ when threeOfAKind cards -> 3
+        | _ when twoPair cards -> 2
+        | _ when onePair cards -> 1
+        | _ when highCard cards -> 0
+        | _ -> failwith "Expressions should have been exhaustive"
+    
+    let labelStrength (c: char) =
+        match c with
+        | 'A' -> 14
+        | 'K' -> 13
+        | 'Q' -> 12
+        | 'J' -> 11
+        | 'T' -> 10
+        | _ -> int $"{c}"
+    
+    let labelStrengthWithJoker (c: char) =
+        labelStrength (if c = 'J' then '1' else c)
+    
+    let parseHands (lines: string list) =
+        lines
+        |> List.map (fun x -> x.Split ' ' |> Array.toList)
+        |> List.map (fun x -> { Cards = List.head x; Bid = int (List.last x) })
+        
+    let handComparer (strengthFunc: char -> int) (h1: Hand) (h2: Hand) =
+        if h1 = h2 then
+            0
+        else
+            List.zip (h1.Cards |> Seq.toList) (h2.Cards |> Seq.toList)
+            |> List.map (fun x -> {| L = strengthFunc (fst x); R = strengthFunc (snd x) |})
+            |> List.find (fun x -> x.L > x.R || x.R > x.L)
+            |> (fun x -> x.L.CompareTo(x.R))
+       
+    
+    // No equivalent of c# order by, then by methods -> sorting difficult due to immutable lists
+    // Not sure how to solve yet
+    let part1 (input: AocInput) =
+        parseHands (input.Lines |> Seq.toList) 
+            |> List.sortBy (fun hand -> handStrength hand.Cards) 
+            |> List.sortWith (handComparer labelStrength)
+            |> List.mapi (fun i h -> h.Bid * (i + 1))
+            |> List.sum
+
+    let part2 (input: AocInput) = 0
+
 module Fay08 =
 
     type Node = { Left: string; Right: string }
@@ -196,6 +280,7 @@ module Fay08 =
 
     let part2 (input: AocInput) =
         let endsWithA (x: string * Node) = (fst x).EndsWith 'A'
+
         parseNetwork (input.Lines |> Seq.toList)
         |> (fun nw ->
             (fst nw)
@@ -203,3 +288,29 @@ module Fay08 =
             |> List.where endsWithA
             |> List.map (fun a -> findPath nw (fst a) "Z")
             |> List.reduce lcm)
+
+module Fay09 =
+
+    let parseOasisReport (lines: string list) =
+        lines |> List.map (fun x -> x.Split ' ' |> Array.map int |> Array.toList)
+
+    let forward (sequence: int list) =
+        let fwd (x1, x2) = x2 - x1
+        let len = List.length sequence
+        let s1 = List.take (len - 1) sequence
+        let s2 = List.tail sequence
+        List.zip s1 s2 |> List.map fwd
+
+    let rec extrapolate (sequence: int list) =
+        if sequence.Length = 0 then
+            0
+        else
+            extrapolate (forward sequence) + List.last sequence
+
+    let extrapolateBackward (sequence: int list) = extrapolate (List.rev sequence)
+
+    let part1 (input: AocInput) =
+        parseOasisReport (input.Lines |> Seq.toList) |> List.sumBy extrapolate
+
+    let part2 (input: AocInput) =
+        parseOasisReport (input.Lines |> Seq.toList) |> List.sumBy extrapolateBackward
