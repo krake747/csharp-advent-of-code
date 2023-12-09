@@ -29,14 +29,14 @@ public sealed class Day09 : IAocDay<int>
     private static int Extrapolate(Func<int, int, int> func, int[] sequence, Index i)
     {
         var curr = sequence;
-        List<int> diffs = [curr[i]];
+        var sum = curr[i];
         while (curr.All(x => x is 0) is false)
         {
             curr = curr.Zip(curr[1..], func).ToArray();
-            diffs.Add(curr[i]);
+            sum += curr[i];
         }
 
-        return diffs.Sum();
+        return sum;
     }
 
     private static IEnumerable<int[]> ParseOasisReport(IEnumerable<string> lines) =>
