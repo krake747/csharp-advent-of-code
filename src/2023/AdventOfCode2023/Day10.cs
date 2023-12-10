@@ -60,7 +60,7 @@ public sealed class Day10 : IAocDay<int>
     private static IEnumerable<Pipe> Inlet(char pipe) =>
         Outlets(pipe).Select(p => p);
 
-    private static Pipe[] Outlets(char pipe) => pipe switch
+    private static IEnumerable<Pipe> Outlets(char pipe) => pipe switch
     {
         'F' => [Pipe.South, Pipe.East],
         '7' => [Pipe.West, Pipe.South],

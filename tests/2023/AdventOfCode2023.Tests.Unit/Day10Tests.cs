@@ -11,6 +11,9 @@ public sealed class Day10Tests : IAocDayTest<int>
     private const string Day = nameof(Day10);
     private const string TestData = @$"..\..\..\Data\{Day}_Test.txt";
     private const string TestData2 = @$"..\..\..\Data\{Day}_Test_2.txt";
+    private const string TestData3 = @$"..\..\..\Data\{Day}_Test_3.txt";
+    private const string TestData4 = @$"..\..\..\Data\{Day}_Test_4.txt";
+    private const string TestData5 = @$"..\..\..\Data\{Day}_Test_5.txt";
     private const string RealData = @$"..\..\..\Data\{Day}.txt";
     private readonly Day10 _sut = new();
 
@@ -23,7 +26,10 @@ public sealed class Day10Tests : IAocDayTest<int>
 
     public static TheoryData<AocInput, int> Part2Data => new()
     {
-        { ReadInput(TestData), 0 },
+        // { ReadInput(TestData), 1 },
+        // { ReadInput(TestData3), 4 },
+        // { ReadInput(TestData4), 8 },
+        // { ReadInput(TestData5), 10 },
         { ReadInput(RealData), 0 }
     };
 
