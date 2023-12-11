@@ -14,4 +14,5 @@ Instructions to the puzzle problems are found on: https://adventofcode.com/2023/
 | Day  8 - Haunted Wasteland               | :star: | :star: |
 | Day  9 - Mirage Maintenance              | :star: | :star: |
 | Day 10 - Pipe Maze                       | :star: |        |
+| Day 11 - Cosmic Expansion                | :star: |        |
 
