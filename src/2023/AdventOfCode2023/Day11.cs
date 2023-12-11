@@ -8,8 +8,8 @@ public sealed class Day11 : IAocDay<long>
     public static long Part1(AocInput input)
     {
         var galaxies = ParseGalaxies(input.AllLines).ToArray();
-        var emptyRows = EmptySpaceRows(input.AllLines).ToArray();
-        var emptyCols = EmptySpaceCols(input.AllLines).ToArray();
+        var emptyRows = EmptySpaceRows(input.AllLines);
+        var emptyCols = EmptySpaceCols(input.AllLines);
         return galaxies
             .SelectMany(_ => galaxies, (g1, g2) => (G1: g1, G2: g2))
             .Sum(galaxyPair =>
@@ -63,15 +63,17 @@ public sealed class Day11 : IAocDay<long>
         }
     }
     
-    private static IEnumerable<int> EmptySpaceRows(IReadOnlyList<string> universe) =>
+    private static int[] EmptySpaceRows(IReadOnlyList<string> universe) =>
         Enumerable.Range(0, universe.Count)
             .Where(row => universe[row].All(x => x is '.'))
-            .Select(row => row);
+            .Select(row => row)
+            .ToArray();
 
-    private static IEnumerable<int> EmptySpaceCols(IReadOnlyList<string> universe) =>
+    private static int[] EmptySpaceCols(IReadOnlyList<string> universe) =>
         Enumerable.Range(0, universe[0].Length)
             .Where(col => universe.All(x => x[col] is '.'))
-            .Select(col => col);
+            .Select(col => col)
+            .ToArray();
 
     private readonly record struct Galaxy(int Row, int Col);
 }
