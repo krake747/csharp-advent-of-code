@@ -8,58 +8,48 @@ public sealed class Day11 : IAocDay<long>
     public static long Part1(AocInput input)
     {
         var galaxies = ParseGalaxies(input.AllLines).ToArray();
-        var emptyRows = EmptySpaceRows(input.AllLines).ToArray();
-        var emptyCols = EmptySpaceCols(input.AllLines).ToArray();
-        var galaxyParis = galaxies.SelectMany(_ => galaxies, (g1, g2) => (g1, g2));
-
-        var sum = galaxyParis.Sum(p =>
-        {
-            var distRow = Distance(p.g1.Row, p.g2.Row) + ExpansionRow(p.g1, p.g2, 1, emptyRows);
-            var distCol = Distance(p.g1.Col, p.g2.Col) + ExpansionCol(p.g1, p.g2, 1, emptyCols);
-            return distRow + distCol;
-        }) / 2; // take half from cartesian input
-        
-        return sum;
+        var emptyRows = EmptySpaceRows(input.AllLines);
+        var emptyCols = EmptySpaceCols(input.AllLines);
+        return galaxies
+            .SelectMany(_ => galaxies, (g1, g2) => (G1: g1, G2: g2))
+            .Sum(galaxyPair =>
+            {
+                var ((row1, col1), (row2, col2)) = galaxyPair;
+                var distRow = Distance(emptyRows, 1, row1, row2);
+                var distCol = Distance(emptyCols, 1, col1, col2);
+                return distRow + distCol;
+            })
+            .Pipe(sum => sum / 2L);
     }
-    
+
     public static long Part2(AocInput input)
     {
         var galaxies = ParseGalaxies(input.AllLines).ToArray();
-        var emptyRows = EmptySpaceRows(input.AllLines).ToArray();
-        var emptyCols = EmptySpaceCols(input.AllLines).ToArray();
-        var galaxyParis = galaxies.SelectMany(_ => galaxies, (g1, g2) => (g1, g2));
-
-        var sum = galaxyParis.Sum(p =>
-        {
-            var distRow = Distance(p.g1.Row, p.g2.Row) + ExpansionRow(p.g1, p.g2, 999999, emptyRows);
-            var distCol = Distance(p.g1.Col, p.g2.Col) + ExpansionCol(p.g1, p.g2, 999999, emptyCols);
-            return distRow + distCol;
-        }) / 2; // take half from cartesian input
-        
-        return sum;
+        var emptyRows = EmptySpaceRows(input.AllLines);
+        var emptyCols = EmptySpaceCols(input.AllLines);
+        return galaxies
+            .SelectMany(_ => galaxies, (g1, g2) => (G1: g1, G2: g2))
+            .Sum(galaxyPair =>
+            {
+                var ((row1, col1), (row2, col2)) = galaxyPair;
+                var distRow = Distance(emptyRows, 999999, row1, row2);
+                var distCol = Distance(emptyCols, 999999, col1, col2);
+                return distRow + distCol;
+            })
+            .Pipe(sum => sum / 2L);
+    }
+    
+    private static long Distance(IEnumerable<int> emptySpaces, int expansion, int p1, int p2)
+    {
+        var start = Math.Min(p1, p2);
+        var distance = Math.Abs(p1 - p2);
+        var expanded = expansion * Enumerable.Range(start, distance).Count(emptySpaces.Contains);
+        return distance + expanded;
     }
 
-    private static int Distance(int p1, int p2) => Math.Abs(p1 - p2);
-    
-    private static long ExpansionRow(Galaxy g1, Galaxy g2, int expansion, IEnumerable<int> emptySpaces)
+    private static IEnumerable<Galaxy> ParseGalaxies(IReadOnlyList<string> universe)
     {
-        var ((r1, _), (r2, _)) = (g1, g2);
-        var start = Math.Min(r1, r2);
-        var dist = Distance(r1, r2);
-        return expansion * Enumerable.Range(start, dist).Count(x => emptySpaces.Contains(x));
-    }
-    
-    private static int ExpansionCol(Galaxy g1, Galaxy g2, int expansion, IEnumerable<int> emptySpaces)
-    {
-        var ((_, c1), (_, c2)) = (g1, g2);
-        var start = Math.Min(c1, c2);
-        var dist = Distance(c1, c2);
-        return expansion * Enumerable.Range(start, dist).Count(x => emptySpaces.Contains(x));
-    }
-    
-    private static IEnumerable<Galaxy> ParseGalaxies(string[] universe)
-    {
-        var rows = universe.Length;
+        var rows = universe.Count;
         var cols = universe[0].Length;
         for (var row = 0; row < rows; row++)
         {
@@ -73,14 +63,15 @@ public sealed class Day11 : IAocDay<long>
         }
     }
     
-    private static IEnumerable<int> EmptySpaceRows(string[] universe) =>
-        Enumerable.Range(0, universe.Length)
+    private static IEnumerable<int> EmptySpaceRows(IReadOnlyList<string> universe) =>
+        Enumerable.Range(0, universe.Count)
             .Where(row => universe[row].All(x => x is '.'))
             .Select(row => row);
 
-    private static IEnumerable<int> EmptySpaceCols(string[] universe) =>
+    private static IEnumerable<int> EmptySpaceCols(IReadOnlyList<string> universe) =>
         Enumerable.Range(0, universe[0].Length)
             .Where(col => universe.All(x => x[col] is '.'))
             .Select(col => col);
+
     private readonly record struct Galaxy(int Row, int Col);
 }

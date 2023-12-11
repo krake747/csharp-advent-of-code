@@ -36,15 +36,15 @@ public sealed class Day11Tests : IAocDayTest<long>
         // Assert
         result.Should().Be(expected);
     }
-    
+
     [Theory]
     [MemberData(nameof(Part2Data))]
-    [Description("<insert question 2 here>")]
+    [Description("What is the sum of these lengths?")]
     public void Part2(AocInput input, long expected)
     {
         // Act
         var result = Day11.Part2(input);
-    
+
         // Assert
         result.Should().Be(expected);
     }
