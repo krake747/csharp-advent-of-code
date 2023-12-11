@@ -8,8 +8,8 @@ public sealed class Day11 : IAocDay<long>
     public static long Part1(AocInput input)
     {
         var galaxies = ParseGalaxies(input.AllLines).ToArray();
-        var emptyRows = EmptySpaceRows(input.AllLines);
-        var emptyCols = EmptySpaceCols(input.AllLines);
+        var emptyRows = EmptySpaceRows(input.AllLines).ToArray();
+        var emptyCols = EmptySpaceCols(input.AllLines).ToArray();
         return galaxies
             .SelectMany(_ => galaxies, (g1, g2) => (G1: g1, G2: g2))
             .Sum(galaxyPair =>
@@ -25,8 +25,8 @@ public sealed class Day11 : IAocDay<long>
     public static long Part2(AocInput input)
     {
         var galaxies = ParseGalaxies(input.AllLines).ToArray();
-        var emptyRows = EmptySpaceRows(input.AllLines);
-        var emptyCols = EmptySpaceCols(input.AllLines);
+        var emptyRows = EmptySpaceRows(input.AllLines).ToArray();
+        var emptyCols = EmptySpaceCols(input.AllLines).ToArray();
         return galaxies
             .SelectMany(_ => galaxies, (g1, g2) => (G1: g1, G2: g2))
             .Sum(galaxyPair =>
