@@ -15,8 +15,8 @@ public sealed class Day11 : IAocDay<long>
             .Sum(galaxyPair =>
             {
                 var ((row1, col1), (row2, col2)) = galaxyPair;
-                var distRow = Distance(emptyRows, 1, row1, row2);
-                var distCol = Distance(emptyCols, 1, col1, col2);
+                var distRow = SpaceDistance(emptyRows, 1, row1, row2);
+                var distCol = SpaceDistance(emptyCols, 1, col1, col2);
                 return distRow + distCol;
             })
             .Pipe(sum => sum / 2L);
@@ -32,14 +32,14 @@ public sealed class Day11 : IAocDay<long>
             .Sum(galaxyPair =>
             {
                 var ((row1, col1), (row2, col2)) = galaxyPair;
-                var distRow = Distance(emptyRows, 999999, row1, row2);
-                var distCol = Distance(emptyCols, 999999, col1, col2);
+                var distRow = SpaceDistance(emptyRows, 999999, row1, row2);
+                var distCol = SpaceDistance(emptyCols, 999999, col1, col2);
                 return distRow + distCol;
             })
             .Pipe(sum => sum / 2L);
     }
     
-    private static long Distance(IEnumerable<int> emptySpaces, int expansion, int p1, int p2)
+    private static long SpaceDistance(IEnumerable<int> emptySpaces, int expansion, int p1, int p2)
     {
         var start = Math.Min(p1, p2);
         var distance = Math.Abs(p1 - p2);
