@@ -5,6 +5,10 @@ namespace AdventOfCode.Y2020;
 
 public sealed partial class Day04 : IAocDay<int>
 {
+    private static readonly char[] Separators = [' ', '\n'];
+
+    private static readonly string[] SourceArray = ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"];
+
     public static int Part1(AocInput input) =>
         CreatePassports(input.Text)
             .Count(passport => AreAllKeysPresent(passport) || OptionalCountryId(passport));
@@ -21,7 +25,7 @@ public sealed partial class Day04 : IAocDay<int>
         IsValidHairColor(passport) &&
         IsValidEyeColor(passport) &&
         IsValidPassportId(passport);
-    
+
     private static IEnumerable<Dictionary<string, string>> CreatePassports(string input) =>
         input.Split("\n\n")
             .Select(str => str
@@ -29,7 +33,7 @@ public sealed partial class Day04 : IAocDay<int>
                 .Select(s => s.Split(':'))
                 .ToDictionary(k => k[0], v => v[^1]));
 
-    private static bool AreAllKeysPresent(IDictionary<string, string> passport) => 
+    private static bool AreAllKeysPresent(IDictionary<string, string> passport) =>
         passport.Keys.Count >= 8;
 
     private static bool OptionalCountryId(IDictionary<string, string> passport) =>
@@ -58,22 +62,18 @@ public sealed partial class Day04 : IAocDay<int>
     private static bool IsValidHairColor(IReadOnlyDictionary<string, string> passport) =>
         passport.TryGetValue("hcl", out var result) && HairColorRegex().IsMatch(result);
 
-    private static bool IsValidEyeColor(IReadOnlyDictionary<string, string> passport) => 
+    private static bool IsValidEyeColor(IReadOnlyDictionary<string, string> passport) =>
         passport.TryGetValue("ecl", out var result) && SourceArray.Contains(result);
 
     private static bool IsValidPassportId(IReadOnlyDictionary<string, string> passport) =>
         passport.TryGetValue("pid", out var result) && PassportIdRegex().IsMatch(result);
-    
-    private static readonly char[] Separators = [' ', '\n'];
-    
-    private static readonly string[] SourceArray = ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"];
-    
+
     [GeneratedRegex(@"(\d*)(cm|in)")]
     private static partial Regex HeightRegex();
-    
+
     [GeneratedRegex(@"^[0-9]{9}$")]
     private static partial Regex PassportIdRegex();
-    
+
     [GeneratedRegex(@"#([0-9a-f]){6}$")]
     private static partial Regex HairColorRegex();
 }

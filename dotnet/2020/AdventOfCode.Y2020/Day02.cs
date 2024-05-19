@@ -4,6 +4,8 @@ namespace AdventOfCode.Y2020;
 
 public sealed class Day02 : IAocDay<int>
 {
+    private static readonly string[] Separators = ["-", " ", ": "];
+
     public static int Part1(AocInput input) => input.Lines
         .Select(ParseLine)
         .Select(CreatePasswordPolicy)
@@ -13,8 +15,8 @@ public sealed class Day02 : IAocDay<int>
         .Select(ParseLine)
         .Select(CreatePasswordPolicy)
         .Count(IsNewPasswordPolicyValid);
-    
-    private static IEnumerable<string> ParseLine(string line) => 
+
+    private static IEnumerable<string> ParseLine(string line) =>
         line.Split(Separators, StringSplitOptions.TrimEntries);
 
     private static PasswordPolicy CreatePasswordPolicy(IEnumerable<string> segments)
@@ -36,8 +38,6 @@ public sealed class Day02 : IAocDay<int>
         return new[] { firstElement, secondElement }
             .Count(m => m == passwordPolicy.Letter) is 1;
     }
-
-    private static readonly string[] Separators = ["-", " ", ": "];
 
     private sealed record PasswordPolicy(int Min, int Max, char Letter, string Password);
 }

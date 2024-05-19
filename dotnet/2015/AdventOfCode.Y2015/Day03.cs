@@ -18,7 +18,7 @@ public sealed class Day03 : IAocDay<int>
 
     public static int Part2(AocInput input) => input.Text
         .Select((x, i) => (Direction: x, Index: i))
-        .Aggregate((List<List<Points>>)[[new Points(0, 0)], [new Points(0, 0)]], (visited, x) =>
+        .Aggregate((List<List<Points>>) [[new Points(0, 0)], [new Points(0, 0)]], (visited, x) =>
         {
             var isSanta = x.Index % 2 == 0 ? 0 : 1;
             var currentHouse = visited[isSanta][^1];

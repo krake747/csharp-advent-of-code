@@ -5,7 +5,7 @@ namespace AdventOfCode.Y2023;
 [AocPuzzle(2023, 15, "Lens Library")]
 public sealed class Day15 : IAocDay<int>
 {
-    public static int Part1(AocInput input) => 
+    public static int Part1(AocInput input) =>
         input.Text.Split(',').Sum(Hash);
 
     public static int Part2(AocInput input) => 0;

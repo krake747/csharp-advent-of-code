@@ -5,6 +5,8 @@ namespace AdventOfCode.Y2022;
 
 public sealed partial class Day05 : IAocDay<string>
 {
+    private static readonly char[] Edges = [' ', '[', ']'];
+
     public static string Part1(AocInput input)
     {
         var rearrangementPlan = CreateRearrangementPlan(input.Lines);
@@ -30,8 +32,6 @@ public sealed partial class Day05 : IAocDay<string>
         return new RearrangementPlan(containerStacks, rearrangements);
     }
 
-    private static readonly char[] Edges = [' ', '[', ']'];
-
     private static Stack<char>[] CreateContainerStacks(IEnumerable<string> cargoShip)
     {
         var chunks = cargoShip.Select(stack => stack.Chunk(4))
@@ -56,9 +56,9 @@ public sealed partial class Day05 : IAocDay<string>
                 {
                     stacks[index].Push(item);
                 }
-            }  
+            }
         }
-        
+
         return stacks;
     }
 
@@ -99,10 +99,10 @@ public sealed partial class Day05 : IAocDay<string>
         CrateMover9000(move, temp, to);
     }
 
+    [GeneratedRegex(@"move (\d*) from (\d*) to (\d*)")]
+    private static partial Regex InstructionRegex();
+
     private sealed record RearrangementPlan(IEnumerable<Stack<char>> InitialStacks, IEnumerable<Move> Instructions);
 
     private readonly record struct Move(int Amount, int From, int To);
-
-    [GeneratedRegex(@"move (\d*) from (\d*) to (\d*)")]
-    private static partial Regex InstructionRegex();
 }

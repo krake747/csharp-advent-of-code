@@ -178,6 +178,9 @@ public static partial class Day5
         return grid.Cast<int>().Count(cell => cell > minOverlap);
     }
 
+    [GeneratedRegex(@"(\d+)")]
+    private static partial Regex DigitsRegex();
+
     // private static void TraceGrid(int[,] grid)
     // {
     //     var rowLength = grid.GetLength(0);
@@ -198,7 +201,4 @@ public static partial class Day5
     private record struct Line(int X1, int Y1, int X2, int Y2);
 
     private record struct Coordinate(int X, int Y);
-
-    [GeneratedRegex(@"(\d+)")]
-    private static partial Regex DigitsRegex();
 }

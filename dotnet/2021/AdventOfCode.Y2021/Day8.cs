@@ -38,7 +38,7 @@ public static class Day8
         // ab      -> 1
 
         var codes = codesStream.ToArray();
-        
+
         // 4 unique codes 1, 4, 7, 8 are determined by their length.
         var one = codes.Single(c => c.Length == 2);
         var four = codes.Single(c => c.Length == 4);

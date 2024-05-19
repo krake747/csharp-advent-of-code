@@ -23,7 +23,7 @@ public sealed class Day06 : IAocDay<int>
 internal static class Day04Extensions
 {
     internal static ImmutableHashSet<char> ToWhichYesWasAnsweredBy(this IEnumerable<string> source,
-        Func<ImmutableHashSet<char>, string, ImmutableHashSet<char>> func) => 
+        Func<ImmutableHashSet<char>, string, ImmutableHashSet<char>> func) =>
         source.ToArray()
             .Pipe(answers => answers.Skip(1)
                 .Aggregate(ImmutableHashSet.Create(answers[0].ToCharArray()), func));

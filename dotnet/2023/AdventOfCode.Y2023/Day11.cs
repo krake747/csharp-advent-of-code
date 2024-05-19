@@ -38,7 +38,7 @@ public sealed class Day11 : IAocDay<long>
             })
             .Pipe(sum => sum / 2L);
     }
-    
+
     private static long SpaceDistance(IEnumerable<int> emptySpaces, int expansion, int p1, int p2)
     {
         var start = Math.Min(p1, p2);
@@ -62,7 +62,7 @@ public sealed class Day11 : IAocDay<long>
             }
         }
     }
-    
+
     private static int[] EmptySpaceRows(IReadOnlyList<string> universe) =>
         Enumerable.Range(0, universe.Count)
             .Where(row => universe[row].All(x => x is '.'))

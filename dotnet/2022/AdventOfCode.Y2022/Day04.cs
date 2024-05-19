@@ -4,6 +4,8 @@ namespace AdventOfCode.Y2022;
 
 public sealed class Day04 : IAocDay<int>
 {
+    private static readonly char[] Separators = [',', '-'];
+
     public static int Part1(AocInput input)
     {
         return input.Lines.Select(CreateAssignedSections)
@@ -17,8 +19,6 @@ public sealed class Day04 : IAocDay<int>
             .Select(sections => sections.Chunk(2))
             .Count(sectionsRanges => SectionsRanges(sectionsRanges, AreBoundsOverlapping));
     }
-    
-    private static readonly char[] Separators = [',', '-']; 
 
     private static IEnumerable<int> CreateAssignedSections(string pairOfElves) =>
         pairOfElves.Split(Separators).Select(int.Parse);
@@ -40,7 +40,7 @@ public sealed class Day04 : IAocDay<int>
 
 internal readonly record struct Bounds(int Lower, int Upper)
 {
-    internal static Bounds Create(IEnumerable<int> stream) => 
+    internal static Bounds Create(IEnumerable<int> stream) =>
         stream.Order().ToArray().Pipe(array => new Bounds(array[0], array[^1]));
 }
 

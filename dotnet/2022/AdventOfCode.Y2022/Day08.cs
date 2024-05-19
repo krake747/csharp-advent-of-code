@@ -30,7 +30,7 @@ public sealed class Day08 : IAocDay<int>
                 forest[row, col] = map[row][col];
             }
         }
-        
+
         var treeGrid = new int[rows, cols];
         for (var row = 0; row < treeGrid.GetLength(0); row++)
         {
@@ -39,7 +39,7 @@ public sealed class Day08 : IAocDay<int>
                 treeGrid[row, col] = func(forest, row, col);
             }
         }
-        
+
         return treeGrid;
     }
 
@@ -52,7 +52,7 @@ public sealed class Day08 : IAocDay<int>
         var cols = forest.GetLength(1);
         return OnBorder(row, rows) || OnBorder(col, cols);
 
-        static bool OnBorder(int value, int limit) => 
+        static bool OnBorder(int value, int limit) =>
             value == Math.Min(value, 0) || value + 1 >= Math.Max(value + 1, limit);
     }
 

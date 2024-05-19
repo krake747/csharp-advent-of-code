@@ -12,6 +12,8 @@ public sealed class Day12 : IAocDay<int>
         return 0;
     }
 
+    public static int Part2(AocInput input) => 0;
+
     private static int PossibleArrangements(Spring spring)
     {
         var valid = new Dictionary<string, int>();
@@ -26,8 +28,6 @@ public sealed class Day12 : IAocDay<int>
             var brokenSprings = data[^1].Split(',').Select(int.Parse).ToArray();
             return new Spring(row, brokenSprings);
         });
-
-    public static int Part2(AocInput input) => 0;
 
     private sealed record Spring(string Row, int[] BrokenSprings);
 }

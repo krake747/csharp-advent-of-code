@@ -159,7 +159,7 @@ module Fay06 =
 module Fay07 =
 
     type Hand = { Cards: string; Bid: int }
-        
+
     let groupCards (cards: string) = cards |> Seq.toList |> List.groupBy id
 
     let countCards v = fun x -> snd x |> List.length = v
@@ -198,7 +198,7 @@ module Fay07 =
         | _ when onePair cards -> 1
         | _ when highCard cards -> 0
         | _ -> failwith "Expressions should have been exhaustive"
-    
+
     let labelStrength (c: char) =
         match c with
         | 'A' -> 14
@@ -207,15 +207,15 @@ module Fay07 =
         | 'J' -> 11
         | 'T' -> 10
         | _ -> int $"{c}"
-    
+
     let labelStrengthWithJoker (c: char) =
         labelStrength (if c = 'J' then '1' else c)
-    
+
     let parseHands (lines: string list) =
         lines
         |> List.map (fun x -> x.Split ' ' |> Array.toList)
         |> List.map (fun x -> { Cards = List.head x; Bid = int (List.last x) })
-        
+
     let handComparer (strengthFunc: char -> int) (h1: Hand) (h2: Hand) =
         if h1 = h2 then
             0
@@ -224,16 +224,16 @@ module Fay07 =
             |> List.map (fun x -> {| L = strengthFunc (fst x); R = strengthFunc (snd x) |})
             |> List.find (fun x -> x.L > x.R || x.R > x.L)
             |> (fun x -> x.L.CompareTo(x.R))
-       
-    
+
+
     // No equivalent of c# order by, then by methods -> sorting difficult due to immutable lists
     // Not sure how to solve yet
     let part1 (input: AocInput) =
-        parseHands (input.Lines |> Seq.toList) 
-            |> List.sortBy (fun hand -> handStrength hand.Cards) 
-            |> List.sortWith (handComparer labelStrength)
-            |> List.mapi (fun i h -> h.Bid * (i + 1))
-            |> List.sum
+        parseHands (input.Lines |> Seq.toList)
+        |> List.sortBy (fun hand -> handStrength hand.Cards)
+        |> List.sortWith (handComparer labelStrength)
+        |> List.mapi (fun i h -> h.Bid * (i + 1))
+        |> List.sum
 
     let part2 (input: AocInput) = 0
 

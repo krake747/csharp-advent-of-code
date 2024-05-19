@@ -35,7 +35,8 @@ public sealed class Day10Tests : IAocDayTest<int>
 
     [Theory]
     [MemberData(nameof(Part1Data))]
-    [Description("How many steps along the loop does it take to get from the starting position to the point farthest from the starting position?")]
+    [Description(
+        "How many steps along the loop does it take to get from the starting position to the point farthest from the starting position?")]
     public void Part1(AocInput input, int expected)
     {
         // Act

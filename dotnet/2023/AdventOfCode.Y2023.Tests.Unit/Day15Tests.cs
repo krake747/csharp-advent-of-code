@@ -36,7 +36,7 @@ public sealed class Day15Tests : IAocDayTest<int>
         // Assert
         result.Should().Be(expected);
     }
-    
+
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("<insert question 2 here>")]
@@ -44,7 +44,7 @@ public sealed class Day15Tests : IAocDayTest<int>
     {
         // Act
         var result = Day15.Part2(input);
-    
+
         // Assert
         result.Should().Be(expected);
     }

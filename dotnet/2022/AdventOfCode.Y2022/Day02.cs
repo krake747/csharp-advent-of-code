@@ -4,6 +4,13 @@ namespace AdventOfCode.Y2022;
 
 public sealed class Day02 : IAocDay<int>
 {
+    private static readonly Dictionary<Shape, Shape> LosesTo = new()
+    {
+        { Shape.Paper, Shape.Rock },
+        { Shape.Rock, Shape.Scissors },
+        { Shape.Scissors, Shape.Paper }
+    };
+
     public static int Part1(AocInput input) => input.Lines
         .Select(code => Decrypt(code, ParseShape))
         .Sum(Score);
@@ -12,7 +19,7 @@ public sealed class Day02 : IAocDay<int>
         .Select(code => Decrypt(code, ParseShape, ParseOutcome, DesiredOutcome))
         .Sum(Score);
 
-    private static (T, T) Decrypt<T>(string code, Func<char, T> decrypter) => 
+    private static (T, T) Decrypt<T>(string code, Func<char, T> decrypter) =>
         (decrypter(code[0]), decrypter(code[^1]));
 
     private static (TL, TR) Decrypt<TL, TO, TR>(string code, Func<char, TL> leftParser, Func<char, TO> rightParser,
@@ -38,20 +45,13 @@ public sealed class Day02 : IAocDay<int>
         'Z' => Result.Win,
         _ => throw new ArgumentOutOfRangeException(nameof(c), "Matching pattern is not defined")
     };
-    
-    
+
+
     private static Shape DesiredOutcome(Shape leftShape, Result rightOutcome) => rightOutcome switch
     {
         Result.Draw => leftShape,
         Result.Lose => LosesTo[leftShape],
         _ => LosesTo.First(shape => shape.Value == leftShape).Key
-    };
-    
-    private static readonly Dictionary<Shape, Shape> LosesTo = new()
-    {
-        { Shape.Paper, Shape.Rock },
-        { Shape.Rock, Shape.Scissors },
-        { Shape.Scissors, Shape.Paper }
     };
 
     private static int Score((Shape, Shape) shapes)
