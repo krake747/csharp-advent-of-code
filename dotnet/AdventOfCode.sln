@@ -28,11 +28,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2015", "2015", "{4D241D2B-1
 		2015\README.md = 2015\README.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{7A798DE7-4CAB-478C-98BE-6C3B4F89E327}"
-	ProjectSection(SolutionItems) = preProject
-		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2016", "2016", "{F2C6ABE0-9159-41C4-9BDF-01809B8003A2}"
 	ProjectSection(SolutionItems) = preProject
 		2016\README.md = 2016\README.md
