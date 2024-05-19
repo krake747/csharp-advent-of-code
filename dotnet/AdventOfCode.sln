@@ -47,35 +47,35 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode.Cli", "AdventO
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode.Lib", "AdventOfCode.Lib\AdventOfCode.Lib.csproj", "{FA139C9E-9F9F-47E9-907E-E4465793C0EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode2015", "2015\AdventOfCode2015\AdventOfCode2015.csproj", "{5367EC90-0802-4ACE-B449-D4CE7EF72FFC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode.Y2015", "2015\AdventOfCode.Y2015\AdventOfCode.Y2015.csproj", "{5367EC90-0802-4ACE-B449-D4CE7EF72FFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode2015.Tests.Unit", "2015\AdventOfCode2015.Tests.Unit\AdventOfCode2015.Tests.Unit.csproj", "{7067BE00-F785-4DA0-ACF3-8D4E7885D1DE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode.Y2015.Tests.Unit", "2015\AdventOfCode.Y2015.Tests.Unit\AdventOfCode.Y2015.Tests.Unit.csproj", "{7067BE00-F785-4DA0-ACF3-8D4E7885D1DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode2016", "2016\AdventOfCode2016\AdventOfCode2016.csproj", "{15AC1527-750B-4FF7-9D81-A07147663F4D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode.Y2016", "2016\AdventOfCode.Y2016\AdventOfCode.Y2016.csproj", "{15AC1527-750B-4FF7-9D81-A07147663F4D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode2016.Tests.Unit", "2016\AdventOfCode2016.Tests.Unit\AdventOfCode2016.Tests.Unit.csproj", "{5CE570A9-B6C6-4892-B141-E576DE05BD40}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode.Y2016.Tests.Unit", "2016\AdventOfCode.Y2016.Tests.Unit\AdventOfCode.Y2016.Tests.Unit.csproj", "{5CE570A9-B6C6-4892-B141-E576DE05BD40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode2019", "2019\AdventOfCode2019\AdventOfCode2019.csproj", "{D99B8759-D717-4F67-800C-92395830BB93}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode.Y2019", "2019\AdventOfCode.Y2019\AdventOfCode.Y2019.csproj", "{D99B8759-D717-4F67-800C-92395830BB93}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode2019.Tests.Unit", "2019\AdventOfCode2019.Tests.Unit\AdventOfCode2019.Tests.Unit.csproj", "{0FE747CF-3F46-45B0-ACAC-17F1D70EE6DE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode.Y2019.Tests.Unit", "2019\AdventOfCode.Y2019.Tests.Unit\AdventOfCode.Y2019.Tests.Unit.csproj", "{0FE747CF-3F46-45B0-ACAC-17F1D70EE6DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode2020", "2020\AdventOfCode2020\AdventOfCode2020.csproj", "{DBA58028-2FCF-4F41-9BE0-0EE8F8A6787D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode.Y2020", "2020\AdventOfCode.Y2020\AdventOfCode.Y2020.csproj", "{DBA58028-2FCF-4F41-9BE0-0EE8F8A6787D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode2020.Tests.Unit", "2020\AdventOfCode2020.Tests.Unit\AdventOfCode2020.Tests.Unit.csproj", "{D9B5EA07-48F0-4F71-B9E5-5C7E7C87BF2C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode.Y2020.Tests.Unit", "2020\AdventOfCode.Y2020.Tests.Unit\AdventOfCode.Y2020.Tests.Unit.csproj", "{D9B5EA07-48F0-4F71-B9E5-5C7E7C87BF2C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode2021", "2021\AdventOfCode2021\AdventOfCode2021.csproj", "{35343404-9BDA-4E6C-9DF8-BC2E7DCA7BFE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode.Y2021", "2021\AdventOfCode.Y2021\AdventOfCode.Y2021.csproj", "{35343404-9BDA-4E6C-9DF8-BC2E7DCA7BFE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode2021.Tests.Unit", "2021\AdventOfCode2021.Tests.Unit\AdventOfCode2021.Tests.Unit.csproj", "{8A9D8039-EC52-4CB3-9943-C7CEF88C3CDA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode.Y2021.Tests.Unit", "2021\AdventOfCode.Y2021.Tests.Unit\AdventOfCode.Y2021.Tests.Unit.csproj", "{8A9D8039-EC52-4CB3-9943-C7CEF88C3CDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode2022", "2022\AdventOfCode2022\AdventOfCode2022.csproj", "{33476808-6D4D-42BC-9FFA-D8D67C0F778F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode.Y2022", "2022\AdventOfCode.Y2022\AdventOfCode.Y2022.csproj", "{33476808-6D4D-42BC-9FFA-D8D67C0F778F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode2022.Tests.Unit", "2022\AdventOfCode2022.Tests.Unit\AdventOfCode2022.Tests.Unit.csproj", "{C52DAA1E-5703-4F79-804F-91F830C09D20}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode.Y2022.Tests.Unit", "2022\AdventOfCode.Y2022.Tests.Unit\AdventOfCode.Y2022.Tests.Unit.csproj", "{C52DAA1E-5703-4F79-804F-91F830C09D20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode2023", "2023\AdventOfCode2023\AdventOfCode2023.csproj", "{D3BECBF1-EC62-4A38-A051-64E33B5428FD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode.Y2023", "2023\AdventOfCode.Y2023\AdventOfCode.Y2023.csproj", "{D3BECBF1-EC62-4A38-A051-64E33B5428FD}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "AdventOfCode2023.FSharp", "2023\AdventOfCode2023.FSharp\AdventOfCode2023.FSharp.fsproj", "{950062DF-2E4E-4190-9D34-41CF680A0328}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "AdventOfCode.Y2023.FSharp", "2023\AdventOfCode.Y2023.FSharp\AdventOfCode.Y2023.FSharp.fsproj", "{950062DF-2E4E-4190-9D34-41CF680A0328}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode2023.Tests.Unit", "2023\AdventOfCode2023.Tests.Unit\AdventOfCode2023.Tests.Unit.csproj", "{1F4BEE1D-9CAA-48AF-A7E5-36FE8B75C59F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode.Y2023.Tests.Unit", "2023\AdventOfCode.Y2023.Tests.Unit\AdventOfCode.Y2023.Tests.Unit.csproj", "{1F4BEE1D-9CAA-48AF-A7E5-36FE8B75C59F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
