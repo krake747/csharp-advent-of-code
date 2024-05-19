@@ -3,10 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode.Lib", "lib\AdventOfCode.Lib\AdventOfCode.Lib.csproj", "{EF9B4393-4339-4E16-8A75-7CF8A3E27EF7}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode.Cli", "lib\AdventOfCode.Cli\AdventOfCode.Cli.csproj", "{F4FB71F9-678B-4CE4-A254-F341EA2ADCC5}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2020", "2020", "{D990BB12-ED36-48CF-8C25-5BE5787F6E75}"
 	ProjectSection(SolutionItems) = preProject
 		src\2020\README.md = src\2020\README.md
@@ -44,6 +40,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode2019.Tests.Unit", "tests\2019\AdventOfCode2019.Tests.Unit\AdventOfCode2019.Tests.Unit.csproj", "{28B52777-43FC-4881-B855-D40B55EF0642}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2015", "2015", "{4D241D2B-13E3-44FE-9B15-B351C3FA64ED}"
+	ProjectSection(SolutionItems) = preProject
+		2015\README.md = 2015\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{7A798DE7-4CAB-478C-98BE-6C3B4F89E327}"
 	ProjectSection(SolutionItems) = preProject
@@ -67,20 +66,20 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "AdventOfCode2023.FSharp", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode2023.Tests.Unit", "tests\2023\AdventOfCode2023.Tests.Unit\AdventOfCode2023.Tests.Unit.csproj", "{C7391906-77A6-4CFA-9E5B-86C605DB7949}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode.Cli", "AdventOfCode.Cli\AdventOfCode.Cli.csproj", "{A2F96099-5201-4ADD-9A08-3D1E704C77D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode.Lib", "AdventOfCode.Lib\AdventOfCode.Lib.csproj", "{FA139C9E-9F9F-47E9-907E-E4465793C0EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode2015", "2015\AdventOfCode2015\AdventOfCode2015.csproj", "{5367EC90-0802-4ACE-B449-D4CE7EF72FFC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode2015.Tests.Unit", "2015\AdventOfCode2015.Tests.Unit\AdventOfCode2015.Tests.Unit.csproj", "{7067BE00-F785-4DA0-ACF3-8D4E7885D1DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{EF9B4393-4339-4E16-8A75-7CF8A3E27EF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EF9B4393-4339-4E16-8A75-7CF8A3E27EF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EF9B4393-4339-4E16-8A75-7CF8A3E27EF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EF9B4393-4339-4E16-8A75-7CF8A3E27EF7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F4FB71F9-678B-4CE4-A254-F341EA2ADCC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F4FB71F9-678B-4CE4-A254-F341EA2ADCC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F4FB71F9-678B-4CE4-A254-F341EA2ADCC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F4FB71F9-678B-4CE4-A254-F341EA2ADCC5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{74CFE68E-1CA1-4C75-841B-B11E1BBDA7A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{74CFE68E-1CA1-4C75-841B-B11E1BBDA7A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74CFE68E-1CA1-4C75-841B-B11E1BBDA7A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -133,6 +132,22 @@ Global
 		{C7391906-77A6-4CFA-9E5B-86C605DB7949}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C7391906-77A6-4CFA-9E5B-86C605DB7949}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C7391906-77A6-4CFA-9E5B-86C605DB7949}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2F96099-5201-4ADD-9A08-3D1E704C77D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2F96099-5201-4ADD-9A08-3D1E704C77D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2F96099-5201-4ADD-9A08-3D1E704C77D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2F96099-5201-4ADD-9A08-3D1E704C77D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA139C9E-9F9F-47E9-907E-E4465793C0EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA139C9E-9F9F-47E9-907E-E4465793C0EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA139C9E-9F9F-47E9-907E-E4465793C0EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA139C9E-9F9F-47E9-907E-E4465793C0EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5367EC90-0802-4ACE-B449-D4CE7EF72FFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5367EC90-0802-4ACE-B449-D4CE7EF72FFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5367EC90-0802-4ACE-B449-D4CE7EF72FFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5367EC90-0802-4ACE-B449-D4CE7EF72FFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7067BE00-F785-4DA0-ACF3-8D4E7885D1DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7067BE00-F785-4DA0-ACF3-8D4E7885D1DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7067BE00-F785-4DA0-ACF3-8D4E7885D1DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7067BE00-F785-4DA0-ACF3-8D4E7885D1DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -151,6 +166,8 @@ Global
 		{39BDB7C5-BF3E-4C54-9B55-21545017A25D} = {79571A7E-73FE-41C8-A48F-CF0C480550E7}
 		{A75C4E57-9F57-4BC1-967C-E7DAE7CEB7CA} = {A8D2572F-66D5-4236-9867-43CE8661C552}
 		{C7391906-77A6-4CFA-9E5B-86C605DB7949} = {C7E364B3-3BB0-4A9C-82EF-746A14094A5E}
+		{5367EC90-0802-4ACE-B449-D4CE7EF72FFC} = {4D241D2B-13E3-44FE-9B15-B351C3FA64ED}
+		{7067BE00-F785-4DA0-ACF3-8D4E7885D1DE} = {4D241D2B-13E3-44FE-9B15-B351C3FA64ED}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {662EBAE1-BFBB-4961-A415-16514843317D}
