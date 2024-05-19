@@ -1,4 +1,4 @@
-﻿namespace AdventOfCodeLib;
+﻿namespace AdventOfCode.Lib;
 
 internal readonly record struct Coordinates(int X, int Y)
 {

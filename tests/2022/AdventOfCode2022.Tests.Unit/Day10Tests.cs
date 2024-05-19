@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
-using AdventOfCodeLib;
+using AdventOfCode.Lib;
 using Xunit.Abstractions;
-using static AdventOfCodeLib.AocFileReaderService;
+using static AdventOfCode.Lib.AocFileReaderService;
 
 namespace AdventOfCode2022.Tests.Unit;
 

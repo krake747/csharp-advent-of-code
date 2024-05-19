@@ -1,4 +1,4 @@
-using AdventOfCodeLib;
+using AdventOfCode.Lib;
 
 namespace AdventOfCode2015;
 #pragma warning disable CS8602

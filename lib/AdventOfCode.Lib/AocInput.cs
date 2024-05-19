@@ -1,4 +1,4 @@
-﻿namespace AdventOfCodeLib;
+﻿namespace AdventOfCode.Lib;
 
 public sealed class AocInput
 {

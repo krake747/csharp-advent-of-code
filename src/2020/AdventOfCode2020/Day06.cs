@@ -1,5 +1,5 @@
 ﻿using System.Collections.Immutable;
-using AdventOfCodeLib;
+using AdventOfCode.Lib;
 
 namespace AdventOfCode2020;
 

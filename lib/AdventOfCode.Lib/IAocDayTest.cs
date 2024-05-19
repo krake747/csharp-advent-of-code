@@ -1,4 +1,4 @@
-﻿namespace AdventOfCodeLib;
+﻿namespace AdventOfCode.Lib;
 
 public interface IAocDayTest<in TResult>
 {

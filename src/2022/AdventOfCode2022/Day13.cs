@@ -1,7 +1,7 @@
 ﻿using System.Collections.Immutable;
 using System.Text.Json;
 using System.Text.Json.Nodes;
-using AdventOfCodeLib;
+using AdventOfCode.Lib;
 
 namespace AdventOfCode2022;
 

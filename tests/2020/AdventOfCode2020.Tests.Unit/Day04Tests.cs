@@ -1,6 +1,6 @@
 using System.ComponentModel;
-using AdventOfCodeLib;
-using static AdventOfCodeLib.AocFileReaderService;
+using AdventOfCode.Lib;
+using static AdventOfCode.Lib.AocFileReaderService;
 
 namespace AdventOfCode2020.Tests.Unit;
 

@@ -1,5 +1,5 @@
 using System.Text.RegularExpressions;
-using AdventOfCodeLib;
+using AdventOfCode.Lib;
 using Coordinates = (int Row, int Col);
 
 namespace AdventOfCode2023;

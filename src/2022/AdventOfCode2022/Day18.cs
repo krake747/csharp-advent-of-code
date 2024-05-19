@@ -1,4 +1,4 @@
-﻿using AdventOfCodeLib;
+﻿using AdventOfCode.Lib;
 
 namespace AdventOfCode2022;
 

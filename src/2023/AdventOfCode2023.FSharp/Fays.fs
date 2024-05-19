@@ -1,10 +1,7 @@
 ﻿namespace AdventOfCode2023.FSharp
 
-open System
-open System.Collections.Generic
-open System.Linq
 open System.Text.RegularExpressions
-open AdventOfCodeLib
+open AdventOfCode.Lib
 
 module Fays =
     let calibration (mc: MatchCollection) =

@@ -1,8 +1,8 @@
 using System.ComponentModel;
-using AdventOfCodeLib;
+using AdventOfCode.Lib;
 using FluentAssertions;
 using FluentAssertions.Execution;
-using static AdventOfCodeLib.AocFileReaderService;
+using static AdventOfCode.Lib.AocFileReaderService;
 
 namespace AdventOfCode2023.Tests.Unit;
 

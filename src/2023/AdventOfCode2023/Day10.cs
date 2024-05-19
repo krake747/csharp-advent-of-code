@@ -1,5 +1,5 @@
 using System.Numerics;
-using AdventOfCodeLib;
+using AdventOfCode.Lib;
 using static AdventOfCode2023.Day10;
 
 namespace AdventOfCode2023;

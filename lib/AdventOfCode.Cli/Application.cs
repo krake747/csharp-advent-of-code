@@ -1,10 +1,10 @@
 ﻿using System.Text.RegularExpressions;
-using AdventOfCodeLib;
+using AdventOfCode.Lib;
 using Microsoft.Extensions.Configuration;
 using Serilog;
 using TextCopy;
 
-namespace AdventOfCodeCli;
+namespace AdventOfCode.Cli;
 
 public sealed partial class Application(
     IConfiguration config,
@@ -143,7 +143,7 @@ public sealed partial class Application(
     {
         var aocTemplate =
             $$"""
-              using AdventOfCodeLib;
+              using AdventOfCode.Lib;
 
               namespace AdventOfCode{{aocYear}};
 
@@ -165,9 +165,9 @@ public sealed partial class Application(
         var aocTestTemplate =
             $$"""
               using System.ComponentModel;
-              using AdventOfCodeLib;
+              using AdventOfCode.Lib;
               using FluentAssertions;
-              using static AdventOfCodeLib.AocFileReaderService;
+              using static AdventOfCode.Lib.AocFileReaderService;
 
               namespace AdventOfCode{{aocYear}}.Tests.Unit;
 

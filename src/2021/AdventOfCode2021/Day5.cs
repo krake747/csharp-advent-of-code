@@ -1,5 +1,5 @@
 ﻿using System.Text.RegularExpressions;
-using static AdventOfCodeLib.EnumerableRange;
+using static AdventOfCode.Lib.EnumerableRange;
 
 namespace AdventOfCode2021;
 

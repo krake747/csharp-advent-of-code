@@ -1,7 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Security.Cryptography;
 using System.Text;
-using AdventOfCodeLib;
+using AdventOfCode.Lib;
 
 namespace AdventOfCode2015;
 

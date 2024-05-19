@@ -1,4 +1,4 @@
-﻿namespace AdventOfCodeLib;
+﻿namespace AdventOfCode.Lib;
 
 public static class EnumerableRange
 {

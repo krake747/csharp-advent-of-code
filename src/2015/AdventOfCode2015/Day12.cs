@@ -1,6 +1,6 @@
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
-using AdventOfCodeLib;
+using AdventOfCode.Lib;
 
 namespace AdventOfCode2015;
 

@@ -1,4 +1,4 @@
-﻿using AdventOfCodeCli;
+﻿using AdventOfCode.Cli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;

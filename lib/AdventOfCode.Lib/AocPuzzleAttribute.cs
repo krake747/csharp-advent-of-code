@@ -1,4 +1,4 @@
-﻿namespace AdventOfCodeLib;
+﻿namespace AdventOfCode.Lib;
 
 [AttributeUsage(AttributeTargets.Class)]
 public sealed class AocPuzzleAttribute(int year, int day, string name, string lang = "C#") : Attribute

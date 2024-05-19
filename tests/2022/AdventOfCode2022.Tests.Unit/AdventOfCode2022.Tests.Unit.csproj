@@ -23,7 +23,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\..\lib\AdventOfCodeLib\AdventOfCodeLib.csproj"/>
+        <ProjectReference Include="..\..\..\lib\AdventOfCode.Lib\AdventOfCode.Lib.csproj" />
         <ProjectReference Include="..\..\..\src\2022\AdventOfCode2022\AdventOfCode2022.csproj"/>
     </ItemGroup>
 

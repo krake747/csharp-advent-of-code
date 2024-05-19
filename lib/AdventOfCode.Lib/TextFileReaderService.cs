@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
 
-namespace AdventOfCodeLib;
+namespace AdventOfCode.Lib;
 
 public static partial class AocFileReaderService
 {
