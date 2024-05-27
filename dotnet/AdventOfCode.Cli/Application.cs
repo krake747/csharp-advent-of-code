@@ -38,7 +38,7 @@ public sealed partial class Application(
 
         // Create Aoc Day X file
         var srcDirectory = config["Directories:src"]!;
-        var aocFilePath = $@"{srcDirectory}\{aocYear}\AdventOfCode{aocYear}"
+        var aocFilePath = $@"{srcDirectory}\{aocYear}\AdventOfCode.Y{aocYear}"
             .Pipe(Path.GetFullPath)
             .Pipe(CreateDirectory)
             .Pipe(aocDir => Path.Combine(aocDir.FullName, CreateAocDayFileName(day)));
@@ -46,8 +46,7 @@ public sealed partial class Application(
         await CreateAocDayClassFileAsync(aocFilePath, title, aocYear, aocDay, day);
 
         // Create Aoc Day X test file
-        var testsDirectory = config["Directories:tests"]!;
-        var acoTestFilePath = $@"{testsDirectory}\{aocYear}\AdventOfCode{aocYear}.Tests.Unit"
+        var acoTestFilePath = $@"{srcDirectory}\{aocYear}\AdventOfCode.Y{aocYear}.Tests.Unit"
             .Pipe(Path.GetFullPath)
             .Pipe(CreateDirectory)
             .Pipe(aocTestDir => Path.Combine(aocTestDir.FullName, CreateAocTestFileName(day)));
@@ -56,7 +55,7 @@ public sealed partial class Application(
 
         // Create Real input file
         var (realInputFileName, testInputFileName) = CreateTestFileNames(day);
-        var aocDataDirectory = $@"{testsDirectory}\{aocYear}\AdventOfCode{aocYear}.Tests.Unit\Data"
+        var aocDataDirectory = $@"{srcDirectory}\{aocYear}\AdventOfCode.Y{aocYear}.Tests.Unit\Data"
             .Pipe(Path.GetFullPath)
             .Pipe(CreateDirectory);
 
@@ -145,7 +144,7 @@ public sealed partial class Application(
             $$"""
               using AdventOfCode.Lib;
 
-              namespace AdventOfCode{{aocYear}};
+              namespace AdventOfCode.Y{{aocYear}};
 
               [AocPuzzle({{aocYear}}, {{aocDay}}, "{{title}}")]
               public sealed class Day{{day}} : IAocDay<int>
@@ -169,7 +168,7 @@ public sealed partial class Application(
               using FluentAssertions;
               using static AdventOfCode.Lib.AocFileReaderService;
 
-              namespace AdventOfCode{{aocYear}}.Tests.Unit;
+              namespace AdventOfCode.Y{{aocYear}}.Tests.Unit;
 
               [AocPuzzle({{aocYear}}, {{aocDay}}, "{{title}}")]
               public sealed class Day{{day}}Tests : IAocDayTest<int>
