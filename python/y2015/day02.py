@@ -29,7 +29,9 @@ def orderWrapping(present: Present) -> int:
         return min(min(l * w, w * h), h * l)
 
     length, width, height = present
-    return calculateSurface(length, width, height) + calculateAreaOfSmallestSide(length, width, height)
+    return calculateSurface(length, width, height) + calculateAreaOfSmallestSide(
+        length, width, height
+    )
 
 
 def orderRibbon(present: Present) -> int:
@@ -41,7 +43,9 @@ def orderRibbon(present: Present) -> int:
         return min(min(2 * l + 2 * w, 2 * w + 2 * h), 2 * h + 2 * l)
 
     length, width, height = present
-    return calculateBow(length, width, height) + calculatePerimeterOfSmallestSide(length, width, height)
+    return calculateBow(length, width, height) + calculatePerimeterOfSmallestSide(
+        length, width, height
+    )
 
 
 def part1(input: AocInput) -> int:
@@ -53,10 +57,12 @@ def part2(input: AocInput) -> int:
 
 
 def main() -> None:
-    DAY = 'Day02'
-    solve(DAY, part1)
-    solve(DAY, part2)
+    YEAR = "y2015"
+    DAY = "Day02"
+    print(f"Running year {YEAR.replace('y')} day {DAY.replace('Day')}")
+    solve(YEAR, DAY, part1)
+    solve(YEAR, DAY, part2)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

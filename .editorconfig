@@ -37,3 +37,6 @@ fsharp_blank_lines_around_nested_multiline_expressions = true
 fsharp_bar_before_discriminated_union_declaration = false
 fsharp_keep_max_number_of_blank_lines = 100
 fsharp_strict_mode = false
+
+[*.{py}]
+quote_type = double

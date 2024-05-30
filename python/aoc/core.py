@@ -11,7 +11,7 @@ class AocInput:
 
 
 def getAocInput(path: str) -> AocInput:
-    with open(path, 'r') as f:
+    with open(path, "r") as f:
         text = f.read()
         lines = text.splitlines()
 
@@ -23,10 +23,10 @@ def logResults(part: str, test: Number, real: Number) -> None:
     print(f"Real {part.__name__}: {real}")
 
 
-def solve(day: str, part: Callable[[AocInput], Number]):
-    DATA_DIR = 'data'
-    TEST_FILE = os.path.join(DATA_DIR, f'{day}_Test.txt')
-    REAL_FILE = os.path.join(DATA_DIR, f'{day}.txt')
+def solve(year: str, day: str, part: Callable[[AocInput], Number]):
+    DATA_DIR = "data"
+    TEST_FILE = os.path.join(year, DATA_DIR, f"{day}_Test.txt")
+    REAL_FILE = os.path.join(year, DATA_DIR, f"{day}.txt")
 
     testInput = getAocInput(TEST_FILE)
     realInput = getAocInput(REAL_FILE)

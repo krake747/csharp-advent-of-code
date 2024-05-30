@@ -2,7 +2,7 @@ from aoc.core import solve, AocInput
 
 
 def goUpOrDownOneFloor(c: str) -> int:
-    return 1 if c == '(' else - 1
+    return 1 if c == "(" else -1
 
 
 def part1(input: AocInput) -> int:
@@ -21,10 +21,12 @@ def part2(input: AocInput) -> int:
 
 
 def main() -> None:
-    DAY = 'Day01'
-    solve(DAY, part1)
-    solve(DAY, part2)
+    YEAR = "y2015"
+    DAY = "Day01"
+    print(f"Running year {YEAR.replace('y', '')} day {DAY.replace('Day', '')}")
+    solve(YEAR, DAY, part1)
+    solve(YEAR, DAY, part2)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
