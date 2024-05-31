@@ -4,7 +4,7 @@ from numbers import Number
 from typing import Callable
 
 
-@dataclass
+@dataclass(frozen=True)
 class AocInput:
     text: str
     lines: list[str]

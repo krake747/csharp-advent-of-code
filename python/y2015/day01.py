@@ -26,7 +26,3 @@ def main() -> None:
     print(f"Running year {YEAR.replace('y', '')} day {DAY.replace('Day', '')}")
     solve(YEAR, DAY, part1)
     solve(YEAR, DAY, part2)
-
-
-if __name__ == "__main__":
-    main()
