@@ -6,9 +6,10 @@ from y2015.day01 import main as day201501
 from y2015.day02 import main as day201502
 from y2015.day03 import main as day201503
 from y2019.day01 import main as day201901
+from y2020.day01 import main as day202001
 
 
-PUZZLES = {"2015:01": day201501, "2015:02": day201502, "2015:03": day201503, "2019:01": day201901}
+PUZZLES = {"2015:01": day201501, "2015:02": day201502, "2015:03": day201503, "2019:01": day201901, "2020:01": day202001}
 
 
 def loadConfig() -> dict[str, Any]:
