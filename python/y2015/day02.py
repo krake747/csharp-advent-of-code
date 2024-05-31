@@ -2,7 +2,7 @@ from aoc.core import solve, AocInput
 from dataclasses import astuple, dataclass
 
 
-@dataclass
+@dataclass(frozen=True)
 class Present:
     length: int
     width: int
@@ -29,9 +29,7 @@ def orderWrapping(present: Present) -> int:
         return min(min(l * w, w * h), h * l)
 
     length, width, height = present
-    return calculateSurface(length, width, height) + calculateAreaOfSmallestSide(
-        length, width, height
-    )
+    return calculateSurface(length, width, height) + calculateAreaOfSmallestSide(length, width, height)
 
 
 def orderRibbon(present: Present) -> int:
@@ -43,9 +41,7 @@ def orderRibbon(present: Present) -> int:
         return min(min(2 * l + 2 * w, 2 * w + 2 * h), 2 * h + 2 * l)
 
     length, width, height = present
-    return calculateBow(length, width, height) + calculatePerimeterOfSmallestSide(
-        length, width, height
-    )
+    return calculateBow(length, width, height) + calculatePerimeterOfSmallestSide(length, width, height)
 
 
 def part1(input: AocInput) -> int:

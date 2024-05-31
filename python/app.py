@@ -1,8 +1,18 @@
 import argparse
+import tomllib
+from typing import Any
+from pprint import pprint
 from y2015.day01 import main as day201501
 from y2015.day02 import main as day201502
+from y2015.day03 import main as day201503
 
-PUZZLES = {"2015:01": day201501, "2015:02": day201502}
+PUZZLES = {"2015:01": day201501, "2015:02": day201502, "2015:03": day201503}
+
+
+def loadConfig() -> dict[str, Any]:
+    with open("config.toml", "rb") as f:
+        tomlData = tomllib.load(f)
+        return tomlData
 
 
 def main(args) -> None:
@@ -27,4 +37,7 @@ if __name__ == "__main__":
     parser.add_argument("-y", "--year", type=int, help="AOC Year")
     parser.add_argument("-d", "--day", type=int, help="AOC Day")
     args = parser.parse_args()
+
+    pprint(loadConfig(), sort_dicts=False)
+
     main(args)

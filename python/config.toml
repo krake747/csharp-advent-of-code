@@ -1,0 +1,5 @@
+title = "Advent of Code with Python"
+version = "1.0.0"
+
+[owner]
+name = "Kevin Kraemer"
