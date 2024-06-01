@@ -9,12 +9,12 @@ def rollingSum(source: list[int], window: int) -> list[int]:
 
 def part1(input: AocInput) -> int:
     values = list(map(int, input.lines))
-    return sum([1 if l > r else 0 for l, r in zip(values[1:], values)])
+    return sum([l > r for l, r in zip(values[1:], values)])
 
 
 def part2(input: AocInput) -> int:
     values = rollingSum(list(map(int, input.lines)), 3)
-    return sum([1 if l > r else 0 for l, r in zip(values[1:], values)])
+    return sum([l > r for l, r in zip(values[1:], values)])
 
 
 def main() -> None:

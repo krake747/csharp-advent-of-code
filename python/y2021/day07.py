@@ -2,7 +2,7 @@ from aoc.core import solve, AocInput
 
 
 def leastFuelConstantRate(crabs: list[int]) -> int:
-    return min(sum([abs(c - h) for c in crabs]) for h in range(0, max(crabs)))
+    return min(sum(abs(c - h) for c in crabs) for h in range(0, max(crabs)))
 
 
 def leastFuelVariableRate(crabs: list[int]) -> int:
