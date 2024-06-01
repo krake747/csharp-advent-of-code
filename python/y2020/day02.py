@@ -1,5 +1,6 @@
+from os import pipe
 import re
-from aoc.core import solve, AocInput
+from aoc.core import compose, pipe, solve, AocInput
 from dataclasses import astuple, dataclass
 
 
@@ -37,13 +38,11 @@ def isNewPasswordPolicyValid(posswordPolicy: PasswordPolicy) -> bool:
 
 
 def part1(input: AocInput) -> int:
-    policies = list(map(PasswordPolicy.create, map(parseLine, input.lines)))
-    return sum(map(isPasswordPolicyValid, policies))
+    return sum(map(compose(isNewPasswordPolicyValid, PasswordPolicy.create, parseLine), input.lines))
 
 
 def part2(input: AocInput) -> int:
-    policies = list(map(PasswordPolicy.create, map(parseLine, input.lines)))
-    return sum(map(isNewPasswordPolicyValid, policies))
+    return sum(map(pipe(parseLine, PasswordPolicy.create, isNewPasswordPolicyValid), input.lines))
 
 
 def main() -> None:

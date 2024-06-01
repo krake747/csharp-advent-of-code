@@ -1,7 +1,12 @@
+from functools import reduce
 import os
 from dataclasses import dataclass
 from numbers import Number
-from typing import Callable
+from typing import Callable, TypeVar, Unpack
+
+TIn = TypeVar("TIn")
+TOut = TypeVar("TOut")
+GenericFunc = Callable[[TIn], TOut]
 
 
 @dataclass(frozen=True)
@@ -10,16 +15,19 @@ class AocInput:
     lines: list[str]
 
 
+def pipe(*callables: Unpack[GenericFunc]) -> TOut:
+    return lambda x: reduce(lambda y, f: f(y), callables, x)
+
+
+def compose(*callables: Unpack[GenericFunc]) -> TOut:
+    return reduce(lambda f, g: lambda x: f(g(x)), callables, lambda x: x)
+
+
 def getAocInput(path: str) -> AocInput:
     with open(path, "r", encoding="utf-8-sig") as f:
         text = f.read()
         lines = text.splitlines()
         return AocInput(text, lines)
-
-
-def logResults(part: str, test: Number, real: Number) -> None:
-    print(f"Test {part.__name__}: {test}")
-    print(f"Real {part.__name__}: {real}")
 
 
 def solve(year: str, day: str, part: Callable[[AocInput], Number]) -> None:
@@ -32,4 +40,5 @@ def solve(year: str, day: str, part: Callable[[AocInput], Number]) -> None:
 
     test, real = part(testInput), part(realInput)
 
-    logResults(part, test, real)
+    print(f"Test {part.__name__}: {test}")
+    print(f"Real {part.__name__}: {real}")
