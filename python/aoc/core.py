@@ -6,7 +6,6 @@ from typing import Callable, TypeVar, Unpack
 
 TIn = TypeVar("TIn")
 TOut = TypeVar("TOut")
-GenericFunc = Callable[[TIn], TOut]
 
 
 @dataclass(frozen=True)
@@ -15,11 +14,11 @@ class AocInput:
     lines: list[str]
 
 
-def pipe(*callables: Unpack[GenericFunc]) -> TOut:
+def pipe(*callables: Unpack[Callable[[TIn], TOut]]) -> Callable[[TIn], TOut]:
     return lambda x: reduce(lambda y, f: f(y), callables, x)
 
 
-def compose(*callables: Unpack[GenericFunc]) -> TOut:
+def compose(*callables: Unpack[Callable[[TIn], TOut]]) -> Callable[[TIn], TOut]:
     return reduce(lambda f, g: lambda x: f(g(x)), callables, lambda x: x)
 
 
