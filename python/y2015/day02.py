@@ -2,7 +2,7 @@ from aoc.core import solve, AocInput
 from dataclasses import astuple, dataclass
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True)
 class Present:
     length: int
     width: int

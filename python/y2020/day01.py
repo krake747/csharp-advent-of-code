@@ -6,13 +6,13 @@ from functools import reduce
 def part1(input: AocInput) -> int:
     numbers = list(map(int, input.lines))
     entries = product(numbers, numbers)
-    return reduce(lambda a, b: a * b, next(e for e in entries if sum(e) == 2020))
+    return reduce(lambda a, b: a * b, next(filter(lambda e: sum(e) == 2020, entries)))
 
 
 def part2(input: AocInput) -> int:
     numbers = list(map(int, input.lines))
     entries = product(numbers, numbers, numbers)
-    return reduce(lambda a, b: a * b, next(e for e in entries if sum(e) == 2020))
+    return reduce(lambda a, b: a * b, next(filter(lambda e: sum(e) == 2020, entries)))
 
 
 def main() -> None:

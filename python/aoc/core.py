@@ -11,7 +11,7 @@ class AocInput:
 
 
 def getAocInput(path: str) -> AocInput:
-    with open(path, "r") as f:
+    with open(path, "r", encoding="utf-8-sig") as f:
         text = f.read()
         lines = text.splitlines()
         return AocInput(text, lines)

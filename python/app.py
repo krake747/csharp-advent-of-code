@@ -1,21 +1,22 @@
 import argparse
+from importlib import import_module
 import tomllib
-from typing import Any
+from typing import Any, Callable
 from pprint import pprint
-from y2015.day01 import main as day201501
-from y2015.day02 import main as day201502
-from y2015.day03 import main as day201503
-from y2019.day01 import main as day201901
-from y2020.day01 import main as day202001
-
-
-PUZZLES = {"2015:01": day201501, "2015:02": day201502, "2015:03": day201503, "2019:01": day201901, "2020:01": day202001}
+from functools import partial
 
 
 def loadConfig() -> dict[str, Any]:
     with open("config.toml", "rb") as f:
-        tomlData = tomllib.load(f)
-        return tomlData
+        config = tomllib.load(f)
+        return config
+
+
+def puzzleSolver(key: str) -> Callable[[], None] | None:
+    try:
+        return getattr(import_module(key), "main") or None
+    except ModuleNotFoundError:
+        return None
 
 
 def prependZero(d: int) -> str:
@@ -27,8 +28,8 @@ def main(args) -> None:
         print("Requires year and day. Run -h for help")
         return None
 
-    key = f"{args.year}:{prependZero(args.day)}"
-    solver = PUZZLES.get(key, None)
+    key = f"y{args.year}.day{prependZero(args.day)}"
+    solver = puzzleSolver(key)
     if solver is None:
         print(f"{key} not found")
         return None

@@ -3,7 +3,7 @@ from dataclasses import astuple, dataclass
 from itertools import chain
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True)
 class Point:
     x: int
     y: int
