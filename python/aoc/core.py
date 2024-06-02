@@ -44,11 +44,8 @@ def solve(year: str, day: str, part: Callable[[AocInput], Number], skipTest: boo
     def solveReal(year: str, day: str, part: Callable[[AocInput], Number]) -> None:
         DATA_DIR = "data"
         REAL_FILE = os.path.join(year, DATA_DIR, f"{day}.txt")
-
         realInput = getAocInput(REAL_FILE)
-
         real = part(realInput)
-
         print(f"Real {part.__name__}: {real}")
 
     if skipTest:
