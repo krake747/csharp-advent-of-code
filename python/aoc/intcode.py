@@ -91,14 +91,10 @@ class IntCodeMachine:
         return output[-1] if input else memory[0]
 
     @staticmethod
-    def gravityAssist(icm: "IntCodeMachine") -> int:
-        for noun in range(100):
-            for verb in range(100):
-                output = IntCodeMachine.run(icm, noun, verb)
-                if output == 19690720:
-                    return 100 * noun + verb
-
-        return output
+    def gravityAssist(icm: "IntCodeMachine", nouns=100, verbs=100) -> int:
+        return next(
+            100 * n + v for v in range(nouns) for n in range(verbs) if IntCodeMachine.run(icm, n, v) == 19690720
+        )
 
     @staticmethod
     def thermalEnvironmentSupervisionTerminal(icm: "IntCodeMachine", id: Id) -> int:
