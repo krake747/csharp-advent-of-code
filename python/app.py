@@ -3,7 +3,6 @@ from importlib import import_module
 import tomllib
 from typing import Any, Callable
 from pprint import pprint
-from functools import partial
 
 
 def loadConfig() -> dict[str, Any]:

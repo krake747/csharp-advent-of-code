@@ -37,7 +37,9 @@ def getAocInput(path: str) -> AocInput:
         return AocInput(text, lines)
 
 
-def solve(year: str, day: str, part: Callable[[AocInput], Number], skipTest: bool = False) -> None:
+def solve(
+    year: str, day: str, part: Callable[[AocInput], Number], expected: int | None = None, skipTest: bool = False
+) -> None:
     def solveTest(year: str, day: str, part: Callable[[AocInput], Number]) -> None:
         DATA_DIR = "data"
         TEST_FILE = os.path.join(year, DATA_DIR, f"{day}_Test.txt")
@@ -45,16 +47,16 @@ def solve(year: str, day: str, part: Callable[[AocInput], Number], skipTest: boo
         test = part(testInput)
         print(f"Test {part.__name__}: {test}")
 
-    def solveReal(year: str, day: str, part: Callable[[AocInput], Number]) -> None:
+    def solveReal(year: str, day: str, part: Callable[[AocInput], Number], expected: int | None = None) -> None:
         DATA_DIR = "data"
         REAL_FILE = os.path.join(year, DATA_DIR, f"{day}.txt")
         realInput = getAocInput(REAL_FILE)
         real = part(realInput)
-        print(f"Real {part.__name__}: {real}")
+        print(f"Real {part.__name__}: {real}{f' (Expected: {expected})' if expected else ''}")
 
     if skipTest:
-        solveReal(year, day, part)
+        solveReal(year, day, part, expected)
         return
 
     solveTest(year, day, part)
-    solveReal(year, day, part)
+    solveReal(year, day, part, expected)
