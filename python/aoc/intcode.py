@@ -93,7 +93,7 @@ class IntCodeMachine:
     @staticmethod
     def gravityAssist(icm: "IntCodeMachine", nouns=100, verbs=100) -> int:
         return next(
-            100 * n + v for v in range(nouns) for n in range(verbs) if IntCodeMachine.run(icm, n, v) == 19690720
+            100 * n + v for v in range(verbs) for n in range(nouns) if IntCodeMachine.run(icm, n, v) == 19690720
         )
 
     @staticmethod
