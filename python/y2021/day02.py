@@ -14,7 +14,7 @@ class Coordinates:
 
 
 def decode(coordinates: Coordinates, command: str) -> Coordinates:
-    direction, units = pipe(lambda c: c.split(" ", 2), lambda p: (p[0], int(p[1])))(command)
+    direction, units = pipe(command, lambda c: c.split(" ", 2), lambda p: (p[0], int(p[1])))
     x, y, aim = coordinates
     match direction:
         case "forward":

@@ -1,6 +1,6 @@
 from os import pipe
 import re
-from aoc.core import compose, pipe, solve, AocInput
+from aoc.core import compose, composeLeft, solve, AocInput
 from dataclasses import astuple, dataclass
 
 
@@ -42,7 +42,7 @@ def part1(input: AocInput) -> int:
 
 
 def part2(input: AocInput) -> int:
-    return sum(map(pipe(parseLine, PasswordPolicy.create, isNewPasswordPolicyValid), input.lines))
+    return sum(map(composeLeft(parseLine, PasswordPolicy.create, isNewPasswordPolicyValid), input.lines))
 
 
 def main() -> None:

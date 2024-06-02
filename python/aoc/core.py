@@ -14,12 +14,16 @@ class AocInput:
     lines: list[str]
 
 
-def pipe(*callables: Unpack[Callable[[TIn], TOut]]) -> Callable[[TIn], TOut]:
-    return lambda x: reduce(lambda y, f: f(y), callables, x)
+def pipe(source: TIn, *callables: Unpack[Callable[[TIn], TOut]]) -> TOut:
+    return (lambda x: reduce(lambda y, f: f(y), callables, x))(source)
 
 
 def compose(*callables: Unpack[Callable[[TIn], TOut]]) -> Callable[[TIn], TOut]:
     return reduce(lambda f, g: lambda x: f(g(x)), callables, lambda x: x)
+
+
+def composeLeft(*callables: Unpack[Callable[[TIn], TOut]]) -> Callable[[TIn], TOut]:
+    return lambda x: reduce(lambda y, f: f(y), callables, x)
 
 
 def getAocInput(path: str) -> AocInput:
