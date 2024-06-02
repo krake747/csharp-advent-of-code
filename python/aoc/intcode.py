@@ -1,39 +1,45 @@
 from dataclasses import dataclass
 from functools import partial
+from typing import TypeAlias
+
+Memory: TypeAlias = list[int]
+Id: TypeAlias = int | None
+Opcode: TypeAlias = int
+Mode: TypeAlias = int
 
 
 @dataclass
 class IntCodeMachine:
-    memory: list[int]
+    memory: Memory
 
     @staticmethod
     def init(input: list[str]) -> "IntCodeMachine":
         return IntCodeMachine(memory=list(map(int, input.split(","))))
 
     @staticmethod
-    def noun(memory: list[int], noun: int) -> None:
+    def noun(memory: Memory, noun: int) -> None:
         memory[1] = noun
 
     @staticmethod
-    def verb(memory: list[int], verb: int) -> None:
+    def verb(memory: Memory, verb: int) -> None:
         memory[2] = verb
 
     @staticmethod
-    def opcode(memory: list[int], i: int) -> int:
+    def opcode(memory: Memory, i: int) -> Opcode:
         return memory[i] % 100  # Last 2 digits
 
     @staticmethod
-    def arg1(memory: list[int], i: int) -> int:
+    def arg1(memory: Memory, i: int) -> int:
         mode = 1 if memory[i] >= 100 and ((memory[i] % 1000 - memory[i] % 100) == 100) else 0
         return memory[memory[i + 1]] if mode == 0 else memory[i + 1]
 
     @staticmethod
-    def arg2(memory: list[int], i: int) -> int:
+    def arg2(memory: Memory, i: int) -> int:
         mode = 1 if memory[i] >= 100 and ((memory[i] % 10000 - memory[i] % 1000) == 1000) else 0
         return memory[memory[i + 2]] if mode == 0 else memory[i + 2]
 
     @staticmethod
-    def run(icm: "IntCodeMachine", noun: int | None = None, verb: int | None = None, input: int | None = None) -> int:
+    def run(icm: "IntCodeMachine", noun: int | None = None, verb: int | None = None, input: Id = None) -> int:
         memory = icm.memory[:]
 
         if noun is not None:
@@ -95,5 +101,5 @@ class IntCodeMachine:
         return output
 
     @staticmethod
-    def thermalEnvironmentSupervisionTerminal(icm: "IntCodeMachine", id: int) -> int:
+    def thermalEnvironmentSupervisionTerminal(icm: "IntCodeMachine", id: Id) -> int:
         return IntCodeMachine.run(icm, input=id)
