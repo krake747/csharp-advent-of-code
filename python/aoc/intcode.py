@@ -1,118 +1,81 @@
 from dataclasses import dataclass
+from functools import partial
 
 
 @dataclass
 class IntCodeMachine:
     memory: list[int]
 
-    def setNoun(self, noun: int) -> None:
-        self.memory[1] = noun
-
-    def setVerb(self, verb: int) -> None:
-        self.memory[2] = verb
-
     @staticmethod
     def init(input: list[str]) -> "IntCodeMachine":
         return IntCodeMachine(memory=list(map(int, input.split(","))))
 
     @staticmethod
-    def run(icm: "IntCodeMachine", noun: int | None = None, verb: int | None = None, input: int | None = None) -> int:
-        if noun is not None:
-            icm.setNoun(noun)
-        if verb is not None:
-            icm.setVerb(verb)
+    def noun(memory: list[int], noun: int) -> None:
+        memory[1] = noun
 
-        output = [0]
+    @staticmethod
+    def verb(memory: list[int], verb: int) -> None:
+        memory[2] = verb
+
+    @staticmethod
+    def opcode(memory: list[int], i: int) -> int:
+        return memory[i] % 100  # Last 2 digits
+
+    @staticmethod
+    def arg1(memory: list[int], i: int) -> int:
+        mode = 1 if memory[i] >= 100 and ((memory[i] % 1000 - memory[i] % 100) == 100) else 0
+        return memory[memory[i + 1]] if mode == 0 else memory[i + 1]
+
+    @staticmethod
+    def arg2(memory: list[int], i: int) -> int:
+        mode = 1 if memory[i] >= 100 and ((memory[i] % 10000 - memory[i] % 1000) == 1000) else 0
+        return memory[memory[i + 2]] if mode == 0 else memory[i + 2]
+
+    @staticmethod
+    def run(icm: "IntCodeMachine", noun: int | None = None, verb: int | None = None, input: int | None = None) -> int:
         memory = icm.memory[:]
+
+        if noun is not None:
+            IntCodeMachine.noun(memory, noun)
+        if verb is not None:
+            IntCodeMachine.verb(memory, verb)
+
+        address = partial(lambda m, i: m[i], memory)
+        opcode = partial(IntCodeMachine.opcode, memory)
+        arg1 = partial(IntCodeMachine.arg1, memory)
+        arg2 = partial(IntCodeMachine.arg2, memory)
+        output = []
         i = 0
         while i < len(memory):
-            opcode = memory[i] % 100  # last two digits
-            fstMode = 0  # Mode: Position = 0, Immediate = 1
-            sndMode = 0
-            if memory[i] >= 100:
-                if (memory[i] % 1000 - memory[i] % 100) == 100:
-                    fstMode = 1
-                if (memory[i] % 10000 - memory[i] % 1000) == 1000:
-                    sndMode = 1
-
-            match opcode:
+            match opcode(i):
                 case 1:  # Addition
-                    fst = memory[i + 1]
-                    if fstMode == 0:
-                        fst = memory[fst]
-
-                    snd = memory[i + 2]
-                    if sndMode == 0:
-                        snd = memory[snd]
-
-                    memory[memory[i + 3]] = fst + snd
+                    memory[address(i + 3)] = arg1(i) + arg2(i)
                     i += 4
                 case 2:  # Multiplication
-                    fst = memory[i + 1]
-                    if fstMode == 0:
-                        fst = memory[fst]
-
-                    snd = memory[i + 2]
-                    if sndMode == 0:
-                        snd = memory[snd]
-
-                    memory[memory[i + 3]] = fst * snd
+                    memory[address(i + 3)] = arg1(i) * arg2(i)
                     i += 4
                 case 3:  # Input
-                    memory[memory[i + 1]] = input
+                    memory[address(i + 3)] = input
                     i += 2
                 case 4:  # Output
-                    output.append(memory[memory[i + 1]])
+                    output.append(memory[address(i + 1)])
                     i += 2
                 case 5:  # Jump-If-True
-                    fst = memory[i + 1]
-                    if fstMode == 0:
-                        fst = memory[fst]
-
-                    snd = memory[i + 2]
-                    if sndMode == 0:
-                        snd = memory[snd]
-
-                    if fst != 0:
-                        i = snd
+                    if arg1(i) != 0:
+                        i = arg2(i)
                         continue
-
                     i += 3
                 case 6:  # Jump-If-False
-                    fst = memory[i + 1]
-                    if fstMode == 0:
-                        fst = memory[fst]
-
-                    snd = memory[i + 2]
-                    if sndMode == 0:
-                        snd = memory[snd]
-
-                    if fst == 0:
-                        i = snd
+                    if arg1(i) == 0:
+                        i = arg2(i)
                         continue
-
                     i += 3
                 case 7:  # Less Than
-                    fst = memory[i + 1]
-                    if fstMode == 0:
-                        fst = memory[fst]
-
-                    snd = memory[i + 2]
-                    if sndMode == 0:
-                        snd = memory[snd]
-
-                    memory[memory[i + 3]] = 1 if fst < snd else 0
+                    memory[address(i + 3)] = 1 if arg1(i) < arg2(i) else 0
                     i += 4
                 case 8:  # Equals
-                    fst = memory[i + 1]
-                    if fstMode == 0:
-                        fst = memory[fst]
-
-                    snd = memory[i + 2]
-                    if sndMode == 0:
-                        snd = memory[snd]
-
-                    memory[memory[i + 3]] = 1 if fst == snd else 0
+                    memory[address(i + 3)] = 1 if arg1(i) == arg2(i) else 0
                     i += 4
                 case 99:  # Exit
                     break
