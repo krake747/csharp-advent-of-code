@@ -26,6 +26,10 @@ def composeLeft(*callables: Unpack[Callable[[TIn], TOut]]) -> Callable[[TIn], TO
     return lambda x: reduce(lambda y, f: f(y), callables, x)
 
 
+def allValid(source: TIn, *callables: Unpack[Callable[[TIn], bool]]) -> bool:
+    return all(f(source) for f in callables)
+
+
 def getAocInput(path: str) -> AocInput:
     with open(path, "r", encoding="utf-8-sig") as f:
         text = f.read()
