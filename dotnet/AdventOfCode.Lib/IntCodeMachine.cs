@@ -1,16 +1,16 @@
-﻿using Memory = System.Collections.Generic.List<int>;
+﻿using Memory = int[];
 
 namespace AdventOfCode.Lib;
 
 public sealed class IntCodeMachine
 {
-    private readonly Memory _memory = [];
-    private Memory Memory => _memory.ToList();
+    private readonly Memory _memory;
+    private Memory Memory => _memory.ToArray();
     
-    private IntCodeMachine(IEnumerable<int> input) => _memory.AddRange(input);
+    private IntCodeMachine(Memory input) => _memory = input;
     
     
-    public static IntCodeMachine Init(string input) => new(input.Split(',').Select(int.Parse));
+    public static IntCodeMachine Init(string input) => new(input.Split(',').Select(int.Parse).ToArray());
 
     private static void Noun(Memory memory, int noun) => memory[1] = noun;
     
@@ -53,7 +53,7 @@ public sealed class IntCodeMachine
 
         List<int> output = [];
         var i = 0;
-        while (i < memory.Count && memory[i] is not 99)
+        while (i < memory.Length && memory[i] is not 99)
         {
             switch (opcode(i))
             {
@@ -71,7 +71,6 @@ public sealed class IntCodeMachine
                     break;
                 case 4: // Output
                     output.Add(memory[address(i + 1)]);
-                    Console.WriteLine(string.Join(",", output));
                     i += 2;
                     break;
                 case 5: // Jump-If-True
@@ -107,7 +106,7 @@ public sealed class IntCodeMachine
             }
         }
         
-        return input.HasValue ? output[-1] : memory[0];
+        return input.HasValue ? output[^1] : memory[0];
     }
 
     public static int GravityAssist(IntCodeMachine icm, int nouns, int verbs)
