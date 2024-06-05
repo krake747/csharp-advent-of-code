@@ -14,19 +14,17 @@ public sealed class Day04Tests : IAocDayTest<int>
 
     public static TheoryData<AocInput, int> Part1Data => new()
     {
-        { ReadInput(TestData), 0 },
-        { ReadInput(RealData), 0 }
+        { ReadInput(RealData), 481 }
     };
 
     public static TheoryData<AocInput, int> Part2Data => new()
     {
-        { ReadInput(TestData), 0 },
-        { ReadInput(RealData), 0 }
+        { ReadInput(RealData), 299 }
     };
 
     [Theory]
     [MemberData(nameof(Part1Data))]
-    [Description("")]
+    [Description("How many different passwords")]
     public void Part1(AocInput input, int expected)
     {
         // Act
@@ -38,7 +36,7 @@ public sealed class Day04Tests : IAocDayTest<int>
     
     [Theory]
     [MemberData(nameof(Part2Data))]
-    [Description("<insert question 2 here>")]
+    [Description("How many different passwords")]
     public void Part2(AocInput input, int expected)
     {
         // Act

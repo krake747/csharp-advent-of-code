@@ -15,19 +15,19 @@ public sealed class Day03Tests : IAocDayTest<int>
 
     public static TheoryData<AocInput, int> Part1Data => new()
     {
-        { ReadInput(TestData), 0 },
-        { ReadInput(RealData), 0 }
+        { ReadInput(TestData), 159 },
+        { ReadInput(RealData), 403 }
     };
 
     public static TheoryData<AocInput, int> Part2Data => new()
     {
-        { ReadInput(TestData), 0 },
-        { ReadInput(RealData), 0 }
+        { ReadInput(TestData), 610 },
+        { ReadInput(RealData), 4158 }
     };
 
     [Theory]
     [MemberData(nameof(Part1Data))]
-    [Description("")]
+    [Description("What is the Manhattan distance from the central port to the closest intersection?")]
     public void Part1(AocInput input, int expected)
     {
         // Act
@@ -39,7 +39,7 @@ public sealed class Day03Tests : IAocDayTest<int>
     
     [Theory]
     [MemberData(nameof(Part2Data))]
-    [Description("<insert question 2 here>")]
+    [Description("What is the fewest combined steps the wires must take to reach an intersection?")]
     public void Part2(AocInput input, int expected)
     {
         // Act
