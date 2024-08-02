@@ -20,9 +20,9 @@ public sealed class Day06 : IAocDay<int>
     private static ImmutableHashSet<char> Everyone(ImmutableHashSet<char> hashSet, string s) => hashSet.Intersect(s);
 }
 
-internal static class Day04Extensions
+file static class Day04Extensions
 {
-    internal static ImmutableHashSet<char> ToWhichYesWasAnsweredBy(this IEnumerable<string> source,
+    public static ImmutableHashSet<char> ToWhichYesWasAnsweredBy(this IEnumerable<string> source,
         Func<ImmutableHashSet<char>, string, ImmutableHashSet<char>> func) =>
         source.ToArray()
             .Pipe(answers => answers.Skip(1)
