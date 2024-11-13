@@ -2,16 +2,15 @@ name: .NET
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
     paths-ignore:
       - python/**
-      
+
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build:
-
     runs-on: windows-latest
 
     steps:
@@ -19,7 +18,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 8.0.x
+          dotnet-version: 9.x
       - name: Restore dependencies
         run: dotnet restore
         working-directory: dotnet
