@@ -1,6 +1,5 @@
 using System.ComponentModel;
 using AdventOfCode.Lib;
-using FluentAssertions;
 using static AdventOfCode.Lib.AocFileReaderService;
 
 namespace AdventOfCode.Y2019.Tests.Unit;
@@ -36,7 +35,7 @@ public sealed class Day03Tests : IAocDayTest<int>
         // Assert
         result.Should().Be(expected);
     }
-    
+
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("What is the fewest combined steps the wires must take to reach an intersection?")]
@@ -44,7 +43,7 @@ public sealed class Day03Tests : IAocDayTest<int>
     {
         // Act
         var result = Day03.Part2(input);
-    
+
         // Assert
         result.Should().Be(expected);
     }

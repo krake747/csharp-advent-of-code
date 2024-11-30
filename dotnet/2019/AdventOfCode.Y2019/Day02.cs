@@ -7,9 +7,9 @@ public sealed class Day02 : IAocDay<int>
 {
     public static int Part1(AocInput input) => input.Text
         .Pipe(IntCodeMachine.Init)
-        .Pipe(icm => IntCodeMachine.Run(icm, noun: 12, verb: 2));
+        .Pipe(icm => IntCodeMachine.Run(icm, 12, 2));
 
     public static int Part2(AocInput input) => input.Text
         .Pipe(IntCodeMachine.Init)
-        .Pipe(icm => IntCodeMachine.GravityAssist(icm, nouns: 100, verbs: 100));
+        .Pipe(icm => IntCodeMachine.GravityAssist(icm, 100, 100));
 }

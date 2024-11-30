@@ -5,19 +5,23 @@ namespace AdventOfCode.Lib;
 public sealed class IntCodeMachine
 {
     private readonly Memory _memory;
+
+    private IntCodeMachine(Memory input)
+    {
+        _memory = input;
+    }
+
     private Memory Memory => _memory.ToArray();
-    
-    private IntCodeMachine(Memory input) => _memory = input;
-    
-    
+
+
     public static IntCodeMachine Init(string input) => new(input.Split(',').Select(int.Parse).ToArray());
 
     private static void Noun(Memory memory, int noun) => memory[1] = noun;
-    
+
     private static void Verb(Memory memory, int verb) => memory[2] = verb;
-    
+
     private static int Address(Memory memory, int i) => memory[i];
-    
+
     private static int Opcode(Memory memory, int i) => memory[i] % 100;
 
     private static int Arg1(Memory memory, int i)
@@ -31,7 +35,7 @@ public sealed class IntCodeMachine
         var mode = memory[i] >= 100 && memory[i] % 10000 - memory[i] % 1000 is 1000 ? 1 : 0;
         return mode is 0 ? memory[memory[i + 2]] : memory[i + 2];
     }
-    
+
     public static int Run(IntCodeMachine icm, int? noun = null, int? verb = null, int? input = null)
     {
         var memory = icm.Memory;
@@ -45,7 +49,7 @@ public sealed class IntCodeMachine
         {
             Verb(memory, verb.Value);
         }
-        
+
         var address = FunctionalExtensions.Partial<Memory, int, int>(Address, memory);
         var opcode = FunctionalExtensions.Partial<Memory, int, int>(Opcode, memory);
         var arg1 = FunctionalExtensions.Partial<Memory, int, int>(Arg1, memory);
@@ -105,7 +109,7 @@ public sealed class IntCodeMachine
                     throw new Exception($"Invalid Opcode {opcode(i)}");
             }
         }
-        
+
         return input.HasValue ? output[^1] : memory[0];
     }
 
@@ -125,6 +129,6 @@ public sealed class IntCodeMachine
         return -1;
     }
 
-    public static int ThermalEnvironmentSupervisionTerminal(IntCodeMachine icm, int id) => 
+    public static int ThermalEnvironmentSupervisionTerminal(IntCodeMachine icm, int id) =>
         Run(icm, input: id);
 }

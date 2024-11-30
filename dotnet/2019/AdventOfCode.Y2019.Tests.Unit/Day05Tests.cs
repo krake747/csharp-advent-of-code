@@ -33,7 +33,7 @@ public sealed class Day05Tests : IAocDayTest<int>
         // Assert
         result.Should().Be(expected);
     }
-    
+
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("What is the diagnostic code for system ID 5?")]
@@ -41,7 +41,7 @@ public sealed class Day05Tests : IAocDayTest<int>
     {
         // Act
         var result = Day05.Part2(input);
-    
+
         // Assert
         result.Should().Be(expected);
     }

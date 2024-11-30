@@ -33,7 +33,7 @@ public sealed class Day02Tests : IAocDayTest<int>
         // Assert
         result.Should().Be(expected);
     }
-    
+
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("What is 100 * noun + verb?")]
@@ -41,7 +41,7 @@ public sealed class Day02Tests : IAocDayTest<int>
     {
         // Act
         var result = Day02.Part2(input);
-    
+
         // Assert
         result.Should().Be(expected);
     }

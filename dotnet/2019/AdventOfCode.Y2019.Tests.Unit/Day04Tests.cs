@@ -33,7 +33,7 @@ public sealed class Day04Tests : IAocDayTest<int>
         // Assert
         result.Should().Be(expected);
     }
-    
+
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("How many different passwords")]
@@ -41,7 +41,7 @@ public sealed class Day04Tests : IAocDayTest<int>
     {
         // Act
         var result = Day04.Part2(input);
-    
+
         // Assert
         result.Should().Be(expected);
     }

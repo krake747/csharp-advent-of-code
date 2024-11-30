@@ -12,7 +12,7 @@ public sealed class Day03 : IAocDay<int>
         return wire1.Keys.Where(p => wire2.ContainsKey(p)).Min(p => Math.Abs(p.Irow) + Math.Abs(p.Icol));
     }
 
-    public static int Part2(AocInput input) 
+    public static int Part2(AocInput input)
     {
         var wire1 = Trace(input.AllLines[0]);
         var wire2 = Trace(input.AllLines[1]);
@@ -32,7 +32,7 @@ public sealed class Day03 : IAocDay<int>
             {
                 continue;
             }
-            
+
             for (var i = 0; i < int.Parse(len); i++)
             {
                 position = Position.Move(position, command);
@@ -41,12 +41,12 @@ public sealed class Day03 : IAocDay<int>
                 {
                     positions[position] = distance;
                 }
-            } 
+            }
         }
 
         return positions;
     }
-    
+
     private readonly record struct Position(int Irow, int Icol)
     {
         public static Position Move(Position position, char command)
