@@ -146,7 +146,7 @@ public sealed partial class Application(
 
               namespace AdventOfCode.Y{{aocYear}};
 
-              [AocPuzzle({{aocYear}}, {{aocDay}}, "{{title}}")]
+              [AocPuzzle({{aocYear}}, {{aocDay}}, "{{title}}", "C#")]
               public sealed class Day{{day}} : IAocDay<int>
               {
                   public static int Part1(AocInput input) => 0;
@@ -165,17 +165,17 @@ public sealed partial class Application(
             $$"""
               using System.ComponentModel;
               using AdventOfCode.Lib;
+              using FluentAssertions;
               using static AdventOfCode.Lib.AocFileReaderService;
 
               namespace AdventOfCode.Y{{aocYear}}.Tests.Unit;
 
-              [AocPuzzle({{aocYear}}, {{aocDay}}, "{{title}}")]
+              [AocPuzzle({{aocYear}}, {{aocDay}}, "{{title}}", "C#")]
               public sealed class Day{{day}}Tests : IAocDayTest<int>
               {
                   private const string Day = nameof(Day{{day}});
                   private const string TestData = @$"..\..\..\Data\{Day}_Test.txt";
                   private const string RealData = @$"..\..\..\Data\{Day}.txt";
-                  private readonly Day{{day}} _sut = new();
               
                   public static TheoryData<AocInput, int> Part1Data => new()
                   {
@@ -194,10 +194,8 @@ public sealed partial class Application(
                   [Description("{{question}}")]
                   public void Part1(AocInput input, int expected)
                   {
-                      // Act
                       var result = Day{{day}}.Part1(input);
               
-                      // Assert
                       result.Should().Be(expected);
                   }
                   
@@ -206,10 +204,8 @@ public sealed partial class Application(
                   [Description("<insert question 2 here>")]
                   public void Part2(AocInput input, int expected)
                   {
-                      // Act
                       var result = Day{{day}}.Part2(input);
                   
-                      // Assert
                       result.Should().Be(expected);
                   }
               }

@@ -6,14 +6,13 @@ using static AdventOfCode.Lib.AocFileReaderService;
 
 namespace AdventOfCode.Y2023.Tests.Unit;
 
-[AocPuzzle(2023, 1, "Trebuchet?!")]
+[AocPuzzle(2023, 1, "Trebuchet?!", "C#")]
 public sealed class Day01Tests
 {
     private const string Day = nameof(Day01);
     private const string TestData = @$"..\..\..\Data\{Day}_Test.txt";
     private const string TestData2 = @$"..\..\..\Data\{Day}_Test_2.txt";
     private const string RealData = @$"..\..\..\Data\{Day}.txt";
-    private readonly Day01 _sut = new();
 
     public static TheoryData<AocInput, int> Part1Data => new()
     {

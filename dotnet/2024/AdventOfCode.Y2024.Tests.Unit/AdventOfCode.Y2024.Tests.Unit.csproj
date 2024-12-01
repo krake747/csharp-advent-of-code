@@ -20,6 +20,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\AdventOfCode.Y2024.FSharp\AdventOfCode.Y2024.FSharp.fsproj" />
         <ProjectReference Include="..\AdventOfCode.Y2024\AdventOfCode.Y2024.csproj"/>
     </ItemGroup>
 
