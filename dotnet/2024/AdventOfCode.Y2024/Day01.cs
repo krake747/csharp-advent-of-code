@@ -22,7 +22,7 @@ public sealed partial class Day01 : IAocDay<int>
     private static int SimilarityScore(Instructions instructions)
     {
         var counts = instructions.Right.CountBy(i => i).ToDictionary();
-        return instructions.Left.Sum(id => counts.TryGetValue(id, out var count) ? id * count : 0);
+        return instructions.Left.Sum(id => counts.GetValueOrDefault(id) * id);
     }
 
     private static Instructions ParseInstructions(string[] lines)
