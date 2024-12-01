@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\AdventOfCode.Lib\AdventOfCode.Lib.csproj" />
+    </ItemGroup>
+
 </Project>
