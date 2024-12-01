@@ -10,7 +10,7 @@ public sealed class Day01 : IAocDay<int>
         {
             var left = Instructions(lines, 0);
             var right = Instructions(lines, 1);
-            return left.Order().Zip(right.Order(), (l, r) => Math.Abs(l - r)).Sum();
+            return left.Zip(right, (l, r) => Math.Abs(l - r)).Sum();
         });
 
     public static int Part2(AocInput input) => input.AllLines
