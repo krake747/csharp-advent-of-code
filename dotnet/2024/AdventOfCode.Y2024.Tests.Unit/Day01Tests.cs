@@ -21,8 +21,8 @@ public sealed class Day01Tests : IAocDayTest<int>
 
     public static TheoryData<AocInput, int> Part2Data => new()
     {
-        { ReadInput(TestData), 0 },
-        { ReadInput(RealData), 0 }
+        { ReadInput(TestData), 31 },
+        { ReadInput(RealData), 22776016 }
     };
 
     [Theory]
@@ -39,7 +39,7 @@ public sealed class Day01Tests : IAocDayTest<int>
 
     [Theory]
     [MemberData(nameof(Part2Data))]
-    [Description("<insert question 2 here>")]
+    [Description("What is their similarity score?")]
     public void Part2(AocInput input, int expected)
     {
         // Act

@@ -39,6 +39,7 @@
     <Project Path="2024\AdventOfCode.Y2024.FSharp\AdventOfCode.Y2024.FSharp.fsproj" Type="Classic F#" />
     <Project Path="2024\AdventOfCode.Y2024.Tests.Unit\AdventOfCode.Y2024.Tests.Unit.csproj" Type="Classic C#" />
     <Project Path="2024\AdventOfCode.Y2024\AdventOfCode.Y2024.csproj" Type="Classic C#" />
+    <File Path="2024\README.md" />
   </Folder>
   <Project Path="AdventOfCode.Cli\AdventOfCode.Cli.csproj" Type="Classic C#" />
   <Project Path="AdventOfCode.Lib\AdventOfCode.Lib.csproj" Type="Classic C#" />
