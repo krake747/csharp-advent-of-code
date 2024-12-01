@@ -5,12 +5,7 @@ namespace AdventOfCode.Lib;
 
 public static partial class AocFileReaderService
 {
-    public static AocInput ReadInput(string from) => new()
-    {
-        Text = ReadAsString(from),
-        Lines = ReadAsStream(from),
-        AllLines = ReadAsLines(from)
-    };
+    public static AocInput ReadInput(string from) => new(ReadAsString(from), ReadAsStream(from), ReadAsLines(from));
 
     private static string ReadAsString(string from) => FetchFile(from, TextReader);
 
