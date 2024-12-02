@@ -1,11 +1,12 @@
 using System.ComponentModel;
 using AdventOfCode.Lib;
+using AdventOfCode.Y2024.FSharp;
 using FluentAssertions;
 using static AdventOfCode.Lib.AocFileReaderService;
 
 namespace AdventOfCode.Y2024.Tests.Unit;
 
-[AocPuzzle(2024, 2, "Red-Nosed Reports", "C#")]
+[AocPuzzle(2024, 2, "Red-Nosed Reports", "C#", "F#")]
 public sealed class Day02Tests : IAocDayTest<int>
 {
     private const string Day = nameof(Day02);
@@ -41,6 +42,25 @@ public sealed class Day02Tests : IAocDayTest<int>
     {
         var result = Day02.Part2(input);
     
+        result.Should().Be(expected);
+    }    
+    [Theory]
+    [MemberData(nameof(Part1Data))]
+    [Description("How many reports are safe?")]
+    public void FSharp_Part1(AocInput input, int expected)
+    {
+        var result = Fay02.part1(input);
+
+        result.Should().Be(expected);
+    }
+
+    [Theory]
+    [MemberData(nameof(Part2Data))]
+    [Description("How many reports are now safe?")]
+    public void FSharp_Part2(AocInput input, int expected)
+    {
+        var result = Fay02.part2(input);
+
         result.Should().Be(expected);
     }
 }
