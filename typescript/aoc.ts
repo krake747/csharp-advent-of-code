@@ -1,12 +1,12 @@
 import * as fs from "fs/promises";
 import * as path from "path";
 
-interface AocInput {
+export interface AocInput {
     text: string;
     lines: string[];
 }
 
-const findAocInput = async (filePath: string): Promise<AocInput | null> => {
+export const findAocInput = async (filePath: string): Promise<AocInput> => {
     const fullPath = path.resolve(filePath);
     try {
         const text = await fs.readFile(fullPath, "utf-8");
@@ -17,11 +17,6 @@ const findAocInput = async (filePath: string): Promise<AocInput | null> => {
         return <AocInput>{ text, lines };
     } catch (error) {
         console.error(`Unable to read file at ${filePath}: ${error}`);
-        return null;
+        throw new Error();
     }
-};
-
-// Export only the function using CommonJS
-module.exports = {
-    findAocInput
 };

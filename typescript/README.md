@@ -1,5 +1,5 @@
 # AOC Typescript
 
 ```ts
-npx ts-node 2024/day01.ts
+npx tsx 2024/day01.ts
 ```

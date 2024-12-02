@@ -1,6 +1,7 @@
 {
     "name": "advent-of-code",
     "version": "1.0.0",
+    "type": "module",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
@@ -9,7 +10,9 @@
     "license": "MIT",
     "description": "",
     "devDependencies": {
+        "@types/node": "^22.10.1",
         "ts-node": "^10.9.2",
+        "tslib": "^2.8.1",
         "typescript": "^5.7.2"
     }
 }

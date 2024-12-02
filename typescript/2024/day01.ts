@@ -1,9 +1,4 @@
-const aoc = require("./../aoc");
-
-interface AocInput {
-    text: string;
-    lines: string[];
-}
+import { findAocInput, AocInput } from "./../aoc";
 
 function zip<T>(arr1: T[], arr2: T[]) {
     return arr1.map((element, index) => [element, arr2[index]]);
@@ -24,8 +19,8 @@ function part2(input: AocInput): number {
 }
 
 async function main() {
-    const test = await aoc.findAocInput("./2024/data/Day01_Test.txt");
-    const real = await aoc.findAocInput("./2024/data/Day01.txt");
+    const test = await findAocInput("./2024/data/Day01_Test.txt");
+    const real = await findAocInput("./2024/data/Day01.txt");
     console.log("Part 1:", part1(test), part1(real), "expected", 1660292);
     console.log("Part 2:", part2(test), part2(real), "expected", 22776016);
 }
