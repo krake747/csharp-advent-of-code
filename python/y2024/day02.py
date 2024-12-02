@@ -25,7 +25,7 @@ def monotonicDecreasing(pairs: list[Pair]) -> bool:
 
 
 def monotonic(instructions: list[int]) -> bool:
-    pairs = [Pair(left, right) for left, right in zip(instructions, instructions[1:])]
+    pairs = [Pair(l, r) for l, r in zip(instructions, instructions[1:])]
     return monotonicIncreasing(pairs) or monotonicDecreasing(pairs)
 
 
