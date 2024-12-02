@@ -20,8 +20,8 @@ public sealed class Day02Tests : IAocDayTest<int>
 
     public static TheoryData<AocInput, int> Part2Data => new()
     {
-        { ReadInput(TestData), 0 },
-        { ReadInput(RealData), 0 }
+        { ReadInput(TestData), 4 },
+        { ReadInput(RealData), 428 }
     };
 
     [Theory]
@@ -36,7 +36,7 @@ public sealed class Day02Tests : IAocDayTest<int>
     
     [Theory]
     [MemberData(nameof(Part2Data))]
-    [Description("<insert question 2 here>")]
+    [Description("How many reports are now safe?")]
     public void Part2(AocInput input, int expected)
     {
         var result = Day02.Part2(input);
