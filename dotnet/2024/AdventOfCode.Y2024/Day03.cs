@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 using AdventOfCode.Lib;
-using State = (bool Enabled, long Result);
+using State = (bool Enabled, long Total);
 
 namespace AdventOfCode.Y2024;
 
@@ -18,11 +18,11 @@ public sealed partial class Day03 : IAocDay<long>
                 {
                     "do()" => state with { Enabled = true },
                     "don't()" => state with { Enabled = false },
-                    _ => state.Enabled ? state with { Result = state.Result + Instructions(m) } : state
+                    _ => state.Enabled ? state with { Total = state.Total + Instructions(m) } : state
                 }
             )
         )
-        .Pipe(state => state.Result);
+        .Pipe(state => state.Total);
 
     private static int Instructions(Match m) =>
         int.Parse(m.Groups[1].Value) * int.Parse(m.Groups[2].Value);
