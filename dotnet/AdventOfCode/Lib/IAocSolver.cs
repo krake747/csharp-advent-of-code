@@ -8,7 +8,13 @@ public interface IAocSolver
 
 public static class AocSolverExtensions 
 {
-    public static string WorkingDir(int year) => Path.Combine($"Y{year}");
+    public static int Year(this IAocSolver solver) => Year(solver.GetType());
 
-    public static string WorkingDir(int year, int day) => Path.Combine(WorkingDir(year), $"Day{day:00}");
+    public static int Year(Type t) => int.Parse(t.FullName!.Split('.')[1][1..]);
+
+    public static int Day(this IAocSolver solver) => Day(solver.GetType());
+
+    public static int Day(Type t) => int.Parse(t.FullName!.Split('.')[2][3..]);
+
+    public static string WorkingDir(int year, int day) => Path.Combine($"Y{year}", $"Day{day:00}");
 }
