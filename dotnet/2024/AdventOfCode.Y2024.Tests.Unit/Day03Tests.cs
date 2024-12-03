@@ -10,18 +10,19 @@ public sealed class Day03Tests : IAocDayTest<long>
 {
     private const string Day = nameof(Day03);
     private const string TestData = @$"..\..\..\Data\{Day}_Test.txt";
+    private const string TestData2 = @$"..\..\..\Data\{Day}_Test_2.txt";
     private const string RealData = @$"..\..\..\Data\{Day}.txt";
 
     public static TheoryData<AocInput, long> Part1Data => new()
     {
-        { ReadInput(TestData), 161L },
-        { ReadInput(RealData), 166357705L }
+        { ReadInput(TestData), 161 },
+        { ReadInput(RealData), 166357705 }
     };
 
     public static TheoryData<AocInput, long> Part2Data => new()
     {
-        { ReadInput(TestData), 0 },
-        { ReadInput(RealData), 0 }
+        { ReadInput(TestData2), 48 },
+        { ReadInput(RealData), 88811886 }
     };
 
     [Theory]
@@ -36,7 +37,7 @@ public sealed class Day03Tests : IAocDayTest<long>
     
     [Theory]
     [MemberData(nameof(Part2Data))]
-    [Description("<insert question 2 here>")]
+    [Description("What do you get if you add up all of the results of just the enabled multiplications?")]
     public void Part2(AocInput input, long expected)
     {
         var result = Day03.Part2(input);
