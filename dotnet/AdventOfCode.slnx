@@ -43,4 +43,5 @@
   </Folder>
   <Project Path="AdventOfCode.Cli\AdventOfCode.Cli.csproj" Type="Classic C#" />
   <Project Path="AdventOfCode.Lib\AdventOfCode.Lib.csproj" Type="Classic C#" />
+  <Project Path="AdventOfCode\AdventOfCode.csproj" Type="Classic C#" />
 </Solution>
