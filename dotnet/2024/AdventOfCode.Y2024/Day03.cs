@@ -18,7 +18,8 @@ public sealed partial class Day03 : IAocDay<long>
                 {
                     "do()" => state with { Enabled = true },
                     "don't()" => state with { Enabled = false },
-                    _ => state.Enabled ? state with { Total = state.Total + Instructions(m) } : state
+                    _ when state.Enabled => state with { Total = state.Total + Instructions(m) },
+                    _ => state
                 }
             )
         )

@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using AdventOfCode.Lib;
+using AdventOfCode.Y2024.FSharp;
 using FluentAssertions;
 using static AdventOfCode.Lib.AocFileReaderService;
 
@@ -42,6 +43,26 @@ public sealed class Day03Tests : IAocDayTest<long>
     {
         var result = Day03.Part2(input);
     
+        result.Should().Be(expected);
+    }
+    
+    [Theory]
+    [MemberData(nameof(Part1Data))]
+    [Description("What do you get if you add up all of the results of the multiplications?")]
+    public void FSharp_Part1(AocInput input, long expected)
+    {
+        var result = Fay03.part1(input);
+
+        result.Should().Be(expected);
+    }
+
+    [Theory]
+    [MemberData(nameof(Part2Data))]
+    [Description("What do you get if you add up all of the results of just the enabled multiplications?")]
+    public void FSharp_Part2(AocInput input, long expected)
+    {
+        var result = Fay03.part2(input);
+
         result.Should().Be(expected);
     }
 }

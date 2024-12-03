@@ -44,6 +44,7 @@ public sealed class Day02Tests : IAocDayTest<int>
     
         result.Should().Be(expected);
     }    
+    
     [Theory]
     [MemberData(nameof(Part1Data))]
     [Description("How many reports are safe?")]

@@ -1,5 +1,6 @@
 ﻿namespace AdventOfCode.Y2024.FSharp
 
+open System.Text.RegularExpressions
 open AdventOfCode.Lib
 
 module Fay01 =
@@ -63,3 +64,28 @@ module Fay02 =
         |> instructions
         |> Seq.filter (fun instruction -> problemDampener instruction |> Seq.exists monotonic)
         |> Seq.length
+
+module Fay03 =
+            
+    type State = { Enabled: bool; Total: int64 }
+            
+    let instructions (m: Match): int64 =
+        int64 (m.Groups[1].Value) * int64 (m.Groups[2].Value)
+    
+    let updateState (state: State) (m: Match) =
+        match m.Value with
+        | "do()" -> { state with Enabled = true }
+        | "don't()" -> { state with Enabled = false }
+        | _ when state.Enabled -> { state with Total = state.Total + instructions(m) }
+        | _ -> state
+    
+    let part1 (input: AocInput): int64 =
+        input.Text
+        |> Regex(@"mul\((\d+),(\d+)\)").Matches
+        |> Seq.sumBy instructions
+        
+    let part2 (input: AocInput): int64 =
+        input.Text
+        |> Regex(@"do\(\)|don't\(\)|mul\((\d+),(\d+)\)").Matches
+        |> Seq.fold updateState { Enabled = true; Total = 0L }
+        |> _.Total
