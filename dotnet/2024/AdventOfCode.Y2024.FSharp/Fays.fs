@@ -73,11 +73,11 @@ module Fay03 =
     let instructions (m: Match) : int64 =
         int64 (m.Groups[1].Value) * int64 (m.Groups[2].Value)
 
-    let updateState (state: State) (m: Match) =
+    let conditionalInstructions (state: State) (m: Match) =
         match m.Value with
         | "do()" -> { state with Enabled = true }
         | "don't()" -> { state with Enabled = false }
-        | _ when state.Enabled -> { state with Total = state.Total + instructions (m) }
+        | _ when state.Enabled -> { state with Total = state.Total + instructions m }
         | _ -> state
 
     let part1 (input: AocInput) : int64 =
@@ -86,5 +86,5 @@ module Fay03 =
     let part2 (input: AocInput) : int64 =
         input.Text
         |> Regex(@"do\(\)|don't\(\)|mul\((\d+),(\d+)\)").Matches
-        |> Seq.fold updateState { Enabled = true; Total = 0L }
+        |> Seq.fold conditionalInstructions { Enabled = true; Total = 0 }
         |> _.Total
