@@ -13,27 +13,25 @@ class Pair:
 
 
 def instructions(lines: list[str]) -> list[list[int]]:
-    return [list(map(int, line.split(" "))) for line in lines]
+    return [list(map(int, l.split(" "))) for l in lines]
 
 
 def monotonicIncreasing(pairs: list[Pair]) -> bool:
-    return all(1 <= (p.right - p.left) <= 3 for p in pairs)
+    return all(1 <= (r - l) <= 3 for l, r in pairs)
 
 
 def monotonicDecreasing(pairs: list[Pair]) -> bool:
-    return all(1 <= (p.left - p.right) <= 3 for p in pairs)
+    return all(1 <= (l - r) <= 3 for l, r in pairs)
 
 
 def monotonic(instructions: list[int]) -> bool:
-    pairs = [Pair(l, r) for l, r in zip(instructions, instructions[1:])]
+    pairs = [Pair(ls, rs) for ls, rs in zip(instructions, instructions[1:])]
     return monotonicIncreasing(pairs) or monotonicDecreasing(pairs)
 
 
 def problemDampener(instructions: list[str]) -> Iterator[list[int]]:
     for i in range(len(instructions) + 1):
-        take = instructions[: max(0, i - 1)]
-        skip = instructions[i:]
-        yield take + skip
+        yield instructions[: max(0, i - 1)] + instructions[i:]
 
 
 def part1(input: AocInput) -> int:
