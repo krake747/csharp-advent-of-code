@@ -6,5 +6,6 @@ Instructions to the puzzle problems are found on: https://adventofcode.com/2024/
 |:----------------------------|:------:|:------:|
 | Day  1 - Historian Hysteria | :star: | :star: |
 | Day  2 - Red-Nosed Reports  | :star: | :star: |
+| Day  3 - Mull It Over       | :star: |        |
 
 
