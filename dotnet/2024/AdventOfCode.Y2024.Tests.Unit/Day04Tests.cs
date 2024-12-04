@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using AdventOfCode.Lib;
+using AdventOfCode.Y2024.FSharp;
 using FluentAssertions;
 using static AdventOfCode.Lib.AocFileReaderService;
 
@@ -40,6 +41,26 @@ public sealed class Day04Tests : IAocDayTest<int>
     public void Part2(AocInput input, int expected)
     {
         var result = Day04.Part2(input);
+    
+        result.Should().Be(expected);
+    }
+    
+    [Theory]
+    [MemberData(nameof(Part1Data))]
+    [Description("How many times does XMAS appear?")]
+    public void FSharp_Part1(AocInput input, int expected)
+    {
+        var result = Fay04.part1(input);
+
+        result.Should().Be(expected);
+    }
+    
+    [Theory]
+    [MemberData(nameof(Part2Data))]
+    [Description("How many times does an X-MAS appear?")]
+    public void FSharp_Part2(AocInput input, int expected)
+    {
+        var result = Fay04.part2(input);
     
         result.Should().Be(expected);
     }

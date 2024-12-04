@@ -88,3 +88,59 @@ module Fay03 =
         |> Regex(@"do\(\)|don't\(\)|mul\((\d+),(\d+)\)").Matches
         |> Seq.fold conditionalInstructions { Enabled = true; Total = 0 }
         |> _.Total
+
+module Fay04 =
+
+    [<Struct>]
+    type Point = {
+        X: int
+        Y: int
+    } with
+
+        static member North = { X = 0; Y = -1 }
+        static member NorthEast = { X = 1; Y = -1 }
+        static member East = { X = 1; Y = 0 }
+        static member SouthEast = { X = 1; Y = 1 }
+        static member South = { X = 0; Y = 1 }
+        static member SouthWest = { X = -1; Y = 1 }
+        static member West = { X = -1; Y = 0 }
+        static member NorthWest = { X = -1; Y = -1 }
+        static member (+)(p1: Point, p2: Point) = { X = p1.X + p2.X; Y = p1.Y + p2.Y }
+        static member (*)(p: Point, factor: int) = { X = p.X * factor; Y = p.Y * factor }
+
+    let parseMap (lines: string array) : Map<Point, char> =
+        lines
+        |> Array.indexed
+        |> Array.collect (fun (y, line) -> [|
+            for x, char in line.ToCharArray() |> Array.indexed -> { X = x; Y = y }, char
+        |])
+        |> Map.ofArray
+
+    let wordSearch (map: Map<Point, char>) (pattern: string) (p: Point) (dir: Point) =
+        let chars = [
+            for i in 0 .. pattern.Length - 1 -> map.TryFind(p + dir * i) |> Option.defaultValue ' '
+        ]
+
+        chars = Seq.toList pattern || chars = Seq.toList (Seq.rev pattern)
+
+    let wordSearchXmas (map: Map<Point, char>) =
+        let directions = [ Point.East; Point.SouthEast; Point.South; Point.SouthWest ]
+        let wordSearchOnMapForXmas = wordSearch map "XMAS"
+
+        map.Keys
+        |> Seq.collect (fun p -> directions |> Seq.map (wordSearchOnMapForXmas p))
+        |> Seq.filter id
+
+    let wordSearchLargeXmas (map: Map<Point, char>) =
+        let wordSearchOnMapForLargeXmas = wordSearch map "MAS"
+
+        map.Keys
+        |> Seq.filter (fun p ->
+            wordSearchOnMapForLargeXmas (p + Point.NorthWest) Point.SouthEast
+            && wordSearchOnMapForLargeXmas (p + Point.SouthWest) Point.NorthEast)
+
+    let part1 (input: AocInput) =
+        input.AllLines |> parseMap |> wordSearchXmas |> Seq.length
+
+    let part2 (input: AocInput) =
+        input.AllLines |> parseMap |> wordSearchLargeXmas |> Seq.length
