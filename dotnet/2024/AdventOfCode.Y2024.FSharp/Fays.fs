@@ -116,31 +116,31 @@ module Fay04 =
         |])
         |> Map.ofArray
 
-    let wordSearch (map: Map<Point, char>) (pattern: string) (p: Point) (dir: Point) =
+    let searchWord (map: Map<Point, char>) (pattern: string) (p: Point) (dir: Point) =
         let chars = [
             for i in 0 .. pattern.Length - 1 -> map.TryFind(p + dir * i) |> Option.defaultValue ' '
         ]
 
         chars = Seq.toList pattern || chars = Seq.toList (Seq.rev pattern)
 
-    let wordSearchXmas (map: Map<Point, char>) =
+    let searchXmas (map: Map<Point, char>) =
         let directions = [ Point.East; Point.SouthEast; Point.South; Point.SouthWest ]
-        let wordSearchOnMapForXmas = wordSearch map "XMAS"
+        let searchMapForXmas = searchWord map "XMAS"
 
         map.Keys
-        |> Seq.collect (fun p -> directions |> Seq.map (wordSearchOnMapForXmas p))
+        |> Seq.collect (fun p -> directions |> Seq.map (searchMapForXmas p))
         |> Seq.filter id
 
-    let wordSearchLargeXmas (map: Map<Point, char>) =
-        let wordSearchOnMapForLargeXmas = wordSearch map "MAS"
+    let searchXmasShape (map: Map<Point, char>) =
+        let searchMapForXmasShape = searchWord map "MAS"
 
         map.Keys
         |> Seq.filter (fun p ->
-            wordSearchOnMapForLargeXmas (p + Point.NorthWest) Point.SouthEast
-            && wordSearchOnMapForLargeXmas (p + Point.SouthWest) Point.NorthEast)
+            searchMapForXmasShape (p + Point.NorthWest) Point.SouthEast
+            && searchMapForXmasShape (p + Point.SouthWest) Point.NorthEast)
 
     let part1 (input: AocInput) =
-        input.AllLines |> parseMap |> wordSearchXmas |> Seq.length
+        input.AllLines |> parseMap |> searchXmas |> Seq.length
 
     let part2 (input: AocInput) =
-        input.AllLines |> parseMap |> wordSearchLargeXmas |> Seq.length
+        input.AllLines |> parseMap |> searchXmasShape |> Seq.length
