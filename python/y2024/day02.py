@@ -16,20 +16,20 @@ def instructions(lines: list[str]) -> list[list[int]]:
     return [list(map(int, l.split(" "))) for l in lines]
 
 
-def monotonicIncreasing(pairs: list[Pair]) -> bool:
+def monotonic_increasing(pairs: list[Pair]) -> bool:
     return all(1 <= (r - l) <= 3 for l, r in pairs)
 
 
-def monotonicDecreasing(pairs: list[Pair]) -> bool:
+def monotonic_decreasing(pairs: list[Pair]) -> bool:
     return all(1 <= (l - r) <= 3 for l, r in pairs)
 
 
 def monotonic(instructions: list[int]) -> bool:
     pairs = [Pair(ls, rs) for ls, rs in zip(instructions, instructions[1:])]
-    return monotonicIncreasing(pairs) or monotonicDecreasing(pairs)
+    return monotonic_increasing(pairs) or monotonic_decreasing(pairs)
 
 
-def problemDampener(instructions: list[str]) -> Iterator[list[int]]:
+def problem_dampener(instructions: list[str]) -> Iterator[list[int]]:
     for i in range(len(instructions) + 1):
         yield instructions[: max(0, i - 1)] + instructions[i:]
 
@@ -39,7 +39,7 @@ def part1(input: AocInput) -> int:
 
 
 def part2(input: AocInput) -> int:
-    return sum(any(monotonic(i) for i in problemDampener(instr)) for instr in instructions(input.lines))
+    return sum(any(monotonic(i) for i in problem_dampener(instr)) for instr in instructions(input.lines))
 
 
 def main() -> None:
