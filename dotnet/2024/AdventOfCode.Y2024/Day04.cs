@@ -12,7 +12,7 @@ public sealed class Day04 : IAocDay<int>
         input.AllLines
             .Pipe(ParseMap)
             .Pipe(
-                static map =>
+                map =>
                     from point in map.Keys
                     from direction in new[] { Point.East, Point.SouthEast, Point.South, Point.SouthWest }
                     select WordSearch(map, point, direction, "XMAS")
@@ -49,13 +49,13 @@ internal readonly record struct Point(int X, int Y)
     : IAdditionOperators<Point, Point, Point>,
         IMultiplyOperators<Point, int, Point>
 {
-    public static readonly Point North = new(0, -1);      // Move up
-    public static readonly Point NorthEast = new(1, -1);  // Move diagonally up-right
-    public static readonly Point East = new(1, 0);        // Move right
-    public static readonly Point SouthEast = new(1, 1);   // Move diagonally down-right
-    public static readonly Point South = new(0, 1);       // Move down
-    public static readonly Point SouthWest = new(-1, 1);  // Move diagonally down-left
-    public static readonly Point West = new(-1, 0);       // Move left
+    public static readonly Point North = new(0, -1); // Move up
+    public static readonly Point NorthEast = new(1, -1); // Move diagonally up-right
+    public static readonly Point East = new(1, 0); // Move right
+    public static readonly Point SouthEast = new(1, 1); // Move diagonally down-right
+    public static readonly Point South = new(0, 1); // Move down
+    public static readonly Point SouthWest = new(-1, 1); // Move diagonally down-left
+    public static readonly Point West = new(-1, 0); // Move left
     public static readonly Point NorthWest = new(-1, -1); // Move diagonally up-left
 
     public static Point operator +(Point p1, Point p2) => new(p1.X + p2.X, p1.Y + p2.Y);
