@@ -15,7 +15,7 @@ public sealed class Day04 : IAocDay<int>
                 static map =>
                     from point in map.Keys
                     from direction in new[] { Point.East, Point.SouthEast, Point.South, Point.SouthWest }
-                    select WordSearchMatches(map, point, direction, "XMAS")
+                    select WordSearch(map, point, direction, "XMAS")
             )
             .Pipe(matches => matches.Count(m => m));
 
@@ -25,12 +25,12 @@ public sealed class Day04 : IAocDay<int>
             .Pipe(
                 map =>
                     from point in map.Keys
-                    select WordSearchMatches(map, point + Point.NorthWest, Point.SouthEast, "MAS") &&
-                           WordSearchMatches(map, point + Point.SouthWest, Point.NorthEast, "MAS")
+                    select WordSearch(map, point + Point.NorthWest, Point.SouthEast, "MAS") &&
+                           WordSearch(map, point + Point.SouthWest, Point.NorthEast, "MAS")
             )
             .Pipe(matches => matches.Count(m => m));
 
-    private static bool WordSearchMatches(Map map, Point point, Point direction, string pattern)
+    private static bool WordSearch(Map map, Point point, Point direction, string pattern)
     {
         var len = pattern.Length;
         char[] chars = [..Enumerable.Range(0, len).Select(i => map.GetValueOrDefault(point + direction * i))];
