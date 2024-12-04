@@ -42,7 +42,7 @@ module Fay02 =
         |> Array.forall (fun (left, right) -> 1 <= left - right && left - right <= 3)
 
     let monotonic (instructions: int array) =
-        let left = instructions |> Array.take (instructions.Length - 1)
+        let left = instructions |> Array.take (Array.length instructions - 1)
         let right = instructions |> Array.skip 1
         let pairs = Array.zip left right
 
@@ -50,7 +50,7 @@ module Fay02 =
 
     let problemDampener (instructions: int array) : int array seq =
         seq {
-            for i in 0 .. instructions.Length do
+            for i in 0 .. Array.length instructions do
                 let take = instructions |> Seq.take (max 0 (i - 1))
                 let skip = instructions |> Seq.skip i
                 yield Seq.append take skip |> Seq.toArray
@@ -112,13 +112,13 @@ module Fay04 =
         lines
         |> Array.indexed
         |> Array.collect (fun (y, line) -> [|
-            for x, char in line.ToCharArray() |> Array.indexed -> { X = x; Y = y }, char
+            for x, c in line |> Seq.toArray |> Array.indexed -> { X = x; Y = y }, c
         |])
         |> Map.ofArray
 
     let searchWord (map: Map<Point, char>) (pattern: string) (p: Point) (dir: Point) =
         let chars = [
-            for i in 0 .. pattern.Length - 1 -> map.TryFind(p + dir * i) |> Option.defaultValue ' '
+            for i in 0 .. pattern.Length - 1 -> map.TryFind (p + dir * i) |> Option.defaultValue ' '
         ]
 
         chars = Seq.toList pattern || chars = Seq.toList (Seq.rev pattern)
