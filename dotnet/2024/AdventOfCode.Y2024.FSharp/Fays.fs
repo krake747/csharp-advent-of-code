@@ -3,6 +3,7 @@
 open System.Text.RegularExpressions
 open AdventOfCode.Lib
 
+[<AocPuzzle(2024, 1, "Historian Hysteria", "F#")>]
 module Fay01 =
 
     let instructions (lines: string seq) (col: int) =
@@ -28,6 +29,7 @@ module Fay01 =
 
         left |> Seq.sumBy (fun id -> getCount id * id)
 
+[<AocPuzzle(2024, 2, "Red-Nosed Reports", "F#")>]
 module Fay02 =
 
     let instructions (lines: string seq) =
@@ -65,6 +67,7 @@ module Fay02 =
         |> Seq.filter (fun instruction -> problemDampener instruction |> Seq.exists monotonic)
         |> Seq.length
 
+[<AocPuzzle(2024, 3, "Mull It Over", "F#")>]
 module Fay03 =
 
     [<Struct>]
@@ -89,6 +92,7 @@ module Fay03 =
         |> Seq.fold conditionalInstructions { Enabled = true; Total = 0 }
         |> _.Total
 
+[<AocPuzzle(2024, 4, "Ceres Search", "F#")>]
 module Fay04 =
 
     [<Struct>]
@@ -118,7 +122,7 @@ module Fay04 =
 
     let searchWord (map: Map<Point, char>) (pattern: string) (p: Point) (dir: Point) =
         let chars = [
-            for i in 0 .. pattern.Length - 1 -> map.TryFind (p + dir * i) |> Option.defaultValue ' '
+            for i in 0 .. pattern.Length - 1 -> map.TryFind(p + dir * i) |> Option.defaultValue ' '
         ]
 
         chars = Seq.toList pattern || chars = Seq.toList (Seq.rev pattern)
@@ -144,3 +148,48 @@ module Fay04 =
 
     let part2 (input: AocInput) =
         input.AllLines |> parseMap |> searchXmasShape |> Seq.length
+
+[<AocPuzzle(2024, 5, "Print Queue", "F#")>]
+module Fay05 =
+
+    type Pages = string array
+    type PageUpdates = string array array
+    type PagePrecedenceRules = System.Collections.Generic.Comparer<string>
+
+    type SafetyManual = {
+        Updates: PageUpdates
+        PrecedenceRules: PagePrecedenceRules
+    }
+
+    let sleighLaunchSafetyManual (text: string) =
+        let parts = text.Split("\n\n")
+        let ordering = parts[0].Split('\n') |> Set.ofArray
+        let updates = parts[1].Split('\n') |> Array.map _.Split(',')
+
+        let precedenceRules =
+            PagePrecedenceRules.Create(fun p1 p2 -> if ordering.Contains $"%s{p1}|%s{p2}" then -1 else 1)
+
+        { Updates = updates; PrecedenceRules = precedenceRules }
+
+    let elfPageSorting (precedenceRules: PagePrecedenceRules) (pages: Pages) =
+        pages = Array.sortWith (fun p1 p2 -> precedenceRules.Compare(p1, p2)) pages
+
+    let extractMiddlePage (pages: Pages) = int pages[Array.length pages / 2]
+
+    let part1 (input: AocInput) =
+        input.Text
+        |> sleighLaunchSafetyManual
+        |> fun manual ->
+            manual.Updates
+            |> Array.filter (elfPageSorting manual.PrecedenceRules)
+            |> Array.sumBy extractMiddlePage
+
+
+    let part2 (input: AocInput) =
+        input.Text
+        |> sleighLaunchSafetyManual
+        |> fun manual ->
+            manual.Updates
+            |> Array.filter (fun pages -> not (elfPageSorting manual.PrecedenceRules pages))
+            |> Array.map (Array.sortWith (fun p1 p2 -> manual.PrecedenceRules.Compare(p1, p2)))
+            |> Array.sumBy extractMiddlePage
