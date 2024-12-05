@@ -1,7 +1,7 @@
 using AdventOfCode.Lib;
 
-using PageOrderingRules = System.Collections.Generic.HashSet<string>;
-using PageProductionUpdates = string[][];
+using PagePrecedenceRules = System.Collections.Generic.Comparer<string>;
+using PageUpdates = string[][];
 
 namespace AdventOfCode.Y2024;
 
@@ -10,34 +10,32 @@ public sealed class Day05 : IAocDay<int>
 {
     public static int Part1(AocInput input) => 
         input.Text
-            .Pipe(Instructions)
-            .Pipe(instructions =>
-            {
-                var (pageOrderingRules, pageProductionUpdates) = instructions;
-                var comparer = Comparer<string>.Create((p1, p2) => pageOrderingRules.Contains($"{p1}|{p2}") ? -1 : 1);
-                return pageProductionUpdates
-                    .Where(pages => pages.SequenceEqual(pages.OrderBy(p => p, comparer)))
-                    .Sum(pages => int.Parse(pages[pages.Length / 2]));
-            });
+            .Pipe(SleighLaunchSafetyManual)
+            .Pipe(manual => manual.Updates
+                .Where(pages => ElfPageSorting(pages, manual.PrecedenceRules))
+                .Sum(ExtractMiddlePage)
+            );
 
     public static int Part2(AocInput input) => 
         input.Text
-            .Pipe(Instructions)
-            .Pipe(instructions =>
-            {
-                var (pageOrderingRules, pageProductionUpdates) = instructions;
-                var comparer = Comparer<string>.Create((p1, p2) => pageOrderingRules.Contains($"{p1}|{p2}") ? -1 : 1);
-                return pageProductionUpdates
-                    .Where(pages => pages.SequenceEqual(pages.OrderBy(p => p, comparer)) is false)
-                    .Select(pages => pages.OrderBy(p => p, comparer).ToArray())
-                    .Sum(pages => int.Parse(pages[pages.Length / 2]));
-            });
+            .Pipe(SleighLaunchSafetyManual)
+            .Pipe(manual => manual.Updates
+                .Where(pages => ElfPageSorting(pages, manual.PrecedenceRules) is false)
+                .Select(pages => pages.OrderBy(p => p, manual.PrecedenceRules).ToArray())
+                .Sum(ExtractMiddlePage)
+            );
 
-    private static (PageOrderingRules, PageProductionUpdates) Instructions(string text)
+    private static bool ElfPageSorting(string[] pages, PagePrecedenceRules precedenceRules) =>
+        pages.SequenceEqual(pages.OrderBy(p => p, precedenceRules));
+    
+    private static int ExtractMiddlePage(string[] pages) => 
+        int.Parse(pages[pages.Length / 2]);
+
+    private static (PageUpdates Updates, PagePrecedenceRules PrecedenceRules) SleighLaunchSafetyManual(string text)
     {
         var parts = text.Split("\n\n");
-        var pageOrderingRules = parts[0].Split('\n').ToHashSet();
-        var pageProductionUpdates = parts[1].Split('\n').Select(u => u.Split(',')).ToArray();
-        return (pageOrderingRules, pageProductionUpdates);
+        var ordering = parts[0].Split('\n').ToHashSet();
+        var updates = parts[1].Split('\n').Select(u => u.Split(',')).ToArray();
+        return (updates, PagePrecedenceRules.Create((p1, p2) => ordering.Contains($"{p1}|{p2}") ? -1 : 1));
     }
 }
