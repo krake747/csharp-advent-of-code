@@ -30,14 +30,14 @@ module Fay01 =
 
 module Fay02 =
 
-    let instructions (lines: string seq) : int array seq =
+    let instructions (lines: string seq) =
         lines |> Seq.map (fun line -> line.Split ' ' |> Array.map int)
 
-    let monotonicIncreasing (pairs: (int * int) array) : bool =
+    let monotonicIncreasing (pairs: (int * int) array) =
         pairs
         |> Array.forall (fun (left, right) -> 1 <= right - left && right - left <= 3)
 
-    let monotonicDecreasing (pairs: (int * int) array) : bool =
+    let monotonicDecreasing (pairs: (int * int) array) =
         pairs
         |> Array.forall (fun (left, right) -> 1 <= left - right && left - right <= 3)
 
@@ -48,7 +48,7 @@ module Fay02 =
 
         (monotonicIncreasing pairs) || (monotonicDecreasing pairs)
 
-    let problemDampener (instructions: int array) : int array seq =
+    let problemDampener (instructions: int array) =
         seq {
             for i in 0 .. Array.length instructions do
                 let take = instructions |> Seq.take (max 0 (i - 1))
@@ -56,10 +56,10 @@ module Fay02 =
                 yield Seq.append take skip |> Seq.toArray
         }
 
-    let part1 (input: AocInput) : int =
+    let part1 (input: AocInput) =
         input.Lines |> instructions |> Seq.filter monotonic |> Seq.length
 
-    let part2 (input: AocInput) : int =
+    let part2 (input: AocInput) =
         input.Lines
         |> instructions
         |> Seq.filter (fun instruction -> problemDampener instruction |> Seq.exists monotonic)
