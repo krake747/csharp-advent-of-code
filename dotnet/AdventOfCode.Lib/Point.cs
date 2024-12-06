@@ -21,5 +21,5 @@ public readonly record struct Point(int X, int Y)
     public static Point operator *(Point p1, Point p2) => new(p1.X * p2.X - p1.Y * p2.Y, p1.X * p2.Y + p1.Y * p2.X);
     public static Point operator *(Point p, int factor) => new(p.X * factor, p.Y * factor);
     
-    public Point RotateRight() => this * RotationClockwise90; // new(-Y, X)
+    public static Point RotateRight(Point p) => p * RotationClockwise90; // new(-Y, X)
 }

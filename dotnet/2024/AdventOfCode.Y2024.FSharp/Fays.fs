@@ -193,3 +193,94 @@ module Fay05 =
             |> Array.filter (fun pages -> not (elfPageSorting manual.PrecedenceRules pages))
             |> Array.map (Array.sortWith (fun p1 p2 -> manual.PrecedenceRules.Compare(p1, p2)))
             |> Array.sumBy extractMiddlePage
+
+[<AocPuzzle(2024, 6, "Guard Gallivant", "F#")>]
+module Fay06 =
+
+    [<Struct>]
+    type Point = {
+        X: int
+        Y: int
+    } with
+
+        static member North = { X = 0; Y = -1 }
+        static member NorthEast = { X = 1; Y = -1 }
+        static member East = { X = 1; Y = 0 }
+        static member SouthEast = { X = 1; Y = 1 }
+        static member South = { X = 0; Y = 1 }
+        static member SouthWest = { X = -1; Y = 1 }
+        static member West = { X = -1; Y = 0 }
+        static member NorthWest = { X = -1; Y = -1 }
+        static member RotationClockwise90 = { X = 0; Y = 1 }
+        static member (+)(p1: Point, p2: Point) = { X = p1.X + p2.X; Y = p1.Y + p2.Y }
+
+        static member (*)(p1: Point, p2: Point) = {
+            X = p1.X * p2.X - p1.Y * p2.Y
+            Y = p1.X * p2.Y + p1.Y * p2.X
+        }
+
+        static member (*)(p: Point, factor: int) = { X = p.X * factor; Y = p.Y * factor }
+        static member rotateRight(p: Point) = p * Point.RotationClockwise90
+
+    type PatrolMap = Map<Point, char>
+    type Positions = Set<Point>
+
+    type PatrolState = { Position: Point; Direction: Point }
+
+    type GuardRoute = { Positions: Positions; Loop: bool }
+
+    let parsePatrolMap (lines: string array) =
+        lines
+        |> Array.indexed
+        |> Array.collect (fun (y, line) -> [|
+            for x, c in line |> Seq.toArray |> Array.indexed -> { X = x; Y = y }, c
+        |])
+        |> Map.ofArray
+
+    let locateGuardStart (map: PatrolMap) (c: char) =
+        map |> Seq.find (fun kvp -> kvp.Value = c) |> _.Key
+
+    let trackGuardRoute (map: PatrolMap) (start: Point) =
+        let mutable position = start
+        let mutable patrol = { Position = start; Direction = Point.North }
+        let visited = System.Collections.Generic.HashSet<PatrolState>()
+
+        while map.ContainsKey patrol.Position && visited.Add patrol do
+            patrol <-
+                match map.TryFind(patrol.Position + patrol.Direction) |> Option.defaultValue ' ' with
+                | '#' -> {
+                    patrol with
+                        Direction = Point.rotateRight patrol.Direction
+                  }
+                | _ ->
+                    position <- position + patrol.Direction
+                    { patrol with Position = position }
+
+        {
+            Positions = visited |> Seq.map _.Position |> Set.ofSeq
+            Loop = visited.Contains patrol
+        }
+
+    let updateMap (map: PatrolMap) (obstacle: char) (position: Point) =
+        map |> Map.map (fun key value -> if key = position then obstacle else value)
+
+    let part1 (input: AocInput) =
+        input.AllLines
+        |> parsePatrolMap
+        |> (fun m -> (m, locateGuardStart m '^'))
+        |> (fun (map, start) -> trackGuardRoute map start)
+        |> _.Positions
+        |> Set.count
+
+    let part2 (input: AocInput) =
+        let map = parsePatrolMap input.AllLines
+        let start = locateGuardStart map '^'
+        let route = trackGuardRoute map start
+
+        route
+        |> _.Positions
+        |> Set.filter (fun p -> map[p] = '.')
+        |> Seq.sumBy (fun obstacle ->
+            let updatedMap = updateMap map '#' obstacle
+            let route = trackGuardRoute updatedMap start
+            route |> _.Loop |> (fun loop -> if loop then 1 else 0))

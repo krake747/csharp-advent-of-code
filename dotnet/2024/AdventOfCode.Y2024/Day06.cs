@@ -43,7 +43,7 @@ public sealed class Day06 : IAocDay<int>
         {
             patrol = map.GetValueOrDefault(patrol.Position + patrol.Direction) switch
             {
-                '#' => patrol with { Direction = patrol.Direction.RotateRight() },
+                '#' => patrol with { Direction = Point.RotateRight(patrol.Direction) },
                 _ => patrol with { Position = position += patrol.Direction }
             };
         }
