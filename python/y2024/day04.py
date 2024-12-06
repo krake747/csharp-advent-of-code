@@ -55,7 +55,7 @@ class Point:
         return Point(self.x * factor, self.y * factor)
 
 
-Map = defaultdict[Point, str]
+type Map = defaultdict[Point, str]
 
 
 def parse_map(lines: list[str]) -> Map:

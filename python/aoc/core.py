@@ -32,8 +32,8 @@ def allValid(source: TIn, *callables: Unpack[Callable[[TIn], bool]]) -> bool:
 
 def getAocInput(path: str) -> AocInput:
     with open(path, "r", encoding="utf-8-sig") as f:
-        text = f.read()
-        lines = text.splitlines()
+        text = f.read().rstrip("\n")
+        lines = [line for line in text.splitlines() if line.strip()]
         return AocInput(text, lines)
 
 
