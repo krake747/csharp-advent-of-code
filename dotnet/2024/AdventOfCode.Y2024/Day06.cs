@@ -23,9 +23,9 @@ public sealed class Day06 : IAocDay<int>
                 var map = ParsePatrolMap(lines);
                 var start = LocateGuardStart(map, '^');
                 return TrackGuardRoute(map, start).Positions.Where(p => map[p] is '.')
-                    .Sum(obstacle =>
+                    .Sum(open =>
                     {
-                        var updatedMap = UpdateMap(map, '#', obstacle);
+                        var updatedMap = UpdateMap(map, '#', open);
                         var (_, loop) = TrackGuardRoute(updatedMap, start);
                         return loop ? 1 : 0;
                     });

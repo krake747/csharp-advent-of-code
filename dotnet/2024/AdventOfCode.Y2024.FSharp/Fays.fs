@@ -3,6 +3,34 @@
 open System.Text.RegularExpressions
 open AdventOfCode.Lib
 
+module Lib =
+
+    [<Struct>]
+    type Point = {
+        X: int
+        Y: int
+    } with
+
+        static member North = { X = 0; Y = -1 }
+        static member NorthEast = { X = 1; Y = -1 }
+        static member East = { X = 1; Y = 0 }
+        static member SouthEast = { X = 1; Y = 1 }
+        static member South = { X = 0; Y = 1 }
+        static member SouthWest = { X = -1; Y = 1 }
+        static member West = { X = -1; Y = 0 }
+        static member NorthWest = { X = -1; Y = -1 }
+        static member RotationClockwise90 = { X = 0; Y = 1 }
+        static member (+)(p1: Point, p2: Point) = { X = p1.X + p2.X; Y = p1.Y + p2.Y }
+
+        static member (*)(p1: Point, p2: Point) = {
+            X = p1.X * p2.X - p1.Y * p2.Y
+            Y = p1.X * p2.Y + p1.Y * p2.X
+        }
+
+        static member (*)(p: Point, factor: int) = { X = p.X * factor; Y = p.Y * factor }
+        static member rotateRight(p: Point) = p * Point.RotationClockwise90
+
+
 [<AocPuzzle(2024, 1, "Historian Hysteria", "F#")>]
 module Fay01 =
 
@@ -95,22 +123,7 @@ module Fay03 =
 [<AocPuzzle(2024, 4, "Ceres Search", "F#")>]
 module Fay04 =
 
-    [<Struct>]
-    type Point = {
-        X: int
-        Y: int
-    } with
-
-        static member North = { X = 0; Y = -1 }
-        static member NorthEast = { X = 1; Y = -1 }
-        static member East = { X = 1; Y = 0 }
-        static member SouthEast = { X = 1; Y = 1 }
-        static member South = { X = 0; Y = 1 }
-        static member SouthWest = { X = -1; Y = 1 }
-        static member West = { X = -1; Y = 0 }
-        static member NorthWest = { X = -1; Y = -1 }
-        static member (+)(p1: Point, p2: Point) = { X = p1.X + p2.X; Y = p1.Y + p2.Y }
-        static member (*)(p: Point, factor: int) = { X = p.X * factor; Y = p.Y * factor }
+    open Lib
 
     let parseMap (lines: string array) : Map<Point, char> =
         lines
@@ -197,36 +210,11 @@ module Fay05 =
 [<AocPuzzle(2024, 6, "Guard Gallivant", "F#")>]
 module Fay06 =
 
-    [<Struct>]
-    type Point = {
-        X: int
-        Y: int
-    } with
-
-        static member North = { X = 0; Y = -1 }
-        static member NorthEast = { X = 1; Y = -1 }
-        static member East = { X = 1; Y = 0 }
-        static member SouthEast = { X = 1; Y = 1 }
-        static member South = { X = 0; Y = 1 }
-        static member SouthWest = { X = -1; Y = 1 }
-        static member West = { X = -1; Y = 0 }
-        static member NorthWest = { X = -1; Y = -1 }
-        static member RotationClockwise90 = { X = 0; Y = 1 }
-        static member (+)(p1: Point, p2: Point) = { X = p1.X + p2.X; Y = p1.Y + p2.Y }
-
-        static member (*)(p1: Point, p2: Point) = {
-            X = p1.X * p2.X - p1.Y * p2.Y
-            Y = p1.X * p2.Y + p1.Y * p2.X
-        }
-
-        static member (*)(p: Point, factor: int) = { X = p.X * factor; Y = p.Y * factor }
-        static member rotateRight(p: Point) = p * Point.RotationClockwise90
+    open Lib
 
     type PatrolMap = Map<Point, char>
     type Positions = Set<Point>
-
     type PatrolState = { Position: Point; Direction: Point }
-
     type GuardRoute = { Positions: Positions; Loop: bool }
 
     let parsePatrolMap (lines: string array) =
@@ -240,34 +228,40 @@ module Fay06 =
     let locateGuardStart (map: PatrolMap) (c: char) =
         map |> Seq.find (fun kvp -> kvp.Value = c) |> _.Key
 
+    [<TailCall>]
     let trackGuardRoute (map: PatrolMap) (start: Point) =
-        let mutable position = start
-        let mutable patrol = { Position = start; Direction = Point.North }
-        let visited = System.Collections.Generic.HashSet<PatrolState>()
+        let rec track (visited: Set<PatrolState>) (patrol: PatrolState) =
+            if map.ContainsKey patrol.Position && not (visited.Contains patrol) then
+                let visited = visited.Add patrol
 
-        while map.ContainsKey patrol.Position && visited.Add patrol do
-            patrol <-
                 match map.TryFind(patrol.Position + patrol.Direction) |> Option.defaultValue ' ' with
-                | '#' -> {
-                    patrol with
-                        Direction = Point.rotateRight patrol.Direction
-                  }
-                | _ ->
-                    position <- position + patrol.Direction
-                    { patrol with Position = position }
+                | '#' ->
+                    track visited {
+                        patrol with
+                            Direction = Point.rotateRight patrol.Direction
+                    }
 
-        {
-            Positions = visited |> Seq.map _.Position |> Set.ofSeq
-            Loop = visited.Contains patrol
-        }
+                | _ ->
+                    track visited {
+                        patrol with
+                            Position = patrol.Position + patrol.Direction
+                    }
+
+            else
+                {
+                    Positions = visited |> Seq.map _.Position |> Set.ofSeq
+                    Loop = visited.Contains patrol
+                }
+
+        track Set.empty { Position = start; Direction = Point.North }
 
     let updateMap (map: PatrolMap) (obstacle: char) (position: Point) =
-        map |> Map.map (fun key value -> if key = position then obstacle else value)
+        map |> Map.map (fun k v -> if k = position then obstacle else v)
 
     let part1 (input: AocInput) =
         input.AllLines
         |> parsePatrolMap
-        |> (fun m -> (m, locateGuardStart m '^'))
+        |> (fun map -> (map, locateGuardStart map '^'))
         |> (fun (map, start) -> trackGuardRoute map start)
         |> _.Positions
         |> Set.count

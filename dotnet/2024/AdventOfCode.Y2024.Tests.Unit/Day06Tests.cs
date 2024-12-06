@@ -37,7 +37,7 @@ public sealed class Day06Tests : IAocDayTest<int>
     
     [Theory]
     [MemberData(nameof(Part2Data))]
-    [Description("<insert question 2 here>")]
+    [Description("How many different positions could you choose for this obstruction?")]
     public void Part2(AocInput input, int expected)
     {
         var result = Day06.Part2(input);
@@ -57,7 +57,7 @@ public sealed class Day06Tests : IAocDayTest<int>
     
     [Theory]
     [MemberData(nameof(Part2Data))]
-    [Description("<insert question 2 here>")]
+    [Description("How many different positions could you choose for this obstruction?")]
     public void FSharp_Part2(AocInput input, int expected)
     {
         var result = Fay06.part2(input);
