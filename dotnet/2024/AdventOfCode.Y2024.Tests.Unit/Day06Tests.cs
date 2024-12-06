@@ -14,14 +14,14 @@ public sealed class Day06Tests : IAocDayTest<int>
 
     public static TheoryData<AocInput, int> Part1Data => new()
     {
-        { ReadInput(TestData), 0 },
-        { ReadInput(RealData), 0 }
+        { ReadInput(TestData), 41 },
+        { ReadInput(RealData), 5305 }
     };
 
     public static TheoryData<AocInput, int> Part2Data => new()
     {
-        { ReadInput(TestData), 0 },
-        { ReadInput(RealData), 0 }
+        { ReadInput(TestData), 6 },
+        { ReadInput(RealData), 2143 }
     };
 
     [Theory]

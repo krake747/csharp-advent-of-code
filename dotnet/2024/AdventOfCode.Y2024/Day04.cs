@@ -1,7 +1,6 @@
 using System.Collections.Frozen;
-using System.Numerics;
 using AdventOfCode.Lib;
-using Map = System.Collections.Frozen.FrozenDictionary<AdventOfCode.Y2024.Point, char>;
+using Map = System.Collections.Frozen.FrozenDictionary<AdventOfCode.Lib.Point, char>;
 
 namespace AdventOfCode.Y2024;
 
@@ -42,21 +41,4 @@ public sealed class Day04 : IAocDay<int>
         from x in Enumerable.Range(0, lines[0].Length)
         select KeyValuePair.Create(new Point(x, y), lines[y][x])
     ).ToFrozenDictionary();
-}
-
-internal readonly record struct Point(int X, int Y)
-    : IAdditionOperators<Point, Point, Point>,
-        IMultiplyOperators<Point, int, Point>
-{
-    public static readonly Point North = new(0, -1); // Move up
-    public static readonly Point NorthEast = new(1, -1); // Move diagonally up-right
-    public static readonly Point East = new(1, 0); // Move right
-    public static readonly Point SouthEast = new(1, 1); // Move diagonally down-right
-    public static readonly Point South = new(0, 1); // Move down
-    public static readonly Point SouthWest = new(-1, 1); // Move diagonally down-left
-    public static readonly Point West = new(-1, 0); // Move left
-    public static readonly Point NorthWest = new(-1, -1); // Move diagonally up-left
-
-    public static Point operator +(Point p1, Point p2) => new(p1.X + p2.X, p1.Y + p2.Y);
-    public static Point operator *(Point p, int factor) => new(p.X * factor, p.Y * factor);
 }
