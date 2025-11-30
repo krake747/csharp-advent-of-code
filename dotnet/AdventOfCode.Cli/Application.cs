@@ -165,7 +165,7 @@ public sealed partial class Application(
             $$"""
               using System.ComponentModel;
               using AdventOfCode.Lib;
-              using FluentAssertions;
+              using AwesomeAssertions;
               using static AdventOfCode.Lib.AocFileReaderService;
 
               namespace AdventOfCode.Y{{aocYear}}.Tests.Unit;

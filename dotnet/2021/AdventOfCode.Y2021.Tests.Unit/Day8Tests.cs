@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using FluentAssertions;
+using AwesomeAssertions;
 using Xunit;
 
 namespace AdventOfCode.Y2021.Tests.Unit;

@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using AdventOfCode.Lib;
-using FluentAssertions;
-using FluentAssertions.Execution;
+using AwesomeAssertions;
+using AwesomeAssertions.Execution;
 using static AdventOfCode.Lib.AocFileReaderService;
 
 namespace AdventOfCode.Y2023.Tests.Unit;
