@@ -8,15 +8,17 @@ public sealed partial class Day06 : IAocDay<long>
 {
     public static long Part1(AocInput input) =>
         ParseRaceDocument(input.Lines)
-            .Pipe(ReadDocument)
+        | (lines => ReadDocument(lines)
             .Select(WaysToWinRace)
-            .Aggregate(1L, (wins, ways) => wins * ways);
+            .Aggregate(1L, (wins, ways) => wins * ways)
+        );
 
     public static long Part2(AocInput input) =>
         ParseRaceDocument(input.Lines.Select(l => l.Replace(" ", "")))
-            .Pipe(ReadDocument)
+        | (lines => ReadDocument(lines)
             .Select(WaysToWinRace)
-            .Aggregate(1L, (wins, ways) => wins * ways);
+            .Aggregate(1L, (wins, ways) => wins * ways)
+        );
 
     private static long WaysToWinRace(Race race)
     {

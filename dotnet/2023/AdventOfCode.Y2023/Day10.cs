@@ -12,8 +12,8 @@ public sealed class Day10 : IAocDay<int>
 {
     public static int Part1(AocInput input) =>
         ParsePipes(input.Lines)
-            .Pipe(LoopPipeNetwork)
-            .Pipe(StepsStartToFarthest);
+        | LoopPipeNetwork
+        | StepsStartToFarthest;
 
     public static int Part2(AocInput input) => 0;
 

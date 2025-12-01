@@ -6,10 +6,10 @@ namespace AdventOfCode.Y2019;
 public sealed class Day02 : IAocDay<int>
 {
     public static int Part1(AocInput input) => input.Text
-        .Pipe(IntCodeMachine.Init)
-        .Pipe(icm => IntCodeMachine.Run(icm, 12, 2));
+                                               | IntCodeMachine.Init
+                                               | (icm => IntCodeMachine.Run(icm, 12, 2));
 
     public static int Part2(AocInput input) => input.Text
-        .Pipe(IntCodeMachine.Init)
-        .Pipe(icm => IntCodeMachine.GravityAssist(icm, 100, 100));
+                                               | IntCodeMachine.Init
+                                               | (icm => IntCodeMachine.GravityAssist(icm, 100, 100));
 }

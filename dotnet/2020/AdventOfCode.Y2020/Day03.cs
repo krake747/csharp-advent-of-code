@@ -5,21 +5,23 @@ namespace AdventOfCode.Y2020;
 public sealed class Day03 : IAocDay<long>
 {
     public static long Part1(AocInput input) => input.Lines
-        .Pipe(CreateTreeMap)
-        .Pipe(treeMap => CountTreesOnSlope(treeMap, new Slope(1, 3)));
+                                                | CreateTreeMap
+                                                | (treeMap => CountTreesOnSlope(treeMap, new Slope(1, 3)));
 
 
     public static long Part2(AocInput input) => input.Lines
-        .Pipe(CreateTreeMap)
-        .Pipe(treeMap => new[]
-            {
-                new Slope(1, 1),
-                new Slope(1, 3),
-                new Slope(1, 5),
-                new Slope(1, 7),
-                new Slope(2, 1)
-            }
-            .Aggregate(1L, (prod, slope) => prod * CountTreesOnSlope(treeMap, slope)));
+                                                | CreateTreeMap
+                                                | (treeMap => new[]
+                                                    {
+                                                        new Slope(1, 1),
+                                                        new Slope(1, 3),
+                                                        new Slope(1, 5),
+                                                        new Slope(1, 7),
+                                                        new Slope(2, 1)
+                                                    }
+                                                    .Aggregate(1L,
+                                                        (prod, slope) => prod * CountTreesOnSlope(treeMap, slope))
+                                                );
 
 
     private static bool[][] CreateTreeMap(IEnumerable<string> input) =>

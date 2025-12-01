@@ -8,28 +8,28 @@ public sealed class Day06 : IAocDay<int>
 {
     public static int Part1(AocInput input) =>
         input.AllLines
-            .Pipe(lines =>
-            {
-                var map = ParsePatrolMap(lines);
-                var start = LocateGuardStart(map, '^');
-                return TrackGuardRoute(map, start);
-            })
-            .Pipe(route => route.Positions.Count);
+        | (lines =>
+        {
+            var map = ParsePatrolMap(lines);
+            var start = LocateGuardStart(map, '^');
+            return TrackGuardRoute(map, start);
+        })
+        | (route => route.Positions.Count);
 
     public static int Part2(AocInput input) =>
         input.AllLines
-            .Pipe(lines =>
-            {
-                var map = ParsePatrolMap(lines);
-                var start = LocateGuardStart(map, '^');
-                return TrackGuardRoute(map, start).Positions.Where(p => map[p] is '.')
-                    .Sum(open =>
-                    {
-                        var updatedMap = UpdateMap(map, '#', open);
-                        var (_, loop) = TrackGuardRoute(updatedMap, start);
-                        return loop ? 1 : 0;
-                    });
-            });
+        | (lines =>
+        {
+            var map = ParsePatrolMap(lines);
+            var start = LocateGuardStart(map, '^');
+            return TrackGuardRoute(map, start).Positions.Where(p => map[p] is '.')
+                .Sum(open =>
+                {
+                    var updatedMap = UpdateMap(map, '#', open);
+                    var (_, loop) = TrackGuardRoute(updatedMap, start);
+                    return loop ? 1 : 0;
+                });
+        });
 
     private static PatrolMap UpdateMap(PatrolMap map, char obstacle, Point position) =>
         map.ToDictionary(kvp => kvp.Key, kvp => kvp.Key == position ? obstacle : kvp.Value);

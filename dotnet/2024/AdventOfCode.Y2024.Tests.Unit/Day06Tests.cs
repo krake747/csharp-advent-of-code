@@ -34,17 +34,17 @@ public sealed class Day06Tests : IAocDayTest<int>
 
         result.Should().Be(expected);
     }
-    
+
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("How many different positions could you choose for this obstruction?")]
     public void Part2(AocInput input, int expected)
     {
         var result = Day06.Part2(input);
-    
+
         result.Should().Be(expected);
     }
-    
+
     [Theory]
     [MemberData(nameof(Part1Data))]
     [Description("How many distinct positions will the guard visit before leaving the mapped area?")]
@@ -54,14 +54,14 @@ public sealed class Day06Tests : IAocDayTest<int>
 
         result.Should().Be(expected);
     }
-    
+
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("How many different positions could you choose for this obstruction?")]
     public void FSharp_Part2(AocInput input, int expected)
     {
         var result = Fay06.part2(input);
-    
+
         result.Should().Be(expected);
     }
 }

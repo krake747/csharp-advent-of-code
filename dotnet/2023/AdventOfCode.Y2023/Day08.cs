@@ -8,15 +8,16 @@ public sealed partial class Day08 : IAocDay<long>
 {
     public static long Part1(AocInput input) =>
         ParseNetwork(input.Lines)
-            .Pipe(nw => Steps(nw.Nodes, nw.Directions, "AAA", "ZZZ"));
+        | (nw => Steps(nw.Nodes, nw.Directions, "AAA", "ZZZ"));
 
 
     public static long Part2(AocInput input) =>
         ParseNetwork(input.Lines)
-            .Pipe(nw => nw.Nodes
-                .Where(x => x.Key.EndsWith('A'))
-                .Select(x => Steps(nw.Nodes, nw.Directions, x.Key, "Z"))
-                .Aggregate(LeastCommonMultiple));
+        | (nw => nw.Nodes
+            .Where(x => x.Key.EndsWith('A'))
+            .Select(x => Steps(nw.Nodes, nw.Directions, x.Key, "Z"))
+            .Aggregate(LeastCommonMultiple)
+        );
 
     private static long Steps(Dictionary<string, Node> nodes, string directions, string node, string end)
     {
@@ -44,7 +45,7 @@ public sealed partial class Day08 : IAocDay<long>
     private static KeyValuePair<string, Node> ParseNodes(string x) =>
         NodesRegex()
             .Match(x)
-            .Pipe(m => KeyValuePair.Create(m.Groups[1].Value, new Node(m.Groups[2].Value, m.Groups[3].Value)));
+        | (m => KeyValuePair.Create(m.Groups[1].Value, new Node(m.Groups[2].Value, m.Groups[3].Value)));
 
     private static long FindLeastCommonMultiple(IEnumerable<long> numbers) =>
         numbers.Aggregate(LeastCommonMultiple);
@@ -55,7 +56,7 @@ public sealed partial class Day08 : IAocDay<long>
     private static long GreatestCommonDivisor(long x, long y) =>
         y is 0 ? x : GreatestCommonDivisor(y, x % y);
 
-    [GeneratedRegex(@"(\w+) = \((\w+), (\w+)\)", RegexOptions.Compiled | RegexOptions.NonBacktracking)]
+    [GeneratedRegex(@"(\w+) = \((\w+), (\w+)\)", RegexOptions.Compiled)]
     private static partial Regex NodesRegex();
 
     private sealed record Node(string Left, string Right);

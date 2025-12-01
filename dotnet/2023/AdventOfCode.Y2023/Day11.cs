@@ -11,15 +11,15 @@ public sealed class Day11 : IAocDay<long>
         var emptyRows = EmptySpaceRows(input.AllLines);
         var emptyCols = EmptySpaceCols(input.AllLines);
         return galaxies
-            .SelectMany(_ => galaxies, (g1, g2) => (G1: g1, G2: g2))
-            .Sum(galaxyPair =>
-            {
-                var ((row1, col1), (row2, col2)) = galaxyPair;
-                var distRow = SpaceDistance(emptyRows, 1, row1, row2);
-                var distCol = SpaceDistance(emptyCols, 1, col1, col2);
-                return distRow + distCol;
-            })
-            .Pipe(sum => sum / 2L);
+                   .SelectMany(_ => galaxies, (g1, g2) => (G1: g1, G2: g2))
+                   .Sum(galaxyPair =>
+                   {
+                       var ((row1, col1), (row2, col2)) = galaxyPair;
+                       var distRow = SpaceDistance(emptyRows, 1, row1, row2);
+                       var distCol = SpaceDistance(emptyCols, 1, col1, col2);
+                       return distRow + distCol;
+                   })
+               | (sum => sum / 2L);
     }
 
     public static long Part2(AocInput input)
@@ -28,15 +28,15 @@ public sealed class Day11 : IAocDay<long>
         var emptyRows = EmptySpaceRows(input.AllLines);
         var emptyCols = EmptySpaceCols(input.AllLines);
         return galaxies
-            .SelectMany(_ => galaxies, (g1, g2) => (G1: g1, G2: g2))
-            .Sum(galaxyPair =>
-            {
-                var ((row1, col1), (row2, col2)) = galaxyPair;
-                var distRow = SpaceDistance(emptyRows, 999999, row1, row2);
-                var distCol = SpaceDistance(emptyCols, 999999, col1, col2);
-                return distRow + distCol;
-            })
-            .Pipe(sum => sum / 2L);
+                   .SelectMany(_ => galaxies, (g1, g2) => (G1: g1, G2: g2))
+                   .Sum(galaxyPair =>
+                   {
+                       var ((row1, col1), (row2, col2)) = galaxyPair;
+                       var distRow = SpaceDistance(emptyRows, 999999, row1, row2);
+                       var distCol = SpaceDistance(emptyCols, 999999, col1, col2);
+                       return distRow + distCol;
+                   })
+               | (sum => sum / 2L);
     }
 
     private static long SpaceDistance(IEnumerable<int> emptySpaces, int expansion, int p1, int p2)

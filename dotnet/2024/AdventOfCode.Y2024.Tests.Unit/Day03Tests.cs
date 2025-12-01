@@ -35,17 +35,17 @@ public sealed class Day03Tests : IAocDayTest<long>
 
         result.Should().Be(expected);
     }
-    
+
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("What do you get if you add up all of the results of just the enabled multiplications?")]
     public void Part2(AocInput input, long expected)
     {
         var result = Day03.Part2(input);
-    
+
         result.Should().Be(expected);
     }
-    
+
     [Theory]
     [MemberData(nameof(Part1Data))]
     [Description("What do you get if you add up all of the results of the multiplications?")]

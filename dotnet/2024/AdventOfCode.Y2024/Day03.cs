@@ -8,29 +8,33 @@ namespace AdventOfCode.Y2024;
 public sealed partial class Day03 : IAocDay<long>
 {
     public static long Part1(AocInput input) =>
-        input.Text.Pipe(text => ComputerMemory().Matches(text).Sum(Instructions));
+        input.Text
+        | (text => ComputerMemory().Matches(text).Sum(Instructions));
 
     public static long Part2(AocInput input) => input.Text
-        .Pipe(text => ComputerMemoryWithConditionals().Matches(text)
-            .Aggregate(
-                new State(true, 0),
-                (state, m) => m.Value switch
-                {
-                    "do()" => state with { Enabled = true },
-                    "don't()" => state with { Enabled = false },
-                    _ when state.Enabled => state with { Total = state.Total + Instructions(m) },
-                    _ => state
-                }
-            )
-        )
-        .Pipe(state => state.Total);
+                                                | (text => ComputerMemoryWithConditionals().Matches(text)
+                                                    .Aggregate(
+                                                        new State(true, 0),
+                                                        (state, m) => m.Value switch
+                                                        {
+                                                            "do()" => state with { Enabled = true },
+                                                            "don't()" => state with { Enabled = false },
+                                                            _ when state.Enabled => state with
+                                                            {
+                                                                Total = state.Total + Instructions(m)
+                                                            },
+                                                            _ => state
+                                                        }
+                                                    )
+                                                )
+                                                | (state => state.Total);
 
     private static int Instructions(Match m) =>
         int.Parse(m.Groups[1].Value) * int.Parse(m.Groups[2].Value);
 
-    [GeneratedRegex(@"mul\((\d+),(\d+)\)", RegexOptions.Compiled | RegexOptions.NonBacktracking)]
+    [GeneratedRegex(@"mul\((\d+),(\d+)\)", RegexOptions.Compiled)]
     private static partial Regex ComputerMemory();
 
-    [GeneratedRegex(@"do\(\)|don't\(\)|mul\((\d+),(\d+)\)", RegexOptions.Compiled | RegexOptions.NonBacktracking)]
+    [GeneratedRegex(@"do\(\)|don't\(\)|mul\((\d+),(\d+)\)", RegexOptions.Compiled)]
     private static partial Regex ComputerMemoryWithConditionals();
 }

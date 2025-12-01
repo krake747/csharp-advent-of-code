@@ -11,10 +11,12 @@ public sealed partial class Day02 : IAocDay<int>
     public static int Part2(AocInput input) => input.Lines.Sum(PlayGame2);
 
     private static int PlayGame1(string game) =>
-        CountCubesInBag(game).Pipe(bag => bag is { Red: <= 12, Green: <= 13, Blue: <= 14 } ? bag.Id : 0);
+        CountCubesInBag(game)
+        | (bag => bag is { Red: <= 12, Green: <= 13, Blue: <= 14 } ? bag.Id : 0);
 
     private static int PlayGame2(string game) =>
-        CountCubesInBag(game).Pipe(bag => bag.Red * bag.Green * bag.Blue);
+        CountCubesInBag(game)
+        | (bag => bag.Red * bag.Green * bag.Blue);
 
     private static Bag CountCubesInBag(string game)
     {
@@ -31,16 +33,16 @@ public sealed partial class Day02 : IAocDay<int>
     private static int CountCubes(string game, Regex regex) =>
         regex.Matches(game).Max(m => int.Parse(m.Groups[1].Value));
 
-    [GeneratedRegex(@"Game (\d+)", RegexOptions.Compiled | RegexOptions.NonBacktracking)]
+    [GeneratedRegex(@"Game (\d+)", RegexOptions.Compiled)]
     private static partial Regex GameIdRegex();
 
-    [GeneratedRegex(@"(\d+) red", RegexOptions.Compiled | RegexOptions.NonBacktracking)]
+    [GeneratedRegex(@"(\d+) red", RegexOptions.Compiled)]
     private static partial Regex RedCubesRegex();
 
-    [GeneratedRegex(@"(\d+) green", RegexOptions.Compiled | RegexOptions.NonBacktracking)]
+    [GeneratedRegex(@"(\d+) green", RegexOptions.Compiled)]
     private static partial Regex GreenCubesRegex();
 
-    [GeneratedRegex(@"(\d+) blue", RegexOptions.Compiled | RegexOptions.NonBacktracking)]
+    [GeneratedRegex(@"(\d+) blue", RegexOptions.Compiled)]
     private static partial Regex BlueCubesRegex();
 
     private readonly record struct Bag(int Id, int Red, int Green, int Blue);

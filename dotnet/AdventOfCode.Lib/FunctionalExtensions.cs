@@ -1,16 +1,25 @@
 ﻿namespace AdventOfCode.Lib;
 
-public static class FunctionalExtensions
+public static class FunctionalPipeExtensions
 {
-    public static TOut Pipe<TIn, TOut>(this TIn source, Func<TIn, TOut> func) => func(source);
-
-    public static Func<T1, Func<T2, T3>> Curry<T1, T2, T3>(this Func<T1, T2, T3> source)
+    extension<T, TResult>(T)
     {
-        return t1 => t2 => source(t1, t2);
+        public static TResult operator |(T source, Func<T, TResult> func) => func(source);
     }
+}
 
-    public static Func<T2, TOut> Partial<T1, T2, TOut>(this Func<T1, T2, TOut> func, T1 t1)
+public static class FunctionalCurryExtensions
+{
+    extension<T1, T2, T3>(Func<T1, T2, T3> source)
     {
-        return t2 => func(t1, t2);
+        public Func<T1, Func<T2, T3>> Curry()
+        {
+            return t1 => t2 => source(t1, t2);
+        }
+
+        public Func<T2, T3> Partial(T1 t1)
+        {
+            return t2 => source(t1, t2);
+        }
     }
 }

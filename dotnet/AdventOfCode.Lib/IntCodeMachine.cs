@@ -50,10 +50,10 @@ public sealed class IntCodeMachine
             Verb(memory, verb.Value);
         }
 
-        var address = FunctionalExtensions.Partial<Memory, int, int>(Address, memory);
-        var opcode = FunctionalExtensions.Partial<Memory, int, int>(Opcode, memory);
-        var arg1 = FunctionalExtensions.Partial<Memory, int, int>(Arg1, memory);
-        var arg2 = FunctionalExtensions.Partial<Memory, int, int>(Arg2, memory);
+        var address = FunctionalCurryExtensions.Partial<Memory, int, int>(Address, memory);
+        var opcode = FunctionalCurryExtensions.Partial<Memory, int, int>(Opcode, memory);
+        var arg1 = FunctionalCurryExtensions.Partial<Memory, int, int>(Arg1, memory);
+        var arg2 = FunctionalCurryExtensions.Partial<Memory, int, int>(Arg2, memory);
 
         List<int> output = [];
         var i = 0;

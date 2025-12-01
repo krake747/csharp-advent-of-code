@@ -34,17 +34,17 @@ public sealed class Day04Tests : IAocDayTest<int>
 
         result.Should().Be(expected);
     }
-    
+
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("How many times does an X-MAS appear?")]
     public void Part2(AocInput input, int expected)
     {
         var result = Day04.Part2(input);
-    
+
         result.Should().Be(expected);
     }
-    
+
     [Theory]
     [MemberData(nameof(Part1Data))]
     [Description("How many times does XMAS appear?")]
@@ -54,14 +54,14 @@ public sealed class Day04Tests : IAocDayTest<int>
 
         result.Should().Be(expected);
     }
-    
+
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("How many times does an X-MAS appear?")]
     public void FSharp_Part2(AocInput input, int expected)
     {
         var result = Fay04.part2(input);
-    
+
         result.Should().Be(expected);
     }
 }

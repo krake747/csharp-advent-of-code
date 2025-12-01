@@ -41,7 +41,8 @@ public sealed class Day04 : IAocDay<int>
 internal readonly record struct Bounds(int Lower, int Upper)
 {
     internal static Bounds Create(IEnumerable<int> stream) =>
-        stream.Order().ToArray().Pipe(array => new Bounds(array[0], array[^1]));
+        stream.Order().ToArray()
+        | (array => new Bounds(array[0], array[^1]));
 }
 
 internal static class Day04Extensions

@@ -67,9 +67,9 @@ public sealed class Day07 : IAocDay<int>
             h1 == h2
                 ? 0
                 : h1!.Cards
-                    .Zip(h2!.Cards, (fst, snd) => (L: strengthFunc(fst), R: strengthFunc(snd)))
-                    .FirstOrDefault(x => x.L > x.R || x.R > x.L)
-                    .Pipe(x => x.L.CompareTo(x.R));
+                      .Zip(h2!.Cards, (fst, snd) => (L: strengthFunc(fst), R: strengthFunc(snd)))
+                      .FirstOrDefault(x => x.L > x.R || x.R > x.L)
+                  | (x => x.L.CompareTo(x.R));
     }
 
     private sealed record Hand(string Cards, int Bid);

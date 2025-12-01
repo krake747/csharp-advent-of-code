@@ -1,46 +1,50 @@
 ﻿<Solution>
-  <Folder Name="/2015/">
-    <Project Path="2015\AdventOfCode.Y2015.Tests.Unit\AdventOfCode.Y2015.Tests.Unit.csproj" Type="Classic C#" />
-    <Project Path="2015\AdventOfCode.Y2015\AdventOfCode.Y2015.csproj" Type="Classic C#" />
-    <File Path="2015\README.md" />
-  </Folder>
-  <Folder Name="/2016/">
-    <Project Path="2016\AdventOfCode.Y2016.Tests.Unit\AdventOfCode.Y2016.Tests.Unit.csproj" Type="Classic C#" />
-    <Project Path="2016\AdventOfCode.Y2016\AdventOfCode.Y2016.csproj" Type="Classic C#" />
-    <File Path="2016\README.md" />
-  </Folder>
-  <Folder Name="/2019/">
-    <Project Path="2019\AdventOfCode.Y2019.Tests.Unit\AdventOfCode.Y2019.Tests.Unit.csproj" Type="Classic C#" />
-    <Project Path="2019\AdventOfCode.Y2019\AdventOfCode.Y2019.csproj" Type="Classic C#" />
-    <File Path="2019\README.md" />
-  </Folder>
-  <Folder Name="/2020/">
-    <Project Path="2020\AdventOfCode.Y2020.Tests.Unit\AdventOfCode.Y2020.Tests.Unit.csproj" Type="Classic C#" />
-    <Project Path="2020\AdventOfCode.Y2020\AdventOfCode.Y2020.csproj" Type="Classic C#" />
-    <File Path="2020\README.md" />
-  </Folder>
-  <Folder Name="/2021/">
-    <Project Path="2021\AdventOfCode.Y2021.Tests.Unit\AdventOfCode.Y2021.Tests.Unit.csproj" Type="Classic C#" />
-    <Project Path="2021\AdventOfCode.Y2021\AdventOfCode.Y2021.csproj" Type="Classic C#" />
-    <File Path="2021\README.md" />
-  </Folder>
-  <Folder Name="/2022/">
-    <Project Path="2022\AdventOfCode.Y2022.Tests.Unit\AdventOfCode.Y2022.Tests.Unit.csproj" Type="Classic C#" />
-    <Project Path="2022\AdventOfCode.Y2022\AdventOfCode.Y2022.csproj" Type="Classic C#" />
-    <File Path="2022\README.md" />
-  </Folder>
-  <Folder Name="/2023/">
-    <Project Path="2023\AdventOfCode.Y2023.FSharp\AdventOfCode.Y2023.FSharp.fsproj" Type="Classic F#" />
-    <Project Path="2023\AdventOfCode.Y2023.Tests.Unit\AdventOfCode.Y2023.Tests.Unit.csproj" Type="Classic C#" />
-    <Project Path="2023\AdventOfCode.Y2023\AdventOfCode.Y2023.csproj" Type="Classic C#" />
-    <File Path="2023\README.md" />
-  </Folder>
-  <Folder Name="/2024/">
-    <Project Path="2024\AdventOfCode.Y2024.FSharp\AdventOfCode.Y2024.FSharp.fsproj" Type="Classic F#" />
-    <Project Path="2024\AdventOfCode.Y2024.Tests.Unit\AdventOfCode.Y2024.Tests.Unit.csproj" Type="Classic C#" />
-    <Project Path="2024\AdventOfCode.Y2024\AdventOfCode.Y2024.csproj" Type="Classic C#" />
-    <File Path="2024\README.md" />
-  </Folder>
-  <Project Path="AdventOfCode.Cli\AdventOfCode.Cli.csproj" Type="Classic C#" />
-  <Project Path="AdventOfCode.Lib\AdventOfCode.Lib.csproj" Type="Classic C#" />
+    <Folder Name="/2015/">
+        <Project Path="2015\AdventOfCode.Y2015.Tests.Unit\AdventOfCode.Y2015.Tests.Unit.csproj" Type="C#"/>
+        <Project Path="2015\AdventOfCode.Y2015\AdventOfCode.Y2015.csproj" Type="C#"/>
+        <File Path="2015\README.md"/>
+    </Folder>
+    <Folder Name="/2016/">
+        <Project Path="2016\AdventOfCode.Y2016.Tests.Unit\AdventOfCode.Y2016.Tests.Unit.csproj" Type="C#"/>
+        <Project Path="2016\AdventOfCode.Y2016\AdventOfCode.Y2016.csproj" Type="C#"/>
+        <File Path="2016\README.md"/>
+    </Folder>
+    <Folder Name="/2019/">
+        <Project Path="2019\AdventOfCode.Y2019.Tests.Unit\AdventOfCode.Y2019.Tests.Unit.csproj" Type="C#"/>
+        <Project Path="2019\AdventOfCode.Y2019\AdventOfCode.Y2019.csproj" Type="C#"/>
+        <File Path="2019\README.md"/>
+    </Folder>
+    <Folder Name="/2020/">
+        <Project Path="2020\AdventOfCode.Y2020.Tests.Unit\AdventOfCode.Y2020.Tests.Unit.csproj" Type="C#"/>
+        <Project Path="2020\AdventOfCode.Y2020\AdventOfCode.Y2020.csproj" Type="C#"/>
+        <File Path="2020\README.md"/>
+    </Folder>
+    <Folder Name="/2021/">
+        <Project Path="2021\AdventOfCode.Y2021.Tests.Unit\AdventOfCode.Y2021.Tests.Unit.csproj" Type="C#"/>
+        <Project Path="2021\AdventOfCode.Y2021\AdventOfCode.Y2021.csproj" Type="C#"/>
+        <File Path="2021\README.md"/>
+    </Folder>
+    <Folder Name="/2022/">
+        <Project Path="2022\AdventOfCode.Y2022.Tests.Unit\AdventOfCode.Y2022.Tests.Unit.csproj" Type="C#"/>
+        <Project Path="2022\AdventOfCode.Y2022\AdventOfCode.Y2022.csproj" Type="C#"/>
+        <File Path="2022\README.md"/>
+    </Folder>
+    <Folder Name="/2023/">
+        <Project Path="2023\AdventOfCode.Y2023.FSharp\AdventOfCode.Y2023.FSharp.fsproj" Type="F#"/>
+        <Project Path="2023\AdventOfCode.Y2023.Tests.Unit\AdventOfCode.Y2023.Tests.Unit.csproj" Type="C#"/>
+        <Project Path="2023\AdventOfCode.Y2023\AdventOfCode.Y2023.csproj" Type="C#"/>
+        <File Path="2023\README.md"/>
+    </Folder>
+    <Folder Name="/2024/">
+        <Project Path="2024\AdventOfCode.Y2024.FSharp\AdventOfCode.Y2024.FSharp.fsproj" Type="F#"/>
+        <Project Path="2024\AdventOfCode.Y2024.Tests.Unit\AdventOfCode.Y2024.Tests.Unit.csproj" Type="C#"/>
+        <Project Path="2024\AdventOfCode.Y2024\AdventOfCode.Y2024.csproj" Type="C#"/>
+        <File Path="2024\README.md"/>
+    </Folder>
+    <Folder Name="/2025/">
+        <Project Path="2025/AdventOfCode.Y2025.Tests.Unit/AdventOfCode.Y2025.Tests.Unit.csproj"/>
+        <Project Path="2025/AdventOfCode.Y2025/AdventOfCode.Y2025.csproj"/>
+    </Folder>
+    <Project Path="AdventOfCode.Cli\AdventOfCode.Cli.csproj" Type="C#"/>
+    <Project Path="AdventOfCode.Lib\AdventOfCode.Lib.csproj" Type="C#"/>
 </Solution>

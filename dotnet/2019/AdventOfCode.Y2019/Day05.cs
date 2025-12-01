@@ -6,10 +6,10 @@ namespace AdventOfCode.Y2019;
 public sealed class Day05 : IAocDay<int>
 {
     public static int Part1(AocInput input) => input.Text
-        .Pipe(IntCodeMachine.Init)
-        .Pipe(icm => IntCodeMachine.ThermalEnvironmentSupervisionTerminal(icm, 1));
+                                               | IntCodeMachine.Init
+                                               | (icm => IntCodeMachine.ThermalEnvironmentSupervisionTerminal(icm, 1));
 
     public static int Part2(AocInput input) => input.Text
-        .Pipe(IntCodeMachine.Init)
-        .Pipe(icm => IntCodeMachine.ThermalEnvironmentSupervisionTerminal(icm, 5));
+                                               | IntCodeMachine.Init
+                                               | (icm => IntCodeMachine.ThermalEnvironmentSupervisionTerminal(icm, 5));
 }

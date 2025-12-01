@@ -6,11 +6,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Include="Fays.fs" />
+        <Compile Include="Fays.fs"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\AdventOfCode.Lib\AdventOfCode.Lib.csproj" />
+        <ProjectReference Include="..\..\AdventOfCode.Lib\AdventOfCode.Lib.csproj"/>
     </ItemGroup>
 
 </Project>

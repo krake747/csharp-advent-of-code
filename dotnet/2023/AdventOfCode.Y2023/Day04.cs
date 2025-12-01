@@ -16,29 +16,29 @@ public sealed partial class Day04 : IAocDay<int>
     public static int Part2(AocInput input) =>
         Scratchcards(input.Lines)
             .ToArray()
-            .Pipe(scratchcards =>
+        | (scratchcards =>
+        {
+            var store = scratchcards.ToDictionary(kvp => kvp.Id, kvp => (Card: kvp, Original: 1, Copies: 0));
+            var counted = store.Aggregate(store, (pile, scratchcard) =>
             {
-                var store = scratchcards.ToDictionary(kvp => kvp.Id, kvp => (Card: kvp, Original: 1, Copies: 0));
-                var counted = store.Aggregate(store, (pile, scratchcard) =>
+                var ((id, winningNumbers, numbers), original, copies) = scratchcard.Value;
+                var total = original + copies;
+                for (var i = 0; i < total; i++)
                 {
-                    var ((id, winningNumbers, numbers), original, copies) = scratchcard.Value;
-                    var total = original + copies;
-                    for (var i = 0; i < total; i++)
+                    var matchingNumbers = winningNumbers.Intersect(numbers).Count();
+                    for (var nextId = id + 1; nextId <= id + matchingNumbers; nextId++)
                     {
-                        var matchingNumbers = winningNumbers.Intersect(numbers).Count();
-                        for (var nextId = id + 1; nextId <= id + matchingNumbers; nextId++)
-                        {
-                            var current = pile[nextId];
-                            current.Copies += 1;
-                            pile[nextId] = current;
-                        }
+                        var current = pile[nextId];
+                        current.Copies += 1;
+                        pile[nextId] = current;
                     }
+                }
 
-                    return pile;
-                });
-
-                return counted.Values.Sum(x => x.Original + x.Copies);
+                return pile;
             });
+
+            return counted.Values.Sum(x => x.Original + x.Copies);
+        });
 
     private static IEnumerable<Scratchcard> Scratchcards(IEnumerable<string> lines) => lines
         .Select(line => line.Split(Separators))

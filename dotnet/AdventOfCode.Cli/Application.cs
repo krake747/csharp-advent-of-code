@@ -33,31 +33,31 @@ public sealed partial class Application(
         logger.Information("Current Directory: {Path}", Directory.GetCurrentDirectory());
 
         var day = aocDay
-            .Pipe(int.Parse)
-            .Pipe(PrependLeadingZero);
+                  | int.Parse
+                  | PrependLeadingZero;
 
         // Create Aoc Day X file
         var srcDirectory = config["Directories:src"]!;
         var aocFilePath = $@"{srcDirectory}\{aocYear}\AdventOfCode.Y{aocYear}"
-            .Pipe(Path.GetFullPath)
-            .Pipe(CreateDirectory)
-            .Pipe(aocDir => Path.Combine(aocDir.FullName, CreateAocDayFileName(day)));
+                          | Path.GetFullPath
+                          | CreateDirectory
+                          | (aocDir => Path.Combine(aocDir.FullName, CreateAocDayFileName(day)));
 
         await CreateAocDayClassFileAsync(aocFilePath, title, aocYear, aocDay, day);
 
         // Create Aoc Day X test file
         var acoTestFilePath = $@"{srcDirectory}\{aocYear}\AdventOfCode.Y{aocYear}.Tests.Unit"
-            .Pipe(Path.GetFullPath)
-            .Pipe(CreateDirectory)
-            .Pipe(aocTestDir => Path.Combine(aocTestDir.FullName, CreateAocTestFileName(day)));
+                              | Path.GetFullPath
+                              | CreateDirectory
+                              | (aocTestDir => Path.Combine(aocTestDir.FullName, CreateAocTestFileName(day)));
 
         await CreateAocTestClassFileAsync(acoTestFilePath, title, question, aocYear, aocDay, day);
 
         // Create Real input file
         var (realInputFileName, testInputFileName) = CreateTestFileNames(day);
         var aocDataDirectory = $@"{srcDirectory}\{aocYear}\AdventOfCode.Y{aocYear}.Tests.Unit\Data"
-            .Pipe(Path.GetFullPath)
-            .Pipe(CreateDirectory);
+                               | Path.GetFullPath
+                               | CreateDirectory;
 
         var realInputFilePath = Path.Combine(aocDataDirectory.FullName, realInputFileName);
         await CreateRealInputFileAsync(realInputFilePath, input);
@@ -150,7 +150,7 @@ public sealed partial class Application(
               public sealed class Day{{day}} : IAocDay<int>
               {
                   public static int Part1(AocInput input) => 0;
-              
+
                   public static int Part2(AocInput input) => 0;
               }
               """;
@@ -176,26 +176,26 @@ public sealed partial class Application(
                   private const string Day = nameof(Day{{day}});
                   private const string TestData = @$"..\..\..\Data\{Day}_Test.txt";
                   private const string RealData = @$"..\..\..\Data\{Day}.txt";
-              
+
                   public static TheoryData<AocInput, int> Part1Data => new()
                   {
                       { ReadInput(TestData), 0 },
                       { ReadInput(RealData), 0 }
                   };
-              
+
                   public static TheoryData<AocInput, int> Part2Data => new()
                   {
                       { ReadInput(TestData), 0 },
                       { ReadInput(RealData), 0 }
                   };
-              
+
                   [Theory]
                   [MemberData(nameof(Part1Data))]
                   [Description("{{question}}")]
                   public void Part1(AocInput input, int expected)
                   {
                       var result = Day{{day}}.Part1(input);
-              
+
                       result.Should().Be(expected);
                   }
                   

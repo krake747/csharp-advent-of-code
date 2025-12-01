@@ -9,25 +9,23 @@ public sealed class Day04 : IAocDay<int>
 {
     public static int Part1(AocInput input) =>
         input.AllLines
-            .Pipe(ParseMap)
-            .Pipe(
-                map =>
-                    from point in map.Keys
-                    from direction in new[] { Point.East, Point.SouthEast, Point.South, Point.SouthWest }
-                    select SearchWord(map, "XMAS", point, direction)
-            )
-            .Pipe(matches => matches.Count(m => m));
+        | ParseMap
+        | (map =>
+            from point in map.Keys
+            from direction in new[] { Point.East, Point.SouthEast, Point.South, Point.SouthWest }
+            select SearchWord(map, "XMAS", point, direction)
+        )
+        | (matches => matches.Count(m => m));
 
     public static int Part2(AocInput input) =>
         input.AllLines
-            .Pipe(ParseMap)
-            .Pipe(
-                map =>
-                    from point in map.Keys
-                    select SearchWord(map, "MAS", point + Point.NorthWest, Point.SouthEast) &&
-                           SearchWord(map, "MAS", point + Point.SouthWest, Point.NorthEast)
-            )
-            .Pipe(matches => matches.Count(m => m));
+        | ParseMap
+        | (map =>
+            from point in map.Keys
+            select SearchWord(map, "MAS", point + Point.NorthWest, Point.SouthEast) &&
+                   SearchWord(map, "MAS", point + Point.SouthWest, Point.NorthEast)
+        )
+        | (matches => matches.Count(m => m));
 
     private static bool SearchWord(Map map, string pattern, Point point, Point direction)
     {

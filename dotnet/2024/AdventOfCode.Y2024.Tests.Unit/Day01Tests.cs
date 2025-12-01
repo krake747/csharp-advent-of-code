@@ -44,7 +44,7 @@ public sealed class Day01Tests : IAocDayTest<int>
 
         result.Should().Be(expected);
     }
-    
+
     [Theory]
     [MemberData(nameof(Part1Data))]
     [Description("What is the total distance between your lists?")]

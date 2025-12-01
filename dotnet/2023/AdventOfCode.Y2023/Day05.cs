@@ -21,18 +21,17 @@ public sealed partial class Day05 : IAocDay<int>
 
     private static IEnumerable<MapEntry> ParseMapEntries(string map) =>
         map.Split('\n')
-            .Pipe(lines =>
-                from range in lines[1..]
-                let rangeParts = RangeParts(range)
-                let destination = new Range(rangeParts[0], rangeParts[0] + rangeParts[2] - 1)
-                let source = new Range(rangeParts[1], rangeParts[1] + rangeParts[2] - 1)
-                select new MapEntry(GetMapName(lines[0]), source, destination)
-            );
+        | (lines =>
+            from range in lines[1..]
+            let rangeParts = RangeParts(range)
+            let destination = new Range(rangeParts[0], rangeParts[0] + rangeParts[2] - 1)
+            let source = new Range(rangeParts[1], rangeParts[1] + rangeParts[2] - 1)
+            select new MapEntry(GetMapName(lines[0]), source, destination)
+        );
 
     private static MapName GetMapName(string line) =>
-        MapNameRegex()
-            .Match(line)
-            .Pipe(x => new MapName(x.Groups[1].Value, x.Groups[2].Value));
+        MapNameRegex().Match(line)
+        | (x => new MapName(x.Groups[1].Value, x.Groups[2].Value));
 
     private static int[] RangeParts(string line) =>
         NumbersRegex()

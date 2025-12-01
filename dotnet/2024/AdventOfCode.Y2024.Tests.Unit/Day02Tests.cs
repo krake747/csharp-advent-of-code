@@ -34,17 +34,17 @@ public sealed class Day02Tests : IAocDayTest<int>
 
         result.Should().Be(expected);
     }
-    
+
     [Theory]
     [MemberData(nameof(Part2Data))]
     [Description("How many reports are now safe?")]
     public void Part2(AocInput input, int expected)
     {
         var result = Day02.Part2(input);
-    
+
         result.Should().Be(expected);
-    }    
-    
+    }
+
     [Theory]
     [MemberData(nameof(Part1Data))]
     [Description("How many reports are safe?")]

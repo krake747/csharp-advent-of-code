@@ -10,20 +10,20 @@ public sealed class Day05 : IAocDay<int>
 {
     public static int Part1(AocInput input) =>
         input.Text
-            .Pipe(SleighLaunchSafetyManual)
-            .Pipe(manual => manual.Updates
-                .Where(pages => ElfPageSorting(manual.PrecedenceRules, pages))
-                .Sum(ExtractMiddlePage)
-            );
+        | SleighLaunchSafetyManual
+        | (manual => manual.Updates
+            .Where(pages => ElfPageSorting(manual.PrecedenceRules, pages))
+            .Sum(ExtractMiddlePage)
+        );
 
     public static int Part2(AocInput input) =>
         input.Text
-            .Pipe(SleighLaunchSafetyManual)
-            .Pipe(manual => manual.Updates
-                .Where(pages => ElfPageSorting(manual.PrecedenceRules, pages) is false)
-                .Select(pages => pages.OrderBy(p => p, manual.PrecedenceRules).ToArray())
-                .Sum(ExtractMiddlePage)
-            );
+        | SleighLaunchSafetyManual
+        | (manual => manual.Updates
+            .Where(pages => ElfPageSorting(manual.PrecedenceRules, pages) is false)
+            .Select(pages => pages.OrderBy(p => p, manual.PrecedenceRules).ToArray())
+            .Sum(ExtractMiddlePage)
+        );
 
     private static SafetyManual SleighLaunchSafetyManual(string text)
     {

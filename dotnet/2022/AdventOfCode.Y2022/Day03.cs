@@ -17,10 +17,11 @@ public sealed class Day03 : IAocDay<int>
 
     private static char DistinctItemFromGroupOfBackpacks(IEnumerable<string> backpacks) =>
         backpacks.ToArray()
-            .Pipe(input => input
-                .Skip(1)
-                .Aggregate(ImmutableHashSet.Create(input[0].ToCharArray()), (h, e) => h.Intersect(e))
-                .Single());
+        | (input => input
+            .Skip(1)
+            .Aggregate(ImmutableHashSet.Create(input[0].ToCharArray()), (h, e) => h.Intersect(e))
+            .Single()
+        );
 
     private static int ParseItemPriorityValue(char c) => c < 'a' ? c - 'A' + 27 : c - 'a' + 1;
 }
