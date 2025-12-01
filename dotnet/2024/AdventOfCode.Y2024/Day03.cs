@@ -11,23 +11,24 @@ public sealed partial class Day03 : IAocDay<long>
         input.Text
         | (text => ComputerMemory().Matches(text).Sum(Instructions));
 
-    public static long Part2(AocInput input) => input.Text
-                                                | (text => ComputerMemoryWithConditionals().Matches(text)
-                                                    .Aggregate(
-                                                        new State(true, 0),
-                                                        (state, m) => m.Value switch
-                                                        {
-                                                            "do()" => state with { Enabled = true },
-                                                            "don't()" => state with { Enabled = false },
-                                                            _ when state.Enabled => state with
-                                                            {
-                                                                Total = state.Total + Instructions(m)
-                                                            },
-                                                            _ => state
-                                                        }
-                                                    )
-                                                )
-                                                | (state => state.Total);
+    public static long Part2(AocInput input) => 
+        input.Text
+        | (text => ComputerMemoryWithConditionals().Matches(text)
+            .Aggregate(
+                new State(true, 0),
+                (state, m) => m.Value switch
+                {
+                    "do()" => state with { Enabled = true },
+                    "don't()" => state with { Enabled = false },
+                    _ when state.Enabled => state with
+                    {
+                        Total = state.Total + Instructions(m)
+                    },
+                    _ => state
+                }
+            )
+        )
+        | (state => state.Total);
 
     private static int Instructions(Match m) =>
         int.Parse(m.Groups[1].Value) * int.Parse(m.Groups[2].Value);

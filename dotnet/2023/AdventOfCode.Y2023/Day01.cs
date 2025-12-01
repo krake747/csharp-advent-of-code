@@ -57,7 +57,7 @@ public sealed partial class Day01 : IAocDay<int>
         _ => m.Value
     };
 
-    [GeneratedRegex(@"\d", RegexOptions.Compiled | RegexOptions.NonBacktracking)]
+    [GeneratedRegex(@"\d", RegexOptions.Compiled)]
     private static partial Regex DigitRegex();
 
     [GeneratedRegex(@"\d|one|two|three|four|five|six|seven|eight|nine",
