@@ -15,7 +15,7 @@ public sealed class Day01Tests : IAocDayTest<int>
     public static TheoryData<AocInput, int> Part1Data => new()
     {
         { ReadInput(TestData), 3 },
-        { ReadInput(RealData), 0 }
+        { ReadInput(RealData), 1100 }
     };
 
     public static TheoryData<AocInput, int> Part2Data => new()
