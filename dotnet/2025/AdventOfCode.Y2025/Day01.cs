@@ -1,42 +1,38 @@
-using System.Text.RegularExpressions;
 using AdventOfCode.Lib;
 
 namespace AdventOfCode.Y2025;
 
 [AocPuzzle(2025, 1, "Secret Entrance", "C#")]
-public sealed partial class Day01 : IAocDay<int>
+public sealed class Day01 : IAocDay<int>
 {
     public static int Part1(AocInput input) => 
         input.Lines
-            .Select(x => RotationsRegex().Match(x))
-            .Select(Instruction)
-            .Aggregate(new State(0, 50), (acc, instruction) =>
-            {
-                var newState = instruction.Turn switch
-                {
-                    "L" => acc with { Value = (acc.Value - instruction.Amount + 100) % 100 },
-                    "R" => acc with { Value = (acc.Value + instruction.Amount + 100) % 100 },
-                    _ => acc
-                };
+        | Instructions
+        | (instructions => TurnDial(50, instructions))
+        | (rotations => rotations.Count(x => x is 0));
 
-                return newState.Value switch
-                {
-                    0 => newState with { Count = newState.Count + 1 },
-                    _ => newState
-                };
-            })
-            .Count;
+    public static int Part2(AocInput input) =>
+        input.Lines
+        | Pw0X434C49434B
+        | (instructions => TurnDial(50, instructions))
+        | (rotations => rotations.Count(x => x is 0));
 
-    public static int Part2(AocInput input) => 0;
-
-    private static (string Turn, int Amount) Instruction(Match m) =>
-        (
-            Turn: m.Groups[1].Value, 
-            Amount: int.Parse(m.Groups[2].Value)
-        );
-
-    private record struct State(int Count, int Value);
+    private static IEnumerable<int> Instructions(IEnumerable<string> lines) =>
+        from line in lines
+        select Direction(line) * Amount(line);
     
-    [GeneratedRegex(@"(L|R)(\d*)", RegexOptions.Compiled)]
-    private static partial Regex RotationsRegex();
+    private static IEnumerable<int> Pw0X434C49434B(IEnumerable<string> lines) =>
+        from line in lines
+        from _ in Enumerable.Range(0, Amount(line))
+        select Direction(line);
+    
+    private static int Direction(string line) => line[0] == 'L' ? -1 : 1;
+
+    private static int Amount(string line) => int.Parse(line[1..]);
+    
+    private static IEnumerable<int> TurnDial(int start, IEnumerable<int> instructions)
+    {
+        var pos = start;
+        return instructions.Select(r => pos = (pos + r) % 100);
+    }
 }
