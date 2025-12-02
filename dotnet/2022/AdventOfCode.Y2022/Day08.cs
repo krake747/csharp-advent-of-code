@@ -5,13 +5,15 @@ namespace AdventOfCode.Y2022;
 [AocPuzzle(2022, 8, "Treetop Tree House")]
 public sealed class Day08 : IAocDay<int>
 {
-    public static int Part1(AocInput input) => input.Lines
-                                               | (trees => DetermineForest(trees, TreeCoverScore))
-                                               | (forest => forest.Cast<int>().Sum());
+    public static int Part1(AocInput input) =>
+        input.Lines
+        | (trees => DetermineForest(trees, TreeCoverScore))
+        | (forest => forest.Cast<int>().Sum());
 
-    public static int Part2(AocInput input) => input.Lines
-                                               | (trees => DetermineForest(trees, TreeScenicScore))
-                                               | (forest => forest.Cast<int>().Max());
+    public static int Part2(AocInput input) =>
+        input.Lines
+        | (trees => DetermineForest(trees, TreeScenicScore))
+        | (forest => forest.Cast<int>().Max());
 
     private static int[,] DetermineForest(IEnumerable<string> input, Func<int[,], int, int, int> func)
     {

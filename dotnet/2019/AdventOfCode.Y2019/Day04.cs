@@ -27,7 +27,7 @@ public sealed class Day04 : IAocDay<int>
         password.Length is 6;
 
     private static bool Increasing(string password) =>
-        password.Zip(password[1..]).Any(x => x.Item1 > x.Item2) is false;
+        password.Zip(password[1..]).Any(x => x.First > x.Second) is false;
 
     private static bool PotentialDouble(string password) =>
         password.GroupBy(g => g).ToDictionary(k => k.Key, v => v.Count()).Values.Any(c => c >= 2);
